@@ -27,13 +27,6 @@ namespace GIShowCam.Gui
         public GuiBase(FormMain formBase)
         {
             this.form = formBase;
-            /*
-            form.labelPlaybackPosition.Text = string.Empty;
-            this.vlcControl.PositionChanged += this.VlcControlOnPositionChanged;
-            this.vlcControl.Parent = this;
-            this.vlcControl.Enabled = false;
-            this.vlcControl.EndReached += vlcControl_EndReached;*/
-
         }
 
         internal void InitVideo(Panel panelVlc, Label labelPlaybackPosition)
@@ -70,8 +63,7 @@ namespace GIShowCam.Gui
         }
         void vlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-
-            //listBox1.SelectedIndex += 1;
+            //listBoxPeUndeva.SelectedIndex += 1;
         }
 
 
@@ -84,7 +76,7 @@ namespace GIShowCam.Gui
         /// <param name="e">Event arguments, containing the current position. </param>
         private void VlcControlOnPositionChanged(VlcControl sender, VlcEventArgs<float> e)
         {
-            labelPlaybackPosition.Text = (e.Data * 100).ToString("000") + " %";
+            labelPlaybackPosition.Text = "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %";
         }
 
 
