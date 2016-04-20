@@ -45,6 +45,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormMain.cs">
@@ -85,6 +86,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Core.Interops\Vlc.DotNet.Core.Interops.csproj">
+      <Project>{7506dde6-1d45-4fe0-8239-985c5f6eb605}</Project>
+      <Name>Vlc.DotNet.Core.Interops</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Core\Vlc.DotNet.Core.csproj">
       <Project>{0DC24B0B-6862-4615-B62D-81795D2CDD07}</Project>
       <Name>Vlc.DotNet.Core</Name>

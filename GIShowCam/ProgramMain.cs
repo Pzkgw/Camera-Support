@@ -18,13 +18,13 @@ namespace GIShowCam
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
+            
             // Set libvlc.dll and libvlccore.dll directory path
             VlcContext.LibVlcDllsPath = CommonStrings.LIBVLC_DLLS_PATH_DEFAULT_VALUE_AMD64;
 
             // Set the vlc plugins directory path
             VlcContext.LibVlcPluginsPath = CommonStrings.PLUGINS_PATH_DEFAULT_VALUE_AMD64;
-
+/*
             // Ignore the VLC configuration file
             VlcContext.StartupOptions.IgnoreConfig = true;
 
@@ -39,7 +39,7 @@ namespace GIShowCam
 
             VlcContext.StartupOptions.AddOption("--image-duration=5");
             VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
-            //VlcContext.StartupOptions.AddOption("--video-filter=none");
+            //VlcContext.StartupOptions.AddOption("--video-filter=none");*/
 
 
             Application.Run(new FormMain());

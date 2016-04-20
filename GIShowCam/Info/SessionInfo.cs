@@ -9,20 +9,28 @@ namespace GIShowCam.Info
     class SessionInfo
     {
 
-        //"c:\\2016-4-18-18-4-15.mpeg4"
+
+        //http://10.10.10.202/onvif/device_service
+        //rtsp://10.10.10.78/axis-media/media.amp
+        //_camera = IPCameraFactory.GetCamera("rtsp://10.10.10.78/axis-media/media.amp", "root", "cavi123,.");
+
+
+
+        //"c:\2016-4-18-18-4-15.mpeg4"
         // "rtsp://10.10.10.78/axis-media/media.amp";
         //rtsp://10.10.10.202:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif
-        public static string host = "rtsp://10.10.10.202:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif";
+        public static string host = @"rtsp://10.10.10.78/axis-media/media.amp";
 
 
-
-        //"root"
-        public static string user = "admin";
+        //"root" 
+        //"admin"
+        public static string user = "root";
 
 
 
         //"cavi123,."
-        public static string pass = "admin";
+        //"admin"
+        public static string pass = "cavi123,.";
 
 
 
