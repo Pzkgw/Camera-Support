@@ -110,19 +110,19 @@
             // 
             this.txtDevUser.Location = new System.Drawing.Point(73, 69);
             this.txtDevUser.Name = "txtDevUser";
-            this.txtDevUser.Size = new System.Drawing.Size(100, 21);
+            this.txtDevUser.Size = new System.Drawing.Size(120, 21);
             this.txtDevUser.TabIndex = 1;
             // 
             // txtDevPass
             // 
-            this.txtDevPass.Location = new System.Drawing.Point(264, 69);
+            this.txtDevPass.Location = new System.Drawing.Point(294, 69);
             this.txtDevPass.Name = "txtDevPass";
-            this.txtDevPass.Size = new System.Drawing.Size(100, 21);
+            this.txtDevPass.Size = new System.Drawing.Size(120, 21);
             this.txtDevPass.TabIndex = 2;
             // 
             // btnDevConnect
             // 
-            this.btnDevConnect.Location = new System.Drawing.Point(413, 59);
+            this.btnDevConnect.Location = new System.Drawing.Point(443, 59);
             this.btnDevConnect.Name = "btnDevConnect";
             this.btnDevConnect.Size = new System.Drawing.Size(96, 38);
             this.btnDevConnect.TabIndex = 3;
@@ -153,7 +153,7 @@
             // 
             this.lblDevPass.AutoSize = true;
             this.lblDevPass.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblDevPass.Location = new System.Drawing.Point(192, 71);
+            this.lblDevPass.Location = new System.Drawing.Point(222, 72);
             this.lblDevPass.Name = "lblDevPass";
             this.lblDevPass.Size = new System.Drawing.Size(66, 15);
             this.lblDevPass.TabIndex = 6;

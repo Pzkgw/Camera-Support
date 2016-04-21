@@ -14,60 +14,34 @@ using System.Windows.Threading;
 
 namespace GIShowCam.Gui
 {
-    class GuiBase
+    class GuiBase 
     {
-        FormMain form;
+        protected FormMain form;
 
-        VlcControl vlc;
+        protected VlcControl vlc;
 
-        Label labelPlaybackPosition;
-        TextBox txtDevUrl, txtDevUser, txtDevPass;
 
-        bool playIsOn;
-
-        public GuiBase(FormMain formBase)
+        public GuiBase(FormMain formBase, Panel panelVlc)
         {
-            this.form = formBase;            
-        }
-
-        #region Camera Video
-
-        internal void InitVideoControl(Panel panelVlc, Label labelPlaybackPosition)
-        {
-            labelPlaybackPosition.Text = string.Empty;
-            this.labelPlaybackPosition = labelPlaybackPosition;
-
+            this.form = formBase;
 
             vlc = new VlcControl();
             vlc.Dock = DockStyle.Fill;
             vlc.Enabled = false;
             //vlc.ImeMode = System.Windows.Forms.ImeMode.NoControl;
 
-            vlc.PositionChanged += VlcControlOnPositionChanged;
-            vlc.Playing += Vlc_Playing;
-
-            vlc.EndReached += vlcControl_EndReached;
-
             vlc.Parent = panelVlc;
-
-            
-
-
-
-
         }
 
-        private void Media_StateChanged(MediaBase sender, VlcEventArgs<Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States> e)
+        public GuiBase(GuiBase g)
         {
-            form.ControlTextUpdate(labelPlaybackPosition, "State: " + e.Data.ToString());
+            this.form = g.form;
+            this.vlc = g.vlc;
         }
 
-        private void Vlc_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
-        {
-            if (!playIsOn && vlc.IsPlaying) playIsOn = true;
-        }
+        #region Camera Video
 
-        private void PlayNextVideo()
+        protected void VideoPlay()
         {
             if (vlc.Media != null) vlc.Media.Dispose();
 
@@ -84,7 +58,7 @@ namespace GIShowCam.Gui
                 media.AddOption("vvv");//posibil optional
 
                 vlc.Media = media;
-                vlc.Media.StateChanged += Media_StateChanged;
+                
 
             }
             else
@@ -95,86 +69,12 @@ namespace GIShowCam.Gui
             vlc.Play();
         }
 
-        void vlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
-        {
-            vlc.Pause();
-            //listBoxPeUndeva.SelectedIndex += 1;
-        }
-
-
-
-        /// <summary>
-        /// Event handler for "VlcControl.PositionChanged" event. 
-        /// Updates the label containing the playback position. 
-        /// </summary>
-        /// <param name="sender">Event sending. </param>
-        /// <param name="e">Event arguments, containing the current position. </param>
-        private void VlcControlOnPositionChanged(VlcControl sender, VlcEventArgs<float> e)
-        {
-            //form.ControlTextUpdate(labelPlaybackPosition, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
-        }
 
         #endregion Camera Video
 
-        #region Device Info
 
 
-        internal void InitDeviceControl(TextBox txtDevUrl, TextBox txtDevUser, TextBox txtDevPass, Button btnDevConnect)
-        {
-            txtDevUrl.Text = SessionInfo.host;
-            txtDevUser.Text = SessionInfo.user;
-            txtDevPass.Text = SessionInfo.pass;
 
-            this.txtDevUrl = txtDevUrl;
-            this.txtDevUser = txtDevUser;
-            this.txtDevPass = txtDevPass;
-
-            BtnDevConnect_Click(btnDevConnect, null);
-            btnDevConnect.Click += BtnDevConnect_Click;
-        }
-
-        private void BtnDevConnect_Click(object sender, EventArgs e)
-        {
-            if (e != null)
-            {
-                SessionInfo.host = txtDevUrl.Text;
-                SessionInfo.user = txtDevUser.Text;
-                SessionInfo.pass = txtDevPass.Text;
-            }
-
-            if (vlc.IsPlaying) vlc.Stop();
-            PlayNextVideo();            
-        }
-
-        #endregion Device Info
-
-        #region Additional Controls
-
-        internal void InitAdditionalControls(Button btnPlay)
-        {
-            BtnPlay_Click(btnPlay, null);
-            btnPlay.Click += BtnPlay_Click;
-        }
-
-        private void BtnPlay_Click(object sender, EventArgs e)
-        {
-            if (playIsOn)
-            {
-                if (vlc.IsPlaying) vlc.Pause();
-                playIsOn = false;                
-            }
-            else
-            {
-                if (!vlc.IsPlaying) vlc.Play();
-                playIsOn = true;
-            }
-
-            ((Button)sender).Text = playIsOn ? "Pause" : "Play";
-            ((Button)sender).Update();
-        }
-
-
-        #endregion Additional Controls
 
         internal void CleanUp()
         {

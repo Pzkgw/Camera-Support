@@ -14,7 +14,7 @@ namespace GIShowCam
 {
     public partial class FormMain : Form
     {
-        private GuiBase camSpotGui;
+        private GuiBase mainB;
         private readonly Dispatcher _dispatchDr;
 
 
@@ -24,18 +24,19 @@ namespace GIShowCam
 
             _dispatchDr = Dispatcher.CurrentDispatcher;
 
-            camSpotGui = new GuiBase(this);
-            camSpotGui.InitVideoControl(panelVlc, labelPlaybackPosition);
-            camSpotGui.InitDeviceControl(txtDevUrl, txtDevUser, txtDevPass, btnDevConnect);
-            camSpotGui.InitAdditionalControls(btnPlay);
+            mainB = new GuiBase(this, panelVlc);
 
-            this.FormClosing += FormMain_FormClosing;
+            new GuiControls(mainB, btnDevConnect, btnPlay, labelPlaybackPosition);
+            new GuiDeviceInfo(mainB, txtDevUrl, txtDevUser, txtDevPass);
+
+            FormClosing += FormMain_FormClosing;
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            camSpotGui.CleanUp();
+            mainB.CleanUp();
         }
+
 
         #region GUI Events
 
@@ -75,7 +76,6 @@ namespace GIShowCam
 
 
         #endregion GUI Events Main
-
 
 
     }
