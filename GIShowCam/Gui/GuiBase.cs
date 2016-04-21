@@ -73,31 +73,15 @@ namespace GIShowCam.Gui
 
             if (SessionInfo.host.Count(s => s == '.') > 2)
             {
+                string path = SessionInfo.host, util = SessionInfo.user + ":" + SessionInfo.pass + "@";
                 
-                const string qu = "\"", quotMech = "\"\"";
-                /*
-                LocationMedia media = new LocationMedia(qu + SessionInfo.host+ qu+" ");//+ @" ""+SessionInfo.user+ @"""+ @" "" + SessionInfo.pass+@"""
-                media.AddOption(qu + SessionInfo.user + qu + " ");//vlc.Media.AddOption(SessionInfo.user);
-                media.AddOption(qu + SessionInfo.pass + qu + " ");//vlc.Media.AddOption(SessionInfo.pass);
-                */
+                if(path.Contains("rtsp://")&& SessionInfo.user.Length>0)
+                {
+                    path = path.Insert(7, util);
+                }
 
-                //vlc "rtsp://10.10.10.78/axis-media/media.amp" "--rtsp-user=root" "--rtsp-pwd=cavi123,."
-
-
-                string a = "rtsp://10.10.10.78/axis-media/media.amp";
-                string b = "--rtsp-user=root";//--rtsp
-                string c = "--rtsp-pwd=cavi123,.";//
-                a = String.Format("\"{0}\" ", a);
-                b = String.Format("\"{0}\" ", b);
-                c = String.Format("\"{0}\"", c);
-
-
-                LocationMedia media = new LocationMedia(a);
-                //media.AddOption("media.amp");
-                media.AddOption("-vvv");                
-                media.AddOption(b, Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Unique);
-                media.AddOption(c, Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Unique);
-
+                LocationMedia media = new LocationMedia(path);
+                //media.AddOption("vvv");                
 
                 vlc.Media = media;
                 vlc.Media.StateChanged += Media_StateChanged;

@@ -19,18 +19,18 @@ namespace GIShowCam.Info
         //"c:\2016-4-18-18-4-15.mpeg4"
         // "rtsp://10.10.10.78/axis-media/media.amp";
         //rtsp://10.10.10.202:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif
-        public static string host = @"rtsp://@10.10.10.78/axis-media/media.amp";
+        public static string host = @"rtsp://10.10.10.78/axis-media/media.amp";
 
         //--rtsp-user=username --rtsp-pwd=password
         //"root" 
         //"admin"
-        public static string user = "--rtsp-user=root";//-user -username
+        public static string user = "root";//-user -username --rtsp-user=
 
 
 
         //"cavi123,."
         //"admin"
-        public static string pass = "--rtsp-pwd=cavi123,.";//-passwd 
+        public static string pass = "cavi123,.";//-passwd --rtsp-pwd=
 
 
 
