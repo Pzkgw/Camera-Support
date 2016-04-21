@@ -75,13 +75,13 @@ namespace GIShowCam.Gui
             {
                 string path = SessionInfo.host, util = SessionInfo.user + ":" + SessionInfo.pass + "@";
                 
-                if(path.Contains("rtsp://")&& SessionInfo.user.Length>0)
+                if(((path[5]=='/')||(path[6]=='/'))&& SessionInfo.user.Length>0)// http sau "rtsp://"
                 {
                     path = path.Insert(7, util);
                 }
 
                 LocationMedia media = new LocationMedia(path);
-                //media.AddOption("vvv");                
+                media.AddOption("vvv");//posibil optional
 
                 vlc.Media = media;
                 vlc.Media.StateChanged += Media_StateChanged;
