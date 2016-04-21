@@ -15,7 +15,7 @@ namespace Vlc.DotNet.Core.Interops
         public LibVlcFunction<Signatures.LibVlc.Logging.FreeInstance> FreeInstance { get; private set; }
         public LibVlcFunction<Signatures.LibVlc.Logging.Next> Next { get; private set; }
 
-        internal LibVlcLogging(IntPtr myLibVlcDllHandle, Version vlcVersion)
+        public LibVlcLogging(IntPtr myLibVlcDllHandle, Version vlcVersion)
         {
             GetVerbosity = new LibVlcFunction<Signatures.LibVlc.Logging.GetVerbosity>(myLibVlcDllHandle, vlcVersion);
             SetVerbosity = new LibVlcFunction<Signatures.LibVlc.Logging.SetVerbosity>(myLibVlcDllHandle, vlcVersion);

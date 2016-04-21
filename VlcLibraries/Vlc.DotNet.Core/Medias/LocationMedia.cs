@@ -17,7 +17,7 @@ namespace Vlc.DotNet.Core.Medias
             Location = location;
             Initialize();
         }
-        internal LocationMedia(IntPtr handle)
+        public LocationMedia(IntPtr handle)
             : base(handle)
         {
         }

@@ -57,9 +57,9 @@ namespace GIShowCam.Gui
 
         }
 
-        private void Media_StateChanged1(MediaBase sender, VlcEventArgs<Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States> e)
+        private void Media_StateChanged(MediaBase sender, VlcEventArgs<Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States> e)
         {
-            form.ControlTextUpdate(labelPlaybackPosition, e.Data.ToString());
+            form.ControlTextUpdate(labelPlaybackPosition, "State: " + e.Data.ToString());
         }
 
         private void Vlc_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
@@ -71,18 +71,37 @@ namespace GIShowCam.Gui
         {
             if (vlc.Media != null) vlc.Media.Dispose();
 
-            if (SessionInfo.host.Count(f => f == '.') > 2)
+            if (SessionInfo.host.Count(s => s == '.') > 2)
             {
-                LocationMedia media = new LocationMedia(SessionInfo.host);
-                media.AddOption(SessionInfo.user);//vlc.Media.AddOption(SessionInfo.user);
-                media.AddOption(SessionInfo.pass);//vlc.Media.AddOption(SessionInfo.pass);
-                media.StateChanged += Media_StateChanged1;
+                
+                const string qu = "\"", quotMech = "\"\"";
+                /*
+                LocationMedia media = new LocationMedia(qu + SessionInfo.host+ qu+" ");//+ @" ""+SessionInfo.user+ @"""+ @" "" + SessionInfo.pass+@"""
+                media.AddOption(qu + SessionInfo.user + qu + " ");//vlc.Media.AddOption(SessionInfo.user);
+                media.AddOption(qu + SessionInfo.pass + qu + " ");//vlc.Media.AddOption(SessionInfo.pass);
+                */
+
+                //vlc "rtsp://10.10.10.78/axis-media/media.amp" "--rtsp-user=root" "--rtsp-pwd=cavi123,."
+
+
+                string a = "rtsp://10.10.10.78/axis-media/media.amp";
+                string b = "--rtsp-user=root";//--rtsp
+                string c = "--rtsp-pwd=cavi123,.";//
+                a = String.Format("\"{0}\" ", a);
+                b = String.Format("\"{0}\" ", b);
+                c = String.Format("\"{0}\"", c);
+
+
+                LocationMedia media = new LocationMedia(a);
+                //media.AddOption("media.amp");
+                media.AddOption("-vvv");                
+                media.AddOption(b, Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Unique);
+                media.AddOption(c, Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Unique);
 
 
                 vlc.Media = media;
-                
-                
-                
+                vlc.Media.StateChanged += Media_StateChanged;
+
             }
             else
             {
@@ -184,65 +203,3 @@ namespace GIShowCam.Gui
 
     }
 }
-
-
-
-
-
-/*
-Vlc.DotNet.Core.VlcMedia media = new Vlc.DotNet.Core.VlcMedia(@"rtsp://172.16.22.61:554/live");
-
-public void SetMedia(FileInfo file, params string[] options);
-public void SetMedia(string mrl, params string[] options);
-public void SetMedia(Uri file, params string[] options);
-
-
-
-
-Uri uri = new Uri(SessionInfo.host);
-FileInfo fi = new FileInfo(SessionInfo.host);
-
-DirectoryInfo di = new DirectoryInfo("c:\\");//SessionInfo.vlcPlugins);
-
-
-vlc = new VlcControl();
-
-panel.Controls.Add(vlc);
-
-vlc.BackColor = System.Drawing.Color.Black;
-//player.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-vlc.Location = new System.Drawing.Point(0, 0);
-vlc.Size = new System.Drawing.Size(panel.Width, panel.Height);
-vlc.Name = "test";
-
-vlc.Dock = DockStyle.Fill;
-
-//Vlc.DotNet.Core.Medias.LocationMedia[] media;
-
-///vlc.SetMedia(new System.IO.FileInfo("c:\\2016-4-18-18-4-15.mpeg4"));
-vlc.Play(new Uri("2016-4-18-18-4-15.mpeg4"));//uri, us, pa 
-
-//VlcMediaPlayer mk = new VlcMediaPlayer(di);
-
-
-
-//LibVLCLibrary library = LibVLCLibrary.Load(null);
-
-//
-
-//Vlc.DotNet.Core.Interops.VlcManager op = Vlc.DotNet.Core.Interops.VlcManager.GetInstance(di);
-
-//player..PluginsPath = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\";
-
-
-//op.CreateNewInstance(new string[] { "root", "cavi123,." });
-//op.CreateMediaPlayerFromMedia(op.CreateNewMediaFromPath("c:\\2016-4-18-18-4-15.mpeg4"));
-
-
-//  //  myVlcMediaPlayer.SetMedia(file, options);
-
-//if (myVlcMediaPlayer != null)    myVlcMediaPlayer.SetMedia(uri, options);    Play();
-
-
-
-*/

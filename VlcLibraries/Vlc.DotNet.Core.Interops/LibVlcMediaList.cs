@@ -23,7 +23,7 @@ namespace Vlc.DotNet.Core.Interops
         public LibVlcFunction<Signatures.LibVlc.MediaList.Unlock> Unlock { get; private set; }
         public LibVlcFunction<Signatures.LibVlc.MediaList.EventManager> EventManager { get; private set; }
 
-        internal LibVlcMediaList(IntPtr libVlcDllHandle, Version vlcVersion)
+        public LibVlcMediaList(IntPtr libVlcDllHandle, Version vlcVersion)
         {
             NewInstance = new LibVlcFunction<Signatures.LibVlc.MediaList.NewInstance>(libVlcDllHandle, vlcVersion);
             ReleaseInstance = new LibVlcFunction<Signatures.LibVlc.MediaList.ReleaseInstance>(libVlcDllHandle, vlcVersion);

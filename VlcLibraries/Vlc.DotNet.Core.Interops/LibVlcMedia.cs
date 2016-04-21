@@ -29,7 +29,7 @@ namespace Vlc.DotNet.Core.Interops
         public LibVlcFunction<Signatures.LibVlc.Media.GetUserData> GetUserData { get; private set; }
         public LibVlcFunction<Signatures.LibVlc.Media.GetTrackInfo> GetTrackInfo { get; private set; }
 
-        internal LibVlcMedia(IntPtr libVlcDllHandle, Version vlcVersion)
+        public LibVlcMedia(IntPtr libVlcDllHandle, Version vlcVersion)
         {
             NewInstanceFromLocation = new LibVlcFunction<Signatures.LibVlc.Media.NewFromLocation>(libVlcDllHandle, vlcVersion);
             NewInstanceFromPath = new LibVlcFunction<Signatures.LibVlc.Media.NewFromPath>(libVlcDllHandle, vlcVersion);

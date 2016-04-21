@@ -285,7 +285,7 @@ namespace Vlc.DotNet.Forms
             return null;
         }
 
-        internal VlcAudioProperties(IVlcControl vlcControl)
+        public VlcAudioProperties(IVlcControl vlcControl)
         {
             myHostVlcControl = vlcControl;
         }

@@ -22,7 +22,7 @@ namespace Vlc.DotNet.Core.Interops
         public LibVlcFunction<Previous> Previous { get; private set; }
         public LibVlcFunction<SetPlaybackMode> SetPlaybackMode { get; private set; }
 
-        internal LibVlcMediaListPlayer(IntPtr libVlcDllHandle, Version vlcVersion)
+        public LibVlcMediaListPlayer(IntPtr libVlcDllHandle, Version vlcVersion)
         {
             NewInstance = new LibVlcFunction<NewInstance>(libVlcDllHandle, vlcVersion);
             ReleaseInstance = new LibVlcFunction<ReleaseInstance>(libVlcDllHandle, vlcVersion);

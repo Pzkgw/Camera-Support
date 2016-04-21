@@ -3,7 +3,7 @@
 namespace Vlc.DotNet.Core.Interops
 {
     [AttributeUsage(AttributeTargets.Delegate, AllowMultiple = true)]
-    internal sealed class LibVlcFunctionAttribute : Attribute
+    public sealed class LibVlcFunctionAttribute : Attribute
     {
         public string FunctionName { get; private set; }
         public Version MinVersion { get; private set; }

@@ -7,7 +7,7 @@ namespace Vlc.DotNet.Core
     /// </summary>
     public sealed class VlcLogOptions
     {
-        internal VlcLogOptions()
+        public VlcLogOptions()
         {
             Verbosity = VlcLogVerbosities.None;
             LogInFile = false;

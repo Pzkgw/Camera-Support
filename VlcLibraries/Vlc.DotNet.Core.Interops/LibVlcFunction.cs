@@ -15,12 +15,12 @@ namespace Vlc.DotNet.Core.Interops
     {
         private T myDelegate;
 
-        internal LibVlcFunction(IntPtr libVlcHandle)
+        public LibVlcFunction(IntPtr libVlcHandle)
             : this(libVlcHandle, null)
         {
         }
 
-        internal LibVlcFunction(IntPtr libVlcHandle, Version currentVlcVersion)
+        public LibVlcFunction(IntPtr libVlcHandle, Version currentVlcVersion)
         {
             IsAvailable = false;
             object[] attrs = typeof(T).GetCustomAttributes(typeof(LibVlcFunctionAttribute), false);
@@ -84,6 +84,6 @@ namespace Vlc.DotNet.Core.Interops
             }
         }
 
-        internal string VlcFunctionNames { get; private set; }
+        public string VlcFunctionNames { get; private set; }
     }
 }

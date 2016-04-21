@@ -229,7 +229,7 @@ namespace Vlc.DotNet.Core.Medias
 
         #endregion
 
-        internal VlcMediaMetadatas(MediaBase mediaBase)
+        public VlcMediaMetadatas(MediaBase mediaBase)
         {
             myHostMediaBase = mediaBase;
         }

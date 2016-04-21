@@ -17,13 +17,13 @@ namespace Vlc.DotNet.Core
         /// Retreive the audio output description
         /// </summary>
         public string Description { get; private set; }
-        internal VlcAudioOutputDevice Next { get; private set; }
+        public VlcAudioOutputDevice Next { get; private set; }
 
         /// <summary>
         /// VlcAudioOutput constrctor
         /// </summary>
         /// <param name="audioOutput">The libvlc audio output structure</param>
-        internal VlcAudioOutputDevice(AudioOutput audioOutput)
+        public VlcAudioOutputDevice(AudioOutput audioOutput)
         {
             Name = IntPtrExtensions.ToStringAnsi(audioOutput.name);
             Description = IntPtrExtensions.ToStringAnsi(audioOutput.description);

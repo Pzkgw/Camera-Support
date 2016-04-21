@@ -25,7 +25,7 @@ namespace Vlc.DotNet.Core.Medias
             TrackInfos = new VlcMediaTrackInfos(this);
         }
 
-        internal MediaBase(IntPtr handle)
+        public MediaBase(IntPtr handle)
         {
             if (handle == IntPtr.Zero)
                 throw new ArgumentNullException("handle");
@@ -99,13 +99,13 @@ namespace Vlc.DotNet.Core.Medias
         /// <summary>
         /// Gets media descriptor's elementary streams description
         /// </summary>
-        public VlcMediaTrackInfos TrackInfos { get; internal set; }
+        public VlcMediaTrackInfos TrackInfos { get; set; }
 
         /// <summary>
         /// Gets the meta of the media
         /// </summary>
         [Category(CommonStrings.VLC_DOTNET_PROPERTIES_CATEGORY)]
-        public VlcMediaMetadatas Metadatas { get; private set; }
+        public VlcMediaMetadatas Metadatas { get; set; }
 
         protected abstract IntPtr GetNewMediaInstance();
 

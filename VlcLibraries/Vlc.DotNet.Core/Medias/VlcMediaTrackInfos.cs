@@ -15,7 +15,7 @@ namespace Vlc.DotNet.Core.Medias
         /// <summary>
         /// VlcMediaTrackInfos constructor
         /// </summary>
-        internal VlcMediaTrackInfos(MediaBase mediaBase)
+        public VlcMediaTrackInfos(MediaBase mediaBase)
         {
             myMediaBase = mediaBase;
         }

@@ -11,7 +11,7 @@ namespace Vlc.DotNet.Core
         /// <summary>
         /// List of options
         /// </summary>
-        internal readonly StringCollection Options;
+        public readonly StringCollection Options;
 
         /// <summary>
         /// Constructor of VlcStartupOptions

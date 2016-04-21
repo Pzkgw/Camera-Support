@@ -8,7 +8,7 @@ namespace Vlc.DotNet.Core.Interops
     /// </summary>
     public sealed class LibVlcAsynchronousEvents : IDisposable
     {
-        internal LibVlcAsynchronousEvents(IntPtr libVlcDllHandle, Version vlcVersion)
+        public LibVlcAsynchronousEvents(IntPtr libVlcDllHandle, Version vlcVersion)
         {
             Attach = new LibVlcFunction<Attach>(libVlcDllHandle, vlcVersion);
             Detach = new LibVlcFunction<Detach>(libVlcDllHandle, vlcVersion);

@@ -28,7 +28,7 @@ namespace Vlc.DotNet.Core.Interops
         public LibVlcFunction<Signatures.LibVlc.MediaPlayer.Audio.GetDelay> GetDelay { get; private set; }
         public LibVlcFunction<Signatures.LibVlc.MediaPlayer.Audio.SetDelay> SetDelay { get; private set; }
 
-        internal LibVlcMediaPlayerAudio(IntPtr libVlcDllHandle, Version vlcVersion)
+        public LibVlcMediaPlayerAudio(IntPtr libVlcDllHandle, Version vlcVersion)
         {
             NewOutputListInstance = new LibVlcFunction<Signatures.LibVlc.MediaPlayer.Audio.NewOutputListInstance>(libVlcDllHandle, vlcVersion);
             ReleaseOutputList = new LibVlcFunction<Signatures.LibVlc.MediaPlayer.Audio.ReleaseOutputList>(libVlcDllHandle, vlcVersion);

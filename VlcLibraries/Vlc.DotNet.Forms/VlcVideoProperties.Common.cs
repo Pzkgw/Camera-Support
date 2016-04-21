@@ -311,7 +311,7 @@ namespace Vlc.DotNet.Forms
             }
         }
 
-        internal VlcVideoProperties(IVlcControl vlcControl)
+        public VlcVideoProperties(IVlcControl vlcControl)
         {
             myHostVlcControl = vlcControl;
         }

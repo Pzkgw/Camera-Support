@@ -46,7 +46,7 @@ namespace Vlc.DotNet.Core.Interops
         public LibVlcFunction<Signatures.LibVlc.MediaPlayer.Video.GetFloatAdjust> GetFloatAdjust { get; private set; }
         public LibVlcFunction<Signatures.LibVlc.MediaPlayer.Video.SetFloatAdjust> SetFloatAdjust { get; private set; }
 
-        internal LibVlcMediaPlayerVideo(IntPtr libVlcDllHandle, Version vlcVersion)
+        public LibVlcMediaPlayerVideo(IntPtr libVlcDllHandle, Version vlcVersion)
         {
             SetCallbacks = new LibVlcFunction<Signatures.LibVlc.MediaPlayer.Video.SetCallbacks>(libVlcDllHandle, vlcVersion);
             SetFormatCallbacks = new LibVlcFunction<Signatures.LibVlc.MediaPlayer.Video.SetFormatCallbacks>(libVlcDllHandle, vlcVersion);

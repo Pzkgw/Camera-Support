@@ -103,7 +103,7 @@ namespace Vlc.DotNet.Core
             }
         }
 
-        internal static StringCollection GetBaseVlcInstanceArguments()
+        public static StringCollection GetBaseVlcInstanceArguments()
         {
             var result = new StringCollection();
             result.Add("-I");

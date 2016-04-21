@@ -47,7 +47,7 @@ namespace Vlc.DotNet.Core.Interops
         public LibVlcMediaPlayerAudio AudioInterops { get; private set; }
         public LibVlcMediaPlayerVideo VideoInterops { get; private set; }
 
-        internal LibVlcMediaPlayer(IntPtr libVlcDllHandle, Version vlcVersion)
+        public LibVlcMediaPlayer(IntPtr libVlcDllHandle, Version vlcVersion)
         {
             NewInstance = new LibVlcFunction<Signatures.LibVlc.MediaPlayer.NewInstance>(libVlcDllHandle, vlcVersion);
             NewInstanceFromMedia = new LibVlcFunction<Signatures.LibVlc.MediaPlayer.NewInstanceFromMedia>(libVlcDllHandle, vlcVersion);

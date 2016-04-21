@@ -5,7 +5,7 @@
     /// </summary>
     public sealed class VlcErrorHandling
     {
-        internal VlcErrorHandling()
+        public VlcErrorHandling()
         {
         }
 

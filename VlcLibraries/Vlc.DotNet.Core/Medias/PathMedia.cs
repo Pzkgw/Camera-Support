@@ -18,7 +18,7 @@ namespace Vlc.DotNet.Core.Medias
             Initialize();
         }
 
-        internal PathMedia(IntPtr handle)
+        public PathMedia(IntPtr handle)
             : base(handle)
         {
         }

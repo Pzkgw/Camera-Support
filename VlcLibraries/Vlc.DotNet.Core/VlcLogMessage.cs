@@ -11,7 +11,7 @@
         public string Header { get; private set; }
         public string Message { get; private set; }
 
-        internal VlcLogMessage(int verbosity, string type, string name, string header, string message)
+        public VlcLogMessage(int verbosity, string type, string name, string header, string message)
         {
             Verbosity = (VlcLogVerbosities) verbosity;
             Type = type;
