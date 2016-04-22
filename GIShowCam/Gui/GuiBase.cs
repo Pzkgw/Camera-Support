@@ -1,16 +1,9 @@
-﻿using GIShowCam;
-using GIShowCam.Info;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using GIShowCam.Info;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Medias;
-using System.Windows.Threading;
 
 namespace GIShowCam.Gui
 {
@@ -35,8 +28,8 @@ namespace GIShowCam.Gui
 
         public GuiBase(GuiBase g)
         {
-            this.form = g.form;
-            this.vlc = g.vlc;
+            form = g.form;
+            vlc = g.vlc;
         }
 
         #region Camera Video
@@ -47,15 +40,16 @@ namespace GIShowCam.Gui
 
             if (SessionInfo.host.Count(s => s == '.') > 2)
             {
-                string path = SessionInfo.host, util = SessionInfo.user + ":" + SessionInfo.pass + "@";
+                string path = SessionInfo.host;
                 
-                if(((path[5]=='/')||(path[6]=='/'))&& SessionInfo.user.Length>0)// http sau "rtsp://"
+                if(((path[5]=='/')||(path[6]=='/'))&& SessionInfo.user.Length>0)// http:// sau rtsp://
                 {
-                    path = path.Insert(7, util);
+                    path = path.Insert(7, (SessionInfo.user + ":" + SessionInfo.pass + "@"));
                 }
 
+                //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
                 LocationMedia media = new LocationMedia(path);
-                media.AddOption("vvv");//posibil optional
+                media.AddOption("-vvv");//posibil optional
 
                 vlc.Media = media;
                 
@@ -81,6 +75,8 @@ namespace GIShowCam.Gui
             if (vlc.IsPlaying) vlc.Stop();
             if (vlc.Media != null) vlc.Media.Dispose();
             if (vlc != null) vlc.Dispose();
+
+            VlcContext.CloseAll();
         }
         
 

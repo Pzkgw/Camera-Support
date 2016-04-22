@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GIShowCam.Info
+﻿namespace GIShowCam.Info
 {
     class SessionInfo
     {
@@ -19,7 +13,8 @@ namespace GIShowCam.Info
         //"c:\2016-4-18-18-4-15.mpeg4"
         // "rtsp://10.10.10.78/axis-media/media.amp";
         //rtsp://10.10.10.202:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif
-        public static string host = @"rtsp://10.10.10.78/axis-media/media.amp";
+        public static string host = "c:\\2016-4-18-18-4-15.mpeg4";//@"rtsp://10.10.10.78/axis-media/media.amp";
+        // OPT: ?channel=1&subtype=0&unicast=true    SAU    ?channel=2&subtype=0&unicast=true&proto=Onvif
 
         //--rtsp-user=username --rtsp-pwd=password
         //"root" 

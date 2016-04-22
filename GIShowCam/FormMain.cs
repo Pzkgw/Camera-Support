@@ -26,8 +26,9 @@ namespace GIShowCam
 
             mainB = new GuiBase(this, panelVlc);
 
-            new GuiControls(mainB, btnDevConnect, btnPlay, labelPlaybackPosition);
-            new GuiDeviceInfo(mainB, txtDevUrl, txtDevUser, txtDevPass);
+            new GuiControls(mainB, btnDevConnect, txtDevUrl, txtDevUser, txtDevPass,
+                btnPlay, btnSnapshot, btnRecord, lblVlcNotify);
+            new GuiDeviceInfo(mainB, lblDev);
 
             FormClosing += FormMain_FormClosing;
         }

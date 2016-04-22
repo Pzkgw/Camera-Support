@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelPlaybackPosition = new System.Windows.Forms.Label();
+            this.lblVlcNotify = new System.Windows.Forms.Label();
             this.panelVlc = new System.Windows.Forms.Panel();
             this.tabHost = new System.Windows.Forms.TabControl();
             this.tabDevice = new System.Windows.Forms.TabPage();
+            this.lblDev = new System.Windows.Forms.Label();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.btnPlay = new System.Windows.Forms.Button();
             this.txtDevUrl = new System.Windows.Forms.TextBox();
@@ -42,17 +43,20 @@
             this.lblDevUser = new System.Windows.Forms.Label();
             this.lblDevPass = new System.Windows.Forms.Label();
             this.groupBoxDev = new System.Windows.Forms.GroupBox();
+            this.btnSnapshot = new System.Windows.Forms.Button();
+            this.btnRecord = new System.Windows.Forms.Button();
             this.tabHost.SuspendLayout();
+            this.tabDevice.SuspendLayout();
             this.groupBoxDev.SuspendLayout();
             this.SuspendLayout();
             // 
-            // labelPlaybackPosition
+            // lblVlcNotify
             // 
-            this.labelPlaybackPosition.AutoSize = true;
-            this.labelPlaybackPosition.Location = new System.Drawing.Point(864, 529);
-            this.labelPlaybackPosition.Name = "labelPlaybackPosition";
-            this.labelPlaybackPosition.Size = new System.Drawing.Size(0, 13);
-            this.labelPlaybackPosition.TabIndex = 0;
+            this.lblVlcNotify.AutoSize = true;
+            this.lblVlcNotify.Location = new System.Drawing.Point(864, 529);
+            this.lblVlcNotify.Name = "lblVlcNotify";
+            this.lblVlcNotify.Size = new System.Drawing.Size(0, 13);
+            this.lblVlcNotify.TabIndex = 0;
             // 
             // panelVlc
             // 
@@ -73,6 +77,7 @@
             // 
             // tabDevice
             // 
+            this.tabDevice.Controls.Add(this.lblDev);
             this.tabDevice.Location = new System.Drawing.Point(4, 22);
             this.tabDevice.Name = "tabDevice";
             this.tabDevice.Padding = new System.Windows.Forms.Padding(3);
@@ -80,6 +85,15 @@
             this.tabDevice.TabIndex = 0;
             this.tabDevice.Text = "Device";
             this.tabDevice.UseVisualStyleBackColor = true;
+            // 
+            // lblDev
+            // 
+            this.lblDev.AutoSize = true;
+            this.lblDev.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDev.Location = new System.Drawing.Point(3, 3);
+            this.lblDev.Name = "lblDev";
+            this.lblDev.Size = new System.Drawing.Size(0, 13);
+            this.lblDev.TabIndex = 0;
             // 
             // tabLog
             // 
@@ -101,30 +115,30 @@
             // 
             // txtDevUrl
             // 
-            this.txtDevUrl.Location = new System.Drawing.Point(73, 31);
+            this.txtDevUrl.Location = new System.Drawing.Point(69, 30);
             this.txtDevUrl.Name = "txtDevUrl";
             this.txtDevUrl.Size = new System.Drawing.Size(466, 21);
             this.txtDevUrl.TabIndex = 0;
             // 
             // txtDevUser
             // 
-            this.txtDevUser.Location = new System.Drawing.Point(73, 69);
+            this.txtDevUser.Location = new System.Drawing.Point(69, 69);
             this.txtDevUser.Name = "txtDevUser";
             this.txtDevUser.Size = new System.Drawing.Size(120, 21);
             this.txtDevUser.TabIndex = 1;
             // 
             // txtDevPass
             // 
-            this.txtDevPass.Location = new System.Drawing.Point(294, 69);
+            this.txtDevPass.Location = new System.Drawing.Point(267, 68);
             this.txtDevPass.Name = "txtDevPass";
             this.txtDevPass.Size = new System.Drawing.Size(120, 21);
             this.txtDevPass.TabIndex = 2;
             // 
             // btnDevConnect
             // 
-            this.btnDevConnect.Location = new System.Drawing.Point(443, 59);
+            this.btnDevConnect.Location = new System.Drawing.Point(418, 62);
             this.btnDevConnect.Name = "btnDevConnect";
-            this.btnDevConnect.Size = new System.Drawing.Size(96, 38);
+            this.btnDevConnect.Size = new System.Drawing.Size(96, 34);
             this.btnDevConnect.TabIndex = 3;
             this.btnDevConnect.Text = "Connect";
             this.btnDevConnect.UseVisualStyleBackColor = true;
@@ -133,7 +147,7 @@
             // 
             this.lblDevUrl.AutoSize = true;
             this.lblDevUrl.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblDevUrl.Location = new System.Drawing.Point(11, 33);
+            this.lblDevUrl.Location = new System.Drawing.Point(7, 33);
             this.lblDevUrl.Name = "lblDevUrl";
             this.lblDevUrl.Size = new System.Drawing.Size(56, 15);
             this.lblDevUrl.TabIndex = 4;
@@ -143,7 +157,7 @@
             // 
             this.lblDevUser.AutoSize = true;
             this.lblDevUser.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblDevUser.Location = new System.Drawing.Point(11, 71);
+            this.lblDevUser.Location = new System.Drawing.Point(7, 71);
             this.lblDevUser.Name = "lblDevUser";
             this.lblDevUser.Size = new System.Drawing.Size(37, 15);
             this.lblDevUser.TabIndex = 5;
@@ -153,7 +167,7 @@
             // 
             this.lblDevPass.AutoSize = true;
             this.lblDevPass.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblDevPass.Location = new System.Drawing.Point(222, 72);
+            this.lblDevPass.Location = new System.Drawing.Point(195, 72);
             this.lblDevPass.Name = "lblDevPass";
             this.lblDevPass.Size = new System.Drawing.Size(66, 15);
             this.lblDevPass.TabIndex = 6;
@@ -176,20 +190,42 @@
             this.groupBoxDev.TabStop = false;
             this.groupBoxDev.Text = "Device";
             // 
+            // btnSnapshot
+            // 
+            this.btnSnapshot.Location = new System.Drawing.Point(881, 573);
+            this.btnSnapshot.Name = "btnSnapshot";
+            this.btnSnapshot.Size = new System.Drawing.Size(85, 26);
+            this.btnSnapshot.TabIndex = 5;
+            this.btnSnapshot.Text = "Snapshot";
+            this.btnSnapshot.UseVisualStyleBackColor = true;
+            // 
+            // btnRecord
+            // 
+            this.btnRecord.Location = new System.Drawing.Point(990, 572);
+            this.btnRecord.Name = "btnRecord";
+            this.btnRecord.Size = new System.Drawing.Size(86, 27);
+            this.btnRecord.TabIndex = 6;
+            this.btnRecord.Text = "Record";
+            this.btnRecord.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 608);
+            this.Controls.Add(this.btnRecord);
+            this.Controls.Add(this.btnSnapshot);
             this.Controls.Add(this.groupBoxDev);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.tabHost);
             this.Controls.Add(this.panelVlc);
-            this.Controls.Add(this.labelPlaybackPosition);
+            this.Controls.Add(this.lblVlcNotify);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormMain";
             this.tabHost.ResumeLayout(false);
+            this.tabDevice.ResumeLayout(false);
+            this.tabDevice.PerformLayout();
             this.groupBoxDev.ResumeLayout(false);
             this.groupBoxDev.PerformLayout();
             this.ResumeLayout(false);
@@ -199,7 +235,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelPlaybackPosition;
+        private System.Windows.Forms.Label lblVlcNotify;
         private System.Windows.Forms.Panel panelVlc;
         private System.Windows.Forms.TabControl tabHost;
         private System.Windows.Forms.TabPage tabDevice;
@@ -213,5 +249,8 @@
         private System.Windows.Forms.Label lblDevUser;
         private System.Windows.Forms.Label lblDevUrl;
         private System.Windows.Forms.GroupBox groupBoxDev;
+        private System.Windows.Forms.Label lblDev;
+        private System.Windows.Forms.Button btnSnapshot;
+        private System.Windows.Forms.Button btnRecord;
     }
 }

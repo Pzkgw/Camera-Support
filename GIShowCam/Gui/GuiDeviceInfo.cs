@@ -1,30 +1,24 @@
-﻿using GIShowCam.Info;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using Vlc.DotNet.Core;
 
 namespace GIShowCam.Gui
 {
     class GuiDeviceInfo : GuiBase
     {
+        string strCommon = Environment.NewLine;
 
-        TextBox txtDevAddress, txtDevUser, txtDevPass;
-
-        public GuiDeviceInfo(GuiBase mainB, TextBox txtDevAddress, TextBox txtDevUser, TextBox txtDevPass) : base(mainB)
+        public GuiDeviceInfo(GuiBase mainB,  Label lblDev) : base(mainB)
         {
-            txtDevAddress.Text = SessionInfo.host;
-            txtDevUser.Text = SessionInfo.user;
-            txtDevPass.Text = SessionInfo.pass;
+            
 
-            this.txtDevAddress = txtDevAddress;
-            this.txtDevUser = txtDevUser;
-            this.txtDevPass = txtDevPass;
 
-            AddEvents();
+            strCommon = "  Startup options:" + Environment.NewLine;
 
+            for (int i = 0; i < VlcContext.StartupOptions.Options.Count; i++)
+                strCommon += VlcContext.StartupOptions.Options[i] + Environment.NewLine;
+
+            lblDev.Text = strCommon;
         }
 
         #region Device Info
@@ -32,28 +26,6 @@ namespace GIShowCam.Gui
 
 
         #endregion Device Info
-
-        private void AddEvents()
-        {
-            txtDevAddress.TextChanged += TxtDevAddress_TextChanged;
-            txtDevUser.TextChanged += TxtDevUser_TextChanged;
-            txtDevPass.TextChanged += TxtDevPass_TextChanged;
-        }
-
-        private void TxtDevPass_TextChanged(object sender, EventArgs e)
-        {
-            SessionInfo.pass = txtDevPass.Text;
-        }
-
-        private void TxtDevUser_TextChanged(object sender, EventArgs e)
-        {
-            SessionInfo.user = txtDevUser.Text;
-        }
-
-        private void TxtDevAddress_TextChanged(object sender, EventArgs e)
-        {
-            SessionInfo.host = txtDevAddress.Text;
-        }
 
 
 
