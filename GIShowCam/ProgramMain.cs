@@ -22,7 +22,7 @@ namespace GIShowCam
 
             SetDirectory();
 
-            EnableLogConsole();
+            //EnableLogConsole();
 
             AddVlcOptions();            
 
@@ -30,25 +30,54 @@ namespace GIShowCam
             Application.Run(new FormMain());
 
 
-            VlcContext.CloseAll();//Prezenta si in VlcCoseEvent
+            VlcContext.CloseAll();//+ in VlcCoseEvent
         }
 
         private static void AddVlcOptions()
         {
+            string[] optiuni = new string[] {
+                 "--no-fullscreen" // 
+                ,"--one-instance"  //  Allow only one running instance (default disabled)
+                ,"--high-priority" //  Increase the prior-ity of the process (default disabled)                
+                //,"--grayscale" //  merge doar daca e enabled in configuration
+                //,"--no-video" //  no video
+                //,"--image-duration=5" // 
+                //,"--ffmpeg-hw" // 
+                //,"--video-filter=none" // 
+                //,"--live-caching=10000" // 
+                //,"--network-caching=1000" //
+                //,"--vout none" // ERR => VlcCOntrol
+                //,"--disable-debug" // ERR => VlcCOntrol
+                //,"--avcodec - hw = vaapi"// ERR => VlcCOntrol <= fara hw-acceleration
+                //,"--aspect-ratio=16:9" ,"--fullscreen" ,"--file-caching=3000" // OUT => fullscreen video
+                //,"--audio-visual=goom", "--no-fullscreen", "--file-caching=300" // OUT => audio files
 
-            
-            //opt.AddOption("--image-duration=5");
-            //opt.AddOption("--ffmpeg-hw");
-            opt.AddOption("--no-skip-frames");
-            opt.AddOption("--high-priority");
-            //opt.AddOption("--video-filter=none");
-            //opt.AddOption("--live-caching=10000");
-            //opt.AddOption("--network-caching=1000");
 
+                //-------------------  DEFAULT ENABLED <--  to  -->  DISABLED  --------------------------------
 
-            //opt.AddOption("--disable-debug");// NU merge
-            //opt.AddOption("--avcodec - hw = vaapi");// outputs ERROR in VlcCOntrol daca nu e hw-acceleration
+                ,"--aout=none" //  main NO audio output ( optional mai e si "--no-audio" )
+                ,"--no-sout-audio" //        ^^^  Enable audio stream output (default enabled)
+                ,"--no-audio" //             ^^^
+                ,"--no-drop-late-frames" //drops frames that are late (arrive to the video output after their intended display date)
+                ,"--no-video-deco"  // Window decorations (default enabled)
+                ,"--no-skip-frames" // Optional ::> Enables framedropping on MPEG2 stream (default enabled)
+                ,"--no-video-title-show" // Display the title of the video on top of the movie. (default enabled)
+                ,"--no-spu" // You can completely disable the sub-picture processing. (default enabled)
+                ,"--no-sub-autodetect-file" // Autodetect subtitle files (default enabled)
+                //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
+                //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
+                ,"--no-media-library" // The media library is automatically saved and reloaded each time you start VLC. (default enabled)
+                ,"--no-auto-preparse" // Automatically preparse files (default enabled)
+                ,"--no-advanced" //  Show advanced options (default enabled)
+                ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
+                ,"--no-stats"  //    Collect statistics (default enabled)
+                ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
+                ,"--no-playlist-autostart" // playlist auto start (default enabled)
+                ,"--no-snapshot-preview"
 
+            };
+
+            foreach (string optString in optiuni) opt.AddOption(optString);
 
             VlcContext.Initialize();
         }

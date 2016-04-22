@@ -107,11 +107,13 @@
             // 
             // btnPlay
             // 
+            this.btnPlay.Enabled = false;
             this.btnPlay.Location = new System.Drawing.Point(670, 521);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(96, 28);
             this.btnPlay.TabIndex = 3;
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Visible = false;
             // 
             // txtDevUrl
             // 
@@ -192,21 +194,25 @@
             // 
             // btnSnapshot
             // 
+            this.btnSnapshot.Enabled = false;
             this.btnSnapshot.Location = new System.Drawing.Point(881, 573);
             this.btnSnapshot.Name = "btnSnapshot";
             this.btnSnapshot.Size = new System.Drawing.Size(85, 26);
             this.btnSnapshot.TabIndex = 5;
             this.btnSnapshot.Text = "Snapshot";
             this.btnSnapshot.UseVisualStyleBackColor = true;
+            this.btnSnapshot.Visible = false;
             // 
             // btnRecord
             // 
+            this.btnRecord.Enabled = false;
             this.btnRecord.Location = new System.Drawing.Point(990, 572);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(86, 27);
             this.btnRecord.TabIndex = 6;
             this.btnRecord.Text = "Record";
             this.btnRecord.UseVisualStyleBackColor = true;
+            this.btnRecord.Visible = false;
             // 
             // FormMain
             // 

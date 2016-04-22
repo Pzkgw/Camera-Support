@@ -13,6 +13,8 @@ namespace GIShowCam.Gui
 
         TextBox txtDevAddress, txtDevUser, txtDevPass;
 
+        Button btnPlay, btnSnapshot, btnRecord;
+
         bool playIsOn, recordIsOn;
 
         public GuiControls(GuiBase mainB, Button btnDevConnect,
@@ -21,6 +23,9 @@ namespace GIShowCam.Gui
         {
 
             lblVlcNotifications = lblVlcNotify;
+            this.btnRecord = btnRecord;
+            this.btnSnapshot = btnSnapshot;
+            this.btnPlay = btnPlay;
 
             txtDevAddress.Text = SessionInfo.host;
             txtDevUser.Text = SessionInfo.user;
@@ -34,8 +39,7 @@ namespace GIShowCam.Gui
             vlc.Playing += Vlc_Playing;            
             vlc.EndReached += vlcControl_EndReached;
             vlc.PositionChanged += VlcControlOnPositionChanged;
-
-            BtnPlay_Click(btnPlay, null);
+            
             btnPlay.Click += BtnPlay_Click;
 
             BtnDevConnect_Click(btnDevConnect, null);
@@ -65,11 +69,12 @@ namespace GIShowCam.Gui
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
             //vlc.Media.
+            vlc.TakeSnapshot("C:\\", (uint)vlc.Width, (uint)vlc.Height);
         }
 
         private void BtnDevConnect_Click(object sender, EventArgs e)
         {
-            if (vlc.IsPlaying) vlc.Stop();
+            
             VideoPlay();
         }
 
@@ -81,13 +86,13 @@ namespace GIShowCam.Gui
 
         private void Vlc_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-            if (!playIsOn && vlc.IsPlaying) playIsOn = true;
+
         }
 
 
         void vlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-            vlc.Pause();
+            vlc.Stop();
             //listBoxPeUndeva.SelectedIndex += 1;
         }
 
@@ -101,6 +106,13 @@ namespace GIShowCam.Gui
         {
             //form.ControlTextUpdate(labelPlaybackPosition, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
             form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
+
+            if (!playIsOn && vlc.IsPlaying) //play vlc start
+            {
+                form.ControlShow(btnPlay, true);
+                form.ControlShow(btnSnapshot, true);
+                BtnPlay_Click(null, null);
+            }
         }
 
         #region Additional Controls
@@ -111,17 +123,20 @@ namespace GIShowCam.Gui
         {
             if (playIsOn)
             {
-                if (vlc.IsPlaying) vlc.Pause();
+                if (vlc.IsPlaying) vlc.Stop();
+                form.ControlShow(btnRecord, false);
                 playIsOn = false;
             }
             else
             {
                 if (!vlc.IsPlaying) vlc.Play();
+                form.ControlShow(btnRecord, true);                
                 playIsOn = true;
             }
 
-            ((Button)sender).Text = playIsOn ? "Pause" : "Play";
-            ((Button)sender).Update();
+            //((Button)sender)
+            btnPlay.Text = playIsOn ? "Stop" : "Play";
+            //((Button)sender).Update();
         }
 
 

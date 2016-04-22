@@ -46,6 +46,11 @@ namespace GIShowCam
             InvokeGuiThread(new textUpdateDelegate(TextUpdate), ctrl, s);
         }
 
+        internal void ControlShow(Control ctrl, bool on)
+        {
+            InvokeGuiThread(new delegateEnableControl(ControlEnable), ctrl, on);
+        }
+
         #endregion GUI Events
 
 

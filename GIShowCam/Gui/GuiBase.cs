@@ -19,9 +19,11 @@ namespace GIShowCam.Gui
             this.form = formBase;
 
             vlc = new VlcControl();
-            vlc.Dock = DockStyle.Fill;
             vlc.Enabled = false;
-            //vlc.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            vlc.ImeMode = ImeMode.NoControl;
+            vlc.Dock = DockStyle.Fill;
+            //vlc.AudioProperties. = 
+            
 
             vlc.Parent = panelVlc;
         }
@@ -36,31 +38,33 @@ namespace GIShowCam.Gui
 
         protected void VideoPlay()
         {
-            if (vlc.Media != null) vlc.Media.Dispose();
-
-            if (SessionInfo.host.Count(s => s == '.') > 2)
+            if (vlc != null)
             {
-                string path = SessionInfo.host;
-                
-                if(((path[5]=='/')||(path[6]=='/'))&& SessionInfo.user.Length>0)// http:// sau rtsp://
+                if (vlc.IsPlaying) vlc.Stop();
+                if (vlc.Media != null) vlc.Media.Dispose();
+
+                if (SessionInfo.host.Count(s => s == '.') > 2)
                 {
-                    path = path.Insert(7, (SessionInfo.user + ":" + SessionInfo.pass + "@"));
+                    string path = SessionInfo.host;
+
+                    if (((path[5] == '/') || (path[6] == '/')) && SessionInfo.user.Length > 0)// http:// sau rtsp://
+                    {
+                        path = path.Insert(7, (SessionInfo.user + ":" + SessionInfo.pass + "@"));
+                    }
+
+                    //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
+                    LocationMedia media = new LocationMedia(path);
+                    //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
+
+                    vlc.Media = media;
+                }
+                else
+                {
+                    vlc.Media = new PathMedia(SessionInfo.host);
                 }
 
-                //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
-                LocationMedia media = new LocationMedia(path);
-                media.AddOption("-vvv");//posibil optional
-
-                vlc.Media = media;
-                
-
+                vlc.Play();
             }
-            else
-            {
-                vlc.Media = new PathMedia(SessionInfo.host);
-            }            
-
-            vlc.Play();
         }
 
 
