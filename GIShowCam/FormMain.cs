@@ -26,7 +26,7 @@ namespace GIShowCam
 
             mainB = new GuiBase(this, panelVlc);
 
-            new GuiControls(mainB, btnDevConnect, txtDevUrl, txtDevUser, txtDevPass,
+            new GuiControls(mainB, btnDevConnect, txtDevUrl, txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
                 btnPlay, btnSnapshot, btnRecord, lblVlcNotify);
             new GuiDeviceInfo(mainB, lblDev);
 
@@ -81,8 +81,7 @@ namespace GIShowCam
 
 
 
+
         #endregion GUI Events Main
-
-
     }
 }

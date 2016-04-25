@@ -45,24 +45,32 @@
             this.groupBoxDev = new System.Windows.Forms.GroupBox();
             this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
+            this.groupBoxVlcChange = new System.Windows.Forms.GroupBox();
+            this.textBoxWidthF = new System.Windows.Forms.TextBox();
+            this.textBoxHeightF = new System.Windows.Forms.TextBox();
+            this.lblWidthF = new System.Windows.Forms.Label();
+            this.lblHeightF = new System.Windows.Forms.Label();
+            this.lblZoomF = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabHost.SuspendLayout();
             this.tabDevice.SuspendLayout();
             this.groupBoxDev.SuspendLayout();
+            this.groupBoxVlcChange.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblVlcNotify
             // 
             this.lblVlcNotify.AutoSize = true;
-            this.lblVlcNotify.Location = new System.Drawing.Point(864, 529);
+            this.lblVlcNotify.Location = new System.Drawing.Point(604, 9);
             this.lblVlcNotify.Name = "lblVlcNotify";
             this.lblVlcNotify.Size = new System.Drawing.Size(0, 13);
             this.lblVlcNotify.TabIndex = 0;
             // 
             // panelVlc
             // 
-            this.panelVlc.Location = new System.Drawing.Point(337, 12);
+            this.panelVlc.Location = new System.Drawing.Point(337, 22);
             this.panelVlc.Name = "panelVlc";
-            this.panelVlc.Size = new System.Drawing.Size(766, 483);
+            this.panelVlc.Size = new System.Drawing.Size(766, 473);
             this.panelVlc.TabIndex = 1;
             // 
             // tabHost
@@ -195,7 +203,7 @@
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
-            this.btnSnapshot.Location = new System.Drawing.Point(881, 573);
+            this.btnSnapshot.Location = new System.Drawing.Point(823, 522);
             this.btnSnapshot.Name = "btnSnapshot";
             this.btnSnapshot.Size = new System.Drawing.Size(85, 26);
             this.btnSnapshot.TabIndex = 5;
@@ -206,7 +214,7 @@
             // btnRecord
             // 
             this.btnRecord.Enabled = false;
-            this.btnRecord.Location = new System.Drawing.Point(990, 572);
+            this.btnRecord.Location = new System.Drawing.Point(823, 554);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(86, 27);
             this.btnRecord.TabIndex = 6;
@@ -214,11 +222,81 @@
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Visible = false;
             // 
+            // groupBoxVlcChange
+            // 
+            this.groupBoxVlcChange.Controls.Add(this.textBox1);
+            this.groupBoxVlcChange.Controls.Add(this.lblZoomF);
+            this.groupBoxVlcChange.Controls.Add(this.lblHeightF);
+            this.groupBoxVlcChange.Controls.Add(this.lblWidthF);
+            this.groupBoxVlcChange.Controls.Add(this.textBoxHeightF);
+            this.groupBoxVlcChange.Controls.Add(this.textBoxWidthF);
+            this.groupBoxVlcChange.Location = new System.Drawing.Point(998, 501);
+            this.groupBoxVlcChange.Name = "groupBoxVlcChange";
+            this.groupBoxVlcChange.Size = new System.Drawing.Size(115, 108);
+            this.groupBoxVlcChange.TabIndex = 7;
+            this.groupBoxVlcChange.TabStop = false;
+            this.groupBoxVlcChange.Text = "Factor";
+            // 
+            // textBoxWidthF
+            // 
+            this.textBoxWidthF.Location = new System.Drawing.Point(50, 20);
+            this.textBoxWidthF.Name = "textBoxWidthF";
+            this.textBoxWidthF.Size = new System.Drawing.Size(41, 20);
+            this.textBoxWidthF.TabIndex = 0;
+            this.textBoxWidthF.Text = "1";
+            this.textBoxWidthF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxHeightF
+            // 
+            this.textBoxHeightF.Location = new System.Drawing.Point(50, 53);
+            this.textBoxHeightF.Name = "textBoxHeightF";
+            this.textBoxHeightF.Size = new System.Drawing.Size(41, 20);
+            this.textBoxHeightF.TabIndex = 1;
+            this.textBoxHeightF.Text = "1";
+            this.textBoxHeightF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblWidthF
+            // 
+            this.lblWidthF.AutoSize = true;
+            this.lblWidthF.Location = new System.Drawing.Point(6, 23);
+            this.lblWidthF.Name = "lblWidthF";
+            this.lblWidthF.Size = new System.Drawing.Size(38, 13);
+            this.lblWidthF.TabIndex = 2;
+            this.lblWidthF.Text = "Width:";
+            // 
+            // lblHeightF
+            // 
+            this.lblHeightF.AutoSize = true;
+            this.lblHeightF.Location = new System.Drawing.Point(6, 57);
+            this.lblHeightF.Name = "lblHeightF";
+            this.lblHeightF.Size = new System.Drawing.Size(41, 13);
+            this.lblHeightF.TabIndex = 3;
+            this.lblHeightF.Text = "Height:";
+            // 
+            // lblZoomF
+            // 
+            this.lblZoomF.AutoSize = true;
+            this.lblZoomF.Location = new System.Drawing.Point(10, 85);
+            this.lblZoomF.Name = "lblZoomF";
+            this.lblZoomF.Size = new System.Drawing.Size(37, 13);
+            this.lblZoomF.TabIndex = 4;
+            this.lblZoomF.Text = "Zoom:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(50, 82);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(41, 20);
+            this.textBox1.TabIndex = 5;
+            this.textBox1.Text = "100";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 608);
+            this.Controls.Add(this.groupBoxVlcChange);
             this.Controls.Add(this.btnRecord);
             this.Controls.Add(this.btnSnapshot);
             this.Controls.Add(this.groupBoxDev);
@@ -234,6 +312,8 @@
             this.tabDevice.PerformLayout();
             this.groupBoxDev.ResumeLayout(false);
             this.groupBoxDev.PerformLayout();
+            this.groupBoxVlcChange.ResumeLayout(false);
+            this.groupBoxVlcChange.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,5 +338,12 @@
         private System.Windows.Forms.Label lblDev;
         private System.Windows.Forms.Button btnSnapshot;
         private System.Windows.Forms.Button btnRecord;
+        private System.Windows.Forms.GroupBox groupBoxVlcChange;
+        private System.Windows.Forms.Label lblHeightF;
+        private System.Windows.Forms.Label lblWidthF;
+        private System.Windows.Forms.TextBox textBoxHeightF;
+        private System.Windows.Forms.TextBox textBoxWidthF;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lblZoomF;
     }
 }

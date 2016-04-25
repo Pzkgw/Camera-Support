@@ -13,19 +13,19 @@
         //"c:\2016-4-18-18-4-15.mpeg4"
         // "rtsp://10.10.10.78/axis-media/media.amp";
         //rtsp://10.10.10.202:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif
-        public static string host = @"rtsp://10.10.10.78/axis-media/media.amp";
+        public static string host = @"http://192.168.0.92/streaming/channels/2/httppreview";
         // OPT: ?channel=1&subtype=0&unicast=true    SAU    ?channel=2&subtype=0&unicast=true&proto=Onvif
 
         //--rtsp-user=username --rtsp-pwd=password
         //"root" 
         //"admin"
-        public static string user = "root";//-user -username --rtsp-user=
+        public static string user = "admin";//-user -username --rtsp-user=
 
 
 
         //"cavi123,."
         //"admin"
-        public static string pass = "cavi123,.";//-passwd --rtsp-pwd=
+        public static string pass = "1qaz@WSX";//-passwd --rtsp-pwd=
 
 
 

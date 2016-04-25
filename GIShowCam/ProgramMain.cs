@@ -20,6 +20,8 @@ namespace GIShowCam
 
             opt = VlcContext.StartupOptions;
 
+            opt.ScreenSaverEnabled = false;
+
             SetDirectory();
 
             //EnableLogConsole();
@@ -37,8 +39,9 @@ namespace GIShowCam
         {
             string[] optiuni = new string[] {
                  "--no-fullscreen" // 
-                ,"--one-instance"  //  Allow only one running instance (default disabled)
-                ,"--high-priority" //  Increase the prior-ity of the process (default disabled)                
+                /*,"--one-instance"  //  Allow only one running instance (default disabled)
+                ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
+                ,"--no-video-title"  //hide played media filename on startingto play media.
                 //,"--grayscale" //  merge doar daca e enabled in configuration
                 //,"--no-video" //  no video
                 //,"--image-duration=5" // 
@@ -74,12 +77,19 @@ namespace GIShowCam
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
                 ,"--no-playlist-autostart" // playlist auto start (default enabled)
                 ,"--no-snapshot-preview"
+                ,"--quiet"//deactivates all console messages.
+                 */
+                ,"--vout-filter=crop"
+                //,"--croppadd-cropleft 100"
+
 
             };
 
             foreach (string optString in optiuni) opt.AddOption(optString);
 
             VlcContext.Initialize();
+
+            //VlcContext.StartupOptions.Options.
         }
 
 
