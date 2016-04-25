@@ -41,8 +41,8 @@ namespace GIShowCam.Gui
 
         private void FilDevInfo()
         {
-            string devInfo;
-            devInfo = vlc.Media.TrackInfos + Environment.NewLine;
+            string devInfo = "";
+            //devInfo = vlc.Media.Metadatas.Title + Environment.NewLine;
 
 
 

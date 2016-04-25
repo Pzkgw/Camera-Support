@@ -18,11 +18,12 @@ namespace GIShowCam.Gui
         public GuiBase(FormMain formBase, Panel panelVlc)
         {
             this.form = formBase;
-            
+
             //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
             //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
-            //VlcContext.StartupOptions.AddOption("--aspect-ratio=0.2");
-            //VlcContext.StartupOptions.AddOption("--autocrop");
+            //VlcContext.StartupOptions.AddOption("--aspect-ratio=1:9");
+            //VlcContext.StartupOptions.AddOption("--autocrop");--crop-geometry "180 x 120 + 0 + 0"
+            //VlcContext.StartupOptions.AddOption("--crop-geometry \"" + panelVlc.Width + "x" + panelVlc.Height + " + 0 + 0\"");--aspect-ratio=16:9
 
             //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
 
@@ -42,6 +43,9 @@ namespace GIShowCam.Gui
             //vlc.Height = panelVlc.Height;
             //vlc.SetBounds(0, 0, panelVlc.Width, panelVlc.Height);
 
+
+            
+
             panelVlc.Click += PanelVlc_Click;
         }
 
@@ -59,11 +63,15 @@ namespace GIShowCam.Gui
 
         #region Camera Video
 
-        protected void VideoPlay()
+        protected void VideoPlayInit()
         {
             if (vlc != null)
             {
-                if (vlc.IsPlaying) vlc.Stop();
+                if (vlc.IsPlaying)
+                {
+                    vlc.Stop();
+                    form.Restart();
+                }
                 if (vlc.Media != null) vlc.Media.Dispose();
 
                 if (SessionInfo.host.Count(s => s == '.') > 2)
@@ -78,7 +86,7 @@ namespace GIShowCam.Gui
                     //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
                     LocationMedia media = new LocationMedia(path);
                     //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
-                    media.AddOption("–-aspect-ratio=4:3");
+                    //media.AddOption("–-aspect-ratio=4:3");
 
                     vlc.Media = media;
                 }
@@ -86,8 +94,7 @@ namespace GIShowCam.Gui
                 {
                     vlc.Media = new PathMedia(SessionInfo.host);
                 }
-
-                vlc.Play();
+                
             }
         }
 
@@ -100,7 +107,7 @@ namespace GIShowCam.Gui
 
         internal void CleanUp()
         {
-            
+            form.isOn = false;// avoid event send
             if (vlc.IsPlaying) vlc.Stop();
             //if (vlc.Media != null) vlc.Media.Dispose();
             //if (vlc != null) vlc.Dispose();

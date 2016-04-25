@@ -27,11 +27,9 @@
         //"admin"
         public static string pass = "1qaz@WSX";//-passwd --rtsp-pwd=
 
-
-
-
-        public static string vlcPlugins = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\",
-            vlc = @"c:\Program Files (x86)\VideoLAN\VLC\";
+        public static string snapshotDir = "C:\\";
+        //public static string vlcPlugins = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\",
+        //   vlc = @"c:\Program Files (x86)\VideoLAN\VLC\";
 
     }
 }

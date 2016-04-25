@@ -45,17 +45,19 @@
             this.groupBoxDev = new System.Windows.Forms.GroupBox();
             this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
-            this.groupBoxVlcChange = new System.Windows.Forms.GroupBox();
+            this.groupBoxVlcFactors = new System.Windows.Forms.GroupBox();
             this.textBoxWidthF = new System.Windows.Forms.TextBox();
             this.textBoxHeightF = new System.Windows.Forms.TextBox();
             this.lblWidthF = new System.Windows.Forms.Label();
             this.lblHeightF = new System.Windows.Forms.Label();
             this.lblZoomF = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtZoomF = new System.Windows.Forms.TextBox();
+            this.txtDev = new System.Windows.Forms.TextBox();
             this.tabHost.SuspendLayout();
             this.tabDevice.SuspendLayout();
+            this.tabLog.SuspendLayout();
             this.groupBoxDev.SuspendLayout();
-            this.groupBoxVlcChange.SuspendLayout();
+            this.groupBoxVlcFactors.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblVlcNotify
@@ -75,8 +77,8 @@
             // 
             // tabHost
             // 
-            this.tabHost.Controls.Add(this.tabDevice);
             this.tabHost.Controls.Add(this.tabLog);
+            this.tabHost.Controls.Add(this.tabDevice);
             this.tabHost.Location = new System.Drawing.Point(1, 0);
             this.tabHost.Name = "tabHost";
             this.tabHost.SelectedIndex = 0;
@@ -105,6 +107,7 @@
             // 
             // tabLog
             // 
+            this.tabLog.Controls.Add(this.txtDev);
             this.tabLog.Location = new System.Drawing.Point(4, 22);
             this.tabLog.Name = "tabLog";
             this.tabLog.Padding = new System.Windows.Forms.Padding(3);
@@ -116,9 +119,9 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(670, 521);
+            this.btnPlay.Location = new System.Drawing.Point(785, 534);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(96, 28);
+            this.btnPlay.Size = new System.Drawing.Size(79, 37);
             this.btnPlay.TabIndex = 3;
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Visible = false;
@@ -203,7 +206,7 @@
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
-            this.btnSnapshot.Location = new System.Drawing.Point(823, 522);
+            this.btnSnapshot.Location = new System.Drawing.Point(552, 528);
             this.btnSnapshot.Name = "btnSnapshot";
             this.btnSnapshot.Size = new System.Drawing.Size(85, 26);
             this.btnSnapshot.TabIndex = 5;
@@ -214,28 +217,28 @@
             // btnRecord
             // 
             this.btnRecord.Enabled = false;
-            this.btnRecord.Location = new System.Drawing.Point(823, 554);
+            this.btnRecord.Location = new System.Drawing.Point(552, 554);
             this.btnRecord.Name = "btnRecord";
-            this.btnRecord.Size = new System.Drawing.Size(86, 27);
+            this.btnRecord.Size = new System.Drawing.Size(86, 49);
             this.btnRecord.TabIndex = 6;
             this.btnRecord.Text = "Record";
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Visible = false;
             // 
-            // groupBoxVlcChange
+            // groupBoxVlcFactors
             // 
-            this.groupBoxVlcChange.Controls.Add(this.textBox1);
-            this.groupBoxVlcChange.Controls.Add(this.lblZoomF);
-            this.groupBoxVlcChange.Controls.Add(this.lblHeightF);
-            this.groupBoxVlcChange.Controls.Add(this.lblWidthF);
-            this.groupBoxVlcChange.Controls.Add(this.textBoxHeightF);
-            this.groupBoxVlcChange.Controls.Add(this.textBoxWidthF);
-            this.groupBoxVlcChange.Location = new System.Drawing.Point(998, 501);
-            this.groupBoxVlcChange.Name = "groupBoxVlcChange";
-            this.groupBoxVlcChange.Size = new System.Drawing.Size(115, 108);
-            this.groupBoxVlcChange.TabIndex = 7;
-            this.groupBoxVlcChange.TabStop = false;
-            this.groupBoxVlcChange.Text = "Factor";
+            this.groupBoxVlcFactors.Controls.Add(this.txtZoomF);
+            this.groupBoxVlcFactors.Controls.Add(this.lblZoomF);
+            this.groupBoxVlcFactors.Controls.Add(this.lblHeightF);
+            this.groupBoxVlcFactors.Controls.Add(this.lblWidthF);
+            this.groupBoxVlcFactors.Controls.Add(this.textBoxHeightF);
+            this.groupBoxVlcFactors.Controls.Add(this.textBoxWidthF);
+            this.groupBoxVlcFactors.Location = new System.Drawing.Point(998, 501);
+            this.groupBoxVlcFactors.Name = "groupBoxVlcFactors";
+            this.groupBoxVlcFactors.Size = new System.Drawing.Size(115, 108);
+            this.groupBoxVlcFactors.TabIndex = 7;
+            this.groupBoxVlcFactors.TabStop = false;
+            this.groupBoxVlcFactors.Text = "Factor";
             // 
             // textBoxWidthF
             // 
@@ -248,7 +251,7 @@
             // 
             // textBoxHeightF
             // 
-            this.textBoxHeightF.Location = new System.Drawing.Point(50, 53);
+            this.textBoxHeightF.Location = new System.Drawing.Point(50, 50);
             this.textBoxHeightF.Name = "textBoxHeightF";
             this.textBoxHeightF.Size = new System.Drawing.Size(41, 20);
             this.textBoxHeightF.TabIndex = 1;
@@ -267,7 +270,7 @@
             // lblHeightF
             // 
             this.lblHeightF.AutoSize = true;
-            this.lblHeightF.Location = new System.Drawing.Point(6, 57);
+            this.lblHeightF.Location = new System.Drawing.Point(6, 53);
             this.lblHeightF.Name = "lblHeightF";
             this.lblHeightF.Size = new System.Drawing.Size(41, 13);
             this.lblHeightF.TabIndex = 3;
@@ -282,21 +285,30 @@
             this.lblZoomF.TabIndex = 4;
             this.lblZoomF.Text = "Zoom:";
             // 
-            // textBox1
+            // txtZoomF
             // 
-            this.textBox1.Location = new System.Drawing.Point(50, 82);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(41, 20);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "100";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtZoomF.Location = new System.Drawing.Point(50, 82);
+            this.txtZoomF.Name = "txtZoomF";
+            this.txtZoomF.Size = new System.Drawing.Size(41, 20);
+            this.txtZoomF.TabIndex = 5;
+            this.txtZoomF.Text = "100";
+            this.txtZoomF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtDev
+            // 
+            this.txtDev.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDev.Location = new System.Drawing.Point(3, 3);
+            this.txtDev.Multiline = true;
+            this.txtDev.Name = "txtDev";
+            this.txtDev.Size = new System.Drawing.Size(316, 463);
+            this.txtDev.TabIndex = 0;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 608);
-            this.Controls.Add(this.groupBoxVlcChange);
+            this.Controls.Add(this.groupBoxVlcFactors);
             this.Controls.Add(this.btnRecord);
             this.Controls.Add(this.btnSnapshot);
             this.Controls.Add(this.groupBoxDev);
@@ -310,10 +322,12 @@
             this.tabHost.ResumeLayout(false);
             this.tabDevice.ResumeLayout(false);
             this.tabDevice.PerformLayout();
+            this.tabLog.ResumeLayout(false);
+            this.tabLog.PerformLayout();
             this.groupBoxDev.ResumeLayout(false);
             this.groupBoxDev.PerformLayout();
-            this.groupBoxVlcChange.ResumeLayout(false);
-            this.groupBoxVlcChange.PerformLayout();
+            this.groupBoxVlcFactors.ResumeLayout(false);
+            this.groupBoxVlcFactors.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,12 +352,13 @@
         private System.Windows.Forms.Label lblDev;
         private System.Windows.Forms.Button btnSnapshot;
         private System.Windows.Forms.Button btnRecord;
-        private System.Windows.Forms.GroupBox groupBoxVlcChange;
+        private System.Windows.Forms.GroupBox groupBoxVlcFactors;
         private System.Windows.Forms.Label lblHeightF;
         private System.Windows.Forms.Label lblWidthF;
         private System.Windows.Forms.TextBox textBoxHeightF;
         private System.Windows.Forms.TextBox textBoxWidthF;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtZoomF;
         private System.Windows.Forms.Label lblZoomF;
+        private System.Windows.Forms.TextBox txtDev;
     }
 }

@@ -39,7 +39,7 @@ namespace GIShowCam
         {
             string[] optiuni = new string[] {
                  "--no-fullscreen" // 
-                /*,"--one-instance"  //  Allow only one running instance (default disabled)
+               /* ,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on startingto play media.
                 //,"--grayscale" //  merge doar daca e enabled in configuration
@@ -67,8 +67,6 @@ namespace GIShowCam
                 ,"--no-video-title-show" // Display the title of the video on top of the movie. (default enabled)
                 ,"--no-spu" // You can completely disable the sub-picture processing. (default enabled)
                 ,"--no-sub-autodetect-file" // Autodetect subtitle files (default enabled)
-                //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
-                //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
                 ,"--no-media-library" // The media library is automatically saved and reloaded each time you start VLC. (default enabled)
                 ,"--no-auto-preparse" // Automatically preparse files (default enabled)
                 ,"--no-advanced" //  Show advanced options (default enabled)
@@ -77,17 +75,20 @@ namespace GIShowCam
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
                 ,"--no-playlist-autostart" // playlist auto start (default enabled)
                 ,"--no-snapshot-preview"
-                ,"--quiet"//deactivates all console messages.
+                ,"--quiet" // deactivates all console messages
                  */
+                //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
+                //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
+                 /*
                 ,"--vout-filter=crop"
+                ,"--aspect-ratio=16:10"*/
                 //,"--croppadd-cropleft 100"
 
 
             };
 
             foreach (string optString in optiuni) opt.AddOption(optString);
-
-            VlcContext.Initialize();
+            
 
             //VlcContext.StartupOptions.Options.
         }
