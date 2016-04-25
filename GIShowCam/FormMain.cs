@@ -36,7 +36,7 @@ namespace GIShowCam
             mainB = new GuiBase(this, panelVlc);
 
             new GuiDeviceInfo(mainB, lblDev);
-            new GuiControls(mainB, btnDevConnect, txtDevUrl, txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
+            new GuiControls(mainB, btnDevConnect, comboAddress, txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
                 btnPlay, btnSnapshot, btnRecord, lblVlcNotify);
             
 
@@ -68,9 +68,16 @@ namespace GIShowCam
             {
                 _logTimeLast = DateTime.Now;
                 //InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev, Environment.NewLine, true);
+                string sidTxt = "________";
+                if (comboAddress.Text.Length > 3)
+                {
+                    int sid = comboAddress.Text.IndexOf('/', 6);
+                    sidTxt = comboAddress.Text.Substring(sid, comboAddress.Text.Length - sid)+ sidTxt;
+                }
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
-                     string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
-                    _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond) + "Connection start" + Environment.NewLine, true);
+                     "Connection start: " + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
+                    _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond) +
+                     sidTxt + Environment.NewLine, true);
             }
             else
             {

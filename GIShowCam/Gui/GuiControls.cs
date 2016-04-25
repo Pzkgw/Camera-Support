@@ -11,27 +11,29 @@ namespace GIShowCam.Gui
     {
         Label lblVlcNotifications;
 
-        TextBox txtDevAddress, txtDevUser, txtDevPass;
+        ComboBox comboAddress;
+        TextBox txtDevUser, txtDevPass;
 
         Button btnPlay, btnSnapshot, btnRecord;
 
         bool playIsOn, recordIsOn;
 
         public GuiControls(GuiBase mainB, Button btnDevConnect,
-            TextBox txtDevAddress, TextBox txtDevUser, TextBox txtDevPass, 
+            ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass, 
             TextBox textBoxWidthF, TextBox textBoxHeightF,
             Button btnPlay, Button btnSnapshot, Button btnRecord, Label lblVlcNotify) : base(mainB)
         {
 
-            txtDevAddress.Text = SessionInfo.host;
-            txtDevUser.Text = SessionInfo.user;
-            txtDevPass.Text = SessionInfo.pass;
+            
+            txtDevUser.Text = info.user;
+            txtDevPass.Text = info.password;
+            comboTxtAddress.Text = info.host;
 
             this.lblVlcNotifications = lblVlcNotify;
             this.btnRecord = btnRecord;
             this.btnSnapshot = btnSnapshot;
             this.btnPlay = btnPlay;
-            this.txtDevAddress = txtDevAddress;
+            this.comboAddress = comboTxtAddress;
             this.txtDevUser = txtDevUser;
             this.txtDevPass = txtDevPass;
 
@@ -47,11 +49,32 @@ namespace GIShowCam.Gui
             btnRecord.Click += BtnRecord_Click;
             btnPlay.Click += BtnPlay_Click;
 
+            FillDeviceInfo();
 
-            //textbox changed events:
-            AddDevConnectTextEvents();
+            //TextBox changed events:
+            comboAddress.TextChanged += TxtDevAddress_TextChanged;
+            txtDevUser.TextChanged += TxtDevUser_TextChanged;
+            txtDevPass.TextChanged += TxtDevPass_TextChanged;
+
             textBoxWidthF.TextChanged += TextBoxWidthF_TextChanged;
             textBoxHeightF.TextChanged += textBoxHeightF_TextChanged;
+        }
+
+        private void FillDeviceInfo()
+        {
+            foreach (string dev in info.GetDeviceList())
+                comboAddress.Items.Add(dev);
+            comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
+        }
+
+        private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            info.Select(comboAddress.SelectedIndex); 
+            txtDevUser.Text = info.user;
+            txtDevPass.Text = info.password;
+            comboAddress.Text = info.host;
+
+            BtnDevConnect_Click(null, null);
         }
 
         private void TextBoxWidthF_TextChanged(object sender, EventArgs e)
@@ -78,7 +101,7 @@ namespace GIShowCam.Gui
                 }
 
 
-            btnRecord.Text = recordIsOn ? "Start" : "Stop" + Environment.NewLine + "Record";
+            btnRecord.Text = recordIsOn ? "Stop" : "Start" + Environment.NewLine + "Record";
         }
         /*
         //Called to start a recording process
@@ -144,7 +167,7 @@ namespace GIShowCam.Gui
 
         private void Vlc_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-
+            //form.Log("Vlc play event: " + e.Data.ToString());
         }
 
 
@@ -175,8 +198,6 @@ namespace GIShowCam.Gui
                 form.ControlShow(btnPlay, true);
                 form.ControlShow(btnSnapshot, true);
                 BtnPlay_Click(null, null);
-
-                //form.Log(null);
             }
         }
 
@@ -208,29 +229,19 @@ namespace GIShowCam.Gui
         #endregion Additional Controls
 
 
-
-
-
-        private void AddDevConnectTextEvents()
-        {
-            txtDevAddress.TextChanged += TxtDevAddress_TextChanged;
-            txtDevUser.TextChanged += TxtDevUser_TextChanged;
-            txtDevPass.TextChanged += TxtDevPass_TextChanged;
-        }
-
         private void TxtDevPass_TextChanged(object sender, EventArgs e)
         {
-            SessionInfo.pass = txtDevPass.Text;
+            info.password = txtDevPass.Text;
         }
 
         private void TxtDevUser_TextChanged(object sender, EventArgs e)
         {
-            SessionInfo.user = txtDevUser.Text;
+            info.user = txtDevUser.Text;
         }
 
         private void TxtDevAddress_TextChanged(object sender, EventArgs e)
         {
-            SessionInfo.host = txtDevAddress.Text;
+            info.host = comboAddress.Text;
         }
 
 

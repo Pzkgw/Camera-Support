@@ -31,11 +31,11 @@
             this.lblVlcNotify = new System.Windows.Forms.Label();
             this.panelVlc = new System.Windows.Forms.Panel();
             this.tabHost = new System.Windows.Forms.TabControl();
+            this.tabLog = new System.Windows.Forms.TabPage();
+            this.txtDev = new System.Windows.Forms.TextBox();
             this.tabDevice = new System.Windows.Forms.TabPage();
             this.lblDev = new System.Windows.Forms.Label();
-            this.tabLog = new System.Windows.Forms.TabPage();
             this.btnPlay = new System.Windows.Forms.Button();
-            this.txtDevUrl = new System.Windows.Forms.TextBox();
             this.txtDevUser = new System.Windows.Forms.TextBox();
             this.txtDevPass = new System.Windows.Forms.TextBox();
             this.btnDevConnect = new System.Windows.Forms.Button();
@@ -46,16 +46,16 @@
             this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
             this.groupBoxVlcFactors = new System.Windows.Forms.GroupBox();
-            this.textBoxWidthF = new System.Windows.Forms.TextBox();
-            this.textBoxHeightF = new System.Windows.Forms.TextBox();
-            this.lblWidthF = new System.Windows.Forms.Label();
-            this.lblHeightF = new System.Windows.Forms.Label();
-            this.lblZoomF = new System.Windows.Forms.Label();
             this.txtZoomF = new System.Windows.Forms.TextBox();
-            this.txtDev = new System.Windows.Forms.TextBox();
+            this.lblZoomF = new System.Windows.Forms.Label();
+            this.lblHeightF = new System.Windows.Forms.Label();
+            this.lblWidthF = new System.Windows.Forms.Label();
+            this.textBoxHeightF = new System.Windows.Forms.TextBox();
+            this.textBoxWidthF = new System.Windows.Forms.TextBox();
+            this.comboAddress = new System.Windows.Forms.ComboBox();
             this.tabHost.SuspendLayout();
-            this.tabDevice.SuspendLayout();
             this.tabLog.SuspendLayout();
+            this.tabDevice.SuspendLayout();
             this.groupBoxDev.SuspendLayout();
             this.groupBoxVlcFactors.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +85,26 @@
             this.tabHost.Size = new System.Drawing.Size(330, 495);
             this.tabHost.TabIndex = 2;
             // 
+            // tabLog
+            // 
+            this.tabLog.Controls.Add(this.txtDev);
+            this.tabLog.Location = new System.Drawing.Point(4, 22);
+            this.tabLog.Name = "tabLog";
+            this.tabLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLog.Size = new System.Drawing.Size(322, 469);
+            this.tabLog.TabIndex = 1;
+            this.tabLog.Text = "Log";
+            this.tabLog.UseVisualStyleBackColor = true;
+            // 
+            // txtDev
+            // 
+            this.txtDev.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDev.Location = new System.Drawing.Point(3, 3);
+            this.txtDev.Multiline = true;
+            this.txtDev.Name = "txtDev";
+            this.txtDev.Size = new System.Drawing.Size(316, 463);
+            this.txtDev.TabIndex = 0;
+            // 
             // tabDevice
             // 
             this.tabDevice.Controls.Add(this.lblDev);
@@ -105,17 +125,6 @@
             this.lblDev.Size = new System.Drawing.Size(0, 13);
             this.lblDev.TabIndex = 0;
             // 
-            // tabLog
-            // 
-            this.tabLog.Controls.Add(this.txtDev);
-            this.tabLog.Location = new System.Drawing.Point(4, 22);
-            this.tabLog.Name = "tabLog";
-            this.tabLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLog.Size = new System.Drawing.Size(322, 469);
-            this.tabLog.TabIndex = 1;
-            this.tabLog.Text = "Log";
-            this.tabLog.UseVisualStyleBackColor = true;
-            // 
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
@@ -125,13 +134,6 @@
             this.btnPlay.TabIndex = 3;
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Visible = false;
-            // 
-            // txtDevUrl
-            // 
-            this.txtDevUrl.Location = new System.Drawing.Point(69, 30);
-            this.txtDevUrl.Name = "txtDevUrl";
-            this.txtDevUrl.Size = new System.Drawing.Size(466, 21);
-            this.txtDevUrl.TabIndex = 0;
             // 
             // txtDevUser
             // 
@@ -188,9 +190,9 @@
             // 
             // groupBoxDev
             // 
+            this.groupBoxDev.Controls.Add(this.comboAddress);
             this.groupBoxDev.Controls.Add(this.btnDevConnect);
             this.groupBoxDev.Controls.Add(this.lblDevPass);
-            this.groupBoxDev.Controls.Add(this.txtDevUrl);
             this.groupBoxDev.Controls.Add(this.lblDevUser);
             this.groupBoxDev.Controls.Add(this.lblDevUrl);
             this.groupBoxDev.Controls.Add(this.txtDevUser);
@@ -240,41 +242,14 @@
             this.groupBoxVlcFactors.TabStop = false;
             this.groupBoxVlcFactors.Text = "Factor";
             // 
-            // textBoxWidthF
+            // txtZoomF
             // 
-            this.textBoxWidthF.Location = new System.Drawing.Point(50, 20);
-            this.textBoxWidthF.Name = "textBoxWidthF";
-            this.textBoxWidthF.Size = new System.Drawing.Size(41, 20);
-            this.textBoxWidthF.TabIndex = 0;
-            this.textBoxWidthF.Text = "1";
-            this.textBoxWidthF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBoxHeightF
-            // 
-            this.textBoxHeightF.Location = new System.Drawing.Point(50, 50);
-            this.textBoxHeightF.Name = "textBoxHeightF";
-            this.textBoxHeightF.Size = new System.Drawing.Size(41, 20);
-            this.textBoxHeightF.TabIndex = 1;
-            this.textBoxHeightF.Text = "1";
-            this.textBoxHeightF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblWidthF
-            // 
-            this.lblWidthF.AutoSize = true;
-            this.lblWidthF.Location = new System.Drawing.Point(6, 23);
-            this.lblWidthF.Name = "lblWidthF";
-            this.lblWidthF.Size = new System.Drawing.Size(38, 13);
-            this.lblWidthF.TabIndex = 2;
-            this.lblWidthF.Text = "Width:";
-            // 
-            // lblHeightF
-            // 
-            this.lblHeightF.AutoSize = true;
-            this.lblHeightF.Location = new System.Drawing.Point(6, 53);
-            this.lblHeightF.Name = "lblHeightF";
-            this.lblHeightF.Size = new System.Drawing.Size(41, 13);
-            this.lblHeightF.TabIndex = 3;
-            this.lblHeightF.Text = "Height:";
+            this.txtZoomF.Location = new System.Drawing.Point(50, 82);
+            this.txtZoomF.Name = "txtZoomF";
+            this.txtZoomF.Size = new System.Drawing.Size(41, 20);
+            this.txtZoomF.TabIndex = 5;
+            this.txtZoomF.Text = "100";
+            this.txtZoomF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblZoomF
             // 
@@ -285,23 +260,49 @@
             this.lblZoomF.TabIndex = 4;
             this.lblZoomF.Text = "Zoom:";
             // 
-            // txtZoomF
+            // lblHeightF
             // 
-            this.txtZoomF.Location = new System.Drawing.Point(50, 82);
-            this.txtZoomF.Name = "txtZoomF";
-            this.txtZoomF.Size = new System.Drawing.Size(41, 20);
-            this.txtZoomF.TabIndex = 5;
-            this.txtZoomF.Text = "100";
-            this.txtZoomF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.lblHeightF.AutoSize = true;
+            this.lblHeightF.Location = new System.Drawing.Point(6, 53);
+            this.lblHeightF.Name = "lblHeightF";
+            this.lblHeightF.Size = new System.Drawing.Size(41, 13);
+            this.lblHeightF.TabIndex = 3;
+            this.lblHeightF.Text = "Height:";
             // 
-            // txtDev
+            // lblWidthF
             // 
-            this.txtDev.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDev.Location = new System.Drawing.Point(3, 3);
-            this.txtDev.Multiline = true;
-            this.txtDev.Name = "txtDev";
-            this.txtDev.Size = new System.Drawing.Size(316, 463);
-            this.txtDev.TabIndex = 0;
+            this.lblWidthF.AutoSize = true;
+            this.lblWidthF.Location = new System.Drawing.Point(6, 23);
+            this.lblWidthF.Name = "lblWidthF";
+            this.lblWidthF.Size = new System.Drawing.Size(38, 13);
+            this.lblWidthF.TabIndex = 2;
+            this.lblWidthF.Text = "Width:";
+            // 
+            // textBoxHeightF
+            // 
+            this.textBoxHeightF.Location = new System.Drawing.Point(50, 50);
+            this.textBoxHeightF.Name = "textBoxHeightF";
+            this.textBoxHeightF.Size = new System.Drawing.Size(41, 20);
+            this.textBoxHeightF.TabIndex = 1;
+            this.textBoxHeightF.Text = "1";
+            this.textBoxHeightF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxWidthF
+            // 
+            this.textBoxWidthF.Location = new System.Drawing.Point(50, 20);
+            this.textBoxWidthF.Name = "textBoxWidthF";
+            this.textBoxWidthF.Size = new System.Drawing.Size(41, 20);
+            this.textBoxWidthF.TabIndex = 0;
+            this.textBoxWidthF.Text = "1";
+            this.textBoxWidthF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // comboAddress
+            // 
+            this.comboAddress.FormattingEnabled = true;
+            this.comboAddress.Location = new System.Drawing.Point(69, 30);
+            this.comboAddress.Name = "comboAddress";
+            this.comboAddress.Size = new System.Drawing.Size(445, 23);
+            this.comboAddress.TabIndex = 7;
             // 
             // FormMain
             // 
@@ -320,10 +321,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormMain";
             this.tabHost.ResumeLayout(false);
-            this.tabDevice.ResumeLayout(false);
-            this.tabDevice.PerformLayout();
             this.tabLog.ResumeLayout(false);
             this.tabLog.PerformLayout();
+            this.tabDevice.ResumeLayout(false);
+            this.tabDevice.PerformLayout();
             this.groupBoxDev.ResumeLayout(false);
             this.groupBoxDev.PerformLayout();
             this.groupBoxVlcFactors.ResumeLayout(false);
@@ -343,7 +344,6 @@
         private System.Windows.Forms.Button btnDevConnect;
         private System.Windows.Forms.TextBox txtDevPass;
         private System.Windows.Forms.TextBox txtDevUser;
-        private System.Windows.Forms.TextBox txtDevUrl;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Label lblDevPass;
         private System.Windows.Forms.Label lblDevUser;
@@ -360,5 +360,6 @@
         private System.Windows.Forms.TextBox txtZoomF;
         private System.Windows.Forms.Label lblZoomF;
         private System.Windows.Forms.TextBox txtDev;
+        private System.Windows.Forms.ComboBox comboAddress;
     }
 }

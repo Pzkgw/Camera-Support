@@ -14,10 +14,14 @@ namespace GIShowCam.Gui
 
         protected VlcControl vlc;
 
+        protected SessionInfo info;
+
 
         public GuiBase(FormMain formBase, Panel panelVlc)
         {
+            
             this.form = formBase;
+            info = new SessionInfo();
 
             //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
             //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
@@ -59,6 +63,7 @@ namespace GIShowCam.Gui
         {
             form = g.form;
             vlc = g.vlc;
+            info = g.info;
         }
 
         #region Camera Video
@@ -74,13 +79,13 @@ namespace GIShowCam.Gui
                 }
                 if (vlc.Media != null) vlc.Media.Dispose();
 
-                if (SessionInfo.host.Count(s => s == '.') > 2)
+                if (info.host.Count(s => s == '.') > 2)
                 {
-                    string path = SessionInfo.host;
+                    string path = info.host;
 
-                    if (((path[5] == '/') || (path[6] == '/')) && SessionInfo.user.Length > 0)// http:// sau rtsp://
+                    if (((path[5] == '/') || (path[6] == '/')) && info.user.Length > 0)// http:// sau rtsp://
                     {
-                        path = path.Insert(7, (SessionInfo.user + ":" + SessionInfo.pass + "@"));
+                        path = path.Insert(7, (info.user + ":" + info.password + "@"));
                     }
 
                     //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
@@ -92,7 +97,7 @@ namespace GIShowCam.Gui
                 }
                 else
                 {
-                    vlc.Media = new PathMedia(SessionInfo.host);
+                    vlc.Media = new PathMedia(info.host);
                 }
                 
             }
