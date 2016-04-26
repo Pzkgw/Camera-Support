@@ -40,7 +40,7 @@ namespace GIShowCam.Gui
             vlc.ImeMode = ImeMode.NoControl;
             vlc.Dock = DockStyle.Fill;
             vlc.BackColor = Color.Empty;
-            vlc.Rate = 0.0f;
+            //vlc.Rate = 0.0f;
             //vlc.Location = new Point(0,0);
             //vlc.Size = new Size(panelVlc.Width, panelVlc.Height);
             //vlc.Width = panelVlc.Width;
@@ -79,8 +79,12 @@ namespace GIShowCam.Gui
 
                     //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
                     LocationMedia media = new LocationMedia(path);
+                    media.AddOption("no-snapshot-preview");
                     //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
-                    media.AddOption("–-aspect-ratio=4:3");
+                    //media.AddOption("–-aspect-ratio=4:3");
+                    //media.AddOption("--grayscale");
+
+                    
 
                     vlc.Media = media;
                 }
