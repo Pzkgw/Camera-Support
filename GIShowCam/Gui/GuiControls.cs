@@ -94,7 +94,7 @@ namespace GIShowCam.Gui
             {
                 vlc.Media.StateChanged += Media_StateChanged;
                 //vlc.NextFrame();
-                vlc.Play(vlc.Media);
+                vlc.Play();
             }
         }
 
@@ -102,16 +102,25 @@ namespace GIShowCam.Gui
         {
             //form.ControlTextUpdate(lblVlcNotifications, "State: " + e.Data.ToString());
             if (e.Data == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.NothingSpecial)
-                form.Log(null); //connection start
+                form.Log("Connection start"); //connection start
             else
                 form.Log("Connection state: " + e.Data.ToString());
             //form.ControlTextUpdate(lblVlcNotifications, e.Data.ToString());
 
-            if (!playIsOn && vlc.IsPlaying) //play vlc start
+            if (e.Data == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Playing) //play vlc start
             {
+                playIsOn = true;
                 form.ControlShow(btnPlay, true);
                 form.ControlShow(form.btnSnapshot, true);
-                BtnPlay_Click(null, null);
+                form.ControlShow(form.btnRecord, true);
+                BtnPlay_Click(null, null);                
+            }
+            else
+            {
+                playIsOn = false;
+                form.ControlShow(form.btnSnapshot, false);
+                form.ControlShow(form.btnRecord, false);
+                BtnPlay_Click(null, null);                
             }
         }
 
@@ -123,7 +132,20 @@ namespace GIShowCam.Gui
 
         void vlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-
+            if(vlc != null && vlc.Media != null)
+            {
+                BtnDevConnect_Click(null, null);
+            }
+            
+            /*
+            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Ended)
+            {
+                var subItems = vlc.Medias;
+                if (subItems.Count > 0)
+                {
+                    vlc.Play(subItems[0]);
+                }
+            }*/
         }
 
         /// <summary>
@@ -152,24 +174,17 @@ namespace GIShowCam.Gui
 
         private void BtnPlay_Click(object sender, EventArgs e)
         {
-            if (playIsOn)
-            {
-                if (vlc.IsPlaying) vlc.Stop();
-                form.ControlShow(form.btnRecord, false);
-                form.ControlShow(form.btnSnapshot, false);
-                playIsOn = false;
-            }
-            else
-            {
-                if (!vlc.IsPlaying) vlc.Play();
-                form.ControlShow(form.btnRecord, true);
-                form.ControlShow(form.btnSnapshot, true);
-                playIsOn = true;
-            }
+            if (sender != null)
+                if (playIsOn)
+                {
+                    if (vlc.IsPlaying) vlc.Stop();
+                }
+                else
+                {
+                    if (!vlc.IsPlaying) vlc.Play();
+                }
 
-            //((Button)sender)
-            btnPlay.Text = playIsOn ? "Stop" : "Play";
-            //((Button)sender).Update();
+            form.ControlTextUpdate(btnPlay, playIsOn ? "Stop" : "Play");
         }
 
 

@@ -61,11 +61,13 @@ namespace GIShowCam.Gui
         {
             if (vlc != null)
             {
+                
                 if (vlc.IsPlaying)
-                {
-                    vlc.Stop();
+                {                    
                     form.Restart();
                 }
+
+                vlc.Stop();
                 if (vlc.Media != null) vlc.Media.Dispose();
 
                 if (info.host.Count(s => s == '.') > 2)

@@ -37,7 +37,7 @@ namespace GIShowCam
 
         private static void AddVlcOptions()
         {
-            string[] optiuni = new string[] {
+            string[] optiuni = new string[] { //--snapshot-format=jpg
                  "--no-fullscreen" // 
                /* ,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
