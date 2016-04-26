@@ -79,9 +79,9 @@ namespace GIShowCam
                  */
                 //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
                 //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
-                 /*
+                 
                 ,"--vout-filter=crop"
-                ,"--aspect-ratio=16:10"*/
+                /*,"--aspect-ratio=16:10"*/
                 //,"--croppadd-cropleft 100"
 
 

@@ -68,14 +68,15 @@ namespace GIShowCam
             {
                 _logTimeLast = DateTime.Now;
                 //InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev, Environment.NewLine, true);
-                string sidTxt = "________";
+                string sidTxt = "_";
                 if (comboAddress.Text.Length > 3)
                 {
                     int sid = comboAddress.Text.IndexOf('/', 6);
                     sidTxt = comboAddress.Text.Substring(sid, comboAddress.Text.Length - sid)+ sidTxt;
                 }
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
-                     "Connection start: " + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
+                     Environment.NewLine + "Connection start at "
+                     + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
                     _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond) +
                      sidTxt + Environment.NewLine, true);
             }

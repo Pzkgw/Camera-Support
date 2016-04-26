@@ -43,6 +43,7 @@
             this.lblDevUser = new System.Windows.Forms.Label();
             this.lblDevPass = new System.Windows.Forms.Label();
             this.groupBoxDev = new System.Windows.Forms.GroupBox();
+            this.comboAddress = new System.Windows.Forms.ComboBox();
             this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
             this.groupBoxVlcFactors = new System.Windows.Forms.GroupBox();
@@ -52,7 +53,6 @@
             this.lblWidthF = new System.Windows.Forms.Label();
             this.textBoxHeightF = new System.Windows.Forms.TextBox();
             this.textBoxWidthF = new System.Windows.Forms.TextBox();
-            this.comboAddress = new System.Windows.Forms.ComboBox();
             this.tabHost.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDevice.SuspendLayout();
@@ -102,6 +102,7 @@
             this.txtDev.Location = new System.Drawing.Point(3, 3);
             this.txtDev.Multiline = true;
             this.txtDev.Name = "txtDev";
+            this.txtDev.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDev.Size = new System.Drawing.Size(316, 463);
             this.txtDev.TabIndex = 0;
             // 
@@ -205,6 +206,14 @@
             this.groupBoxDev.TabStop = false;
             this.groupBoxDev.Text = "Device";
             // 
+            // comboAddress
+            // 
+            this.comboAddress.FormattingEnabled = true;
+            this.comboAddress.Location = new System.Drawing.Point(69, 30);
+            this.comboAddress.Name = "comboAddress";
+            this.comboAddress.Size = new System.Drawing.Size(445, 23);
+            this.comboAddress.TabIndex = 7;
+            // 
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
@@ -295,14 +304,6 @@
             this.textBoxWidthF.TabIndex = 0;
             this.textBoxWidthF.Text = "1";
             this.textBoxWidthF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // comboAddress
-            // 
-            this.comboAddress.FormattingEnabled = true;
-            this.comboAddress.Location = new System.Drawing.Point(69, 30);
-            this.comboAddress.Name = "comboAddress";
-            this.comboAddress.Size = new System.Drawing.Size(445, 23);
-            this.comboAddress.TabIndex = 7;
             // 
             // FormMain
             // 
