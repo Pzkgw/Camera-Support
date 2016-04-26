@@ -68,17 +68,22 @@ namespace GIShowCam
             {
                 _logTimeLast = DateTime.Now;
                 //InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev, Environment.NewLine, true);
-                string sidTxt = "_";
+                string ipTxt = "", sidTxt = "";
                 if (comboAddress.Text.Length > 3)
                 {
-                    int sid = comboAddress.Text.IndexOf('/', 6);
-                    sidTxt = comboAddress.Text.Substring(sid, comboAddress.Text.Length - sid)+ sidTxt;
+                    int ips = comboAddress.Text.IndexOf('/', 6),
+                        ipf = comboAddress.Text.IndexOf('/', 7);
+                    ipTxt = comboAddress.Text.Substring(ips + 1, ipf - ips - 1) + sidTxt;
+                    sidTxt = comboAddress.Text.Substring(ipf + 1, comboAddress.Text.Length - ipf - 1) + sidTxt;
+
+                    ipTxt =  "IP: " + ipTxt + Environment.NewLine;
+                    sidTxt = "DEVICE: " + sidTxt+ Environment.NewLine;
                 }
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
-                     Environment.NewLine + "Connection start at "
-                     + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
+                     Environment.NewLine + "Connection start " + Environment.NewLine +
+                     "ORA: " + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
                     _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond) +
-                     sidTxt + Environment.NewLine, true);
+                    Environment.NewLine + ipTxt + sidTxt, true);
             }
             else
             {
