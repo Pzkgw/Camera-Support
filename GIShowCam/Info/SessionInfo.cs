@@ -27,7 +27,7 @@ namespace GIShowCam.Info
             for (int i = 1; i < 17; i++)
             {
                 devices.Add(new Device(firstStr + i + lastStr, usr, pass));
-                    }
+            }
         }
 
         internal void Select(int idx)

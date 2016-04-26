@@ -57,6 +57,7 @@
     <Compile Include="Gui\GuiBase.cs" />
     <Compile Include="Gui\GuiControls.cs" />
     <Compile Include="Gui\GuiDeviceInfo.cs" />
+    <Compile Include="Gui\GuiRecord.cs" />
     <Compile Include="Info\Device.cs" />
     <Compile Include="Info\DeviceInfo.cs" />
     <Compile Include="Info\SessionInfo.cs" />

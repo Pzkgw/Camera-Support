@@ -14,14 +14,14 @@ namespace GIShowCam.Gui
         ComboBox comboAddress;
         TextBox txtDevUser, txtDevPass;
 
-        Button btnPlay, btnSnapshot, btnRecord;
+        Button btnPlay;
 
-        bool playIsOn, recordIsOn;
+        bool playIsOn;
 
         public GuiControls(GuiBase mainB, Button btnDevConnect,
             ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass, 
             TextBox textBoxWidthF, TextBox textBoxHeightF,
-            Button btnPlay, Button btnSnapshot, Button btnRecord, Label lblVlcNotify) : base(mainB)
+            Button btnPlay, Label lblVlcNotify) : base(mainB)
         {
 
             
@@ -30,8 +30,6 @@ namespace GIShowCam.Gui
             comboTxtAddress.Text = info.host;
 
             this.lblVlcNotifications = lblVlcNotify;
-            this.btnRecord = btnRecord;
-            this.btnSnapshot = btnSnapshot;
             this.btnPlay = btnPlay;
             this.comboAddress = comboTxtAddress;
             this.txtDevUser = txtDevUser;
@@ -41,12 +39,9 @@ namespace GIShowCam.Gui
             vlc.EndReached += vlcControl_EndReached;
             vlc.PositionChanged += VlcControlOnPositionChanged;
 
-            BtnDevConnect_Click(btnDevConnect, null);
-            BtnRecord_Click(btnRecord, null);
+            BtnDevConnect_Click(btnDevConnect, null);            
 
-            btnDevConnect.Click += BtnDevConnect_Click;            
-            btnSnapshot.Click += BtnSnapshot_Click;            
-            btnRecord.Click += BtnRecord_Click;
+            btnDevConnect.Click += BtnDevConnect_Click;
             btnPlay.Click += BtnPlay_Click;
 
             FillDeviceInfo();
@@ -64,6 +59,7 @@ namespace GIShowCam.Gui
         {
             foreach (string dev in info.GetDeviceList())
                 comboAddress.Items.Add(dev);
+            comboAddress.SelectedIndex = 0;
             comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
         }
 
@@ -86,66 +82,10 @@ namespace GIShowCam.Gui
             
         }
 
-        private void BtnRecord_Click(object sender, EventArgs e)
-        {
-            if (e != null)
-                if (recordIsOn)
-                {
-                    //vlc.Media.AddOption("--color=random", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
-                    recordIsOn = false;
-                }
-                else
-                {
-                    //vlc.Media.AddOption("--color=NIOrandom", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
-                    recordIsOn = true;
-                }
+
+        
 
 
-            btnRecord.Text = recordIsOn ? "Stop" : "Start" + Environment.NewLine + "Record";
-        }
-        /*
-        //Called to start a recording process
-        //Called to start a recording process
-        public void Record(string url, string fileName, int durration)
-        {
-            //Persist parameters to instance fields
-            _finalFilename = fileName;
-            //Destination file name is initially a guid later to be moved and renamed upon completion
-            //_tempPath was previously defined as "f:/MediaArchive"
-            _tempFilename = System.IO.Path.Combine(_tempPath + Guid.NewGuid().ToString() + ".mp4");
-            _WasError = false; //indicate no error 
-            _IsFinished = false; //indicate successful completion of task
-                                 //Timer used to control duration of recording
-            this.secondsToRecord = durration * 60; //Want seconds
-            timeStarted = DateTime.Now;
-            timeToComplete = timeStarted.AddMinutes(durration);
-
-            //Media to record
-            var media = new PathMedia(url);
-            // Original options that worked well in previous version
-            // string options = ":sout=#transcode{}:duplicate{dst=std{access=file,mux=mp4,dst=" + _tempFilename + "}}"; //works with display
-            // tried to resolve issue with the following option removing the duplicate param
-            string options = ":std{access=file,mux=mp4,dst=" + _tempFilename + "}"; //works with display 
-                                                                                    //Verified the incoming parameters were correct
-            System.Windows.Forms.MessageBox.Show(url);
-            //Catch possible errors from vlc
-            vlc.EncounteredError += vlc_EncounteredError;
-            //Call owner thread manager indicating process started
-            UpdateEvents(_finalFilename, durration, 0, false, false);
-            //Setup the media options
-            media.AddOption(options);
-            //Setup the media MRL and start the process
-            vlc.Media = media;
-            //Start the timer used to stop the recording after X minutes
-            t1.Enabled = true;
-        }
-        */
-
-        private void BtnSnapshot_Click(object sender, EventArgs e)
-        {
-            //vlc.Media.
-            vlc.TakeSnapshot(SessionInfo.snapshotDir, (uint)vlc.Width, (uint)vlc.Height);
-        }
 
         private void BtnDevConnect_Click(object sender, EventArgs e)
         {
@@ -163,6 +103,13 @@ namespace GIShowCam.Gui
             //form.ControlTextUpdate(lblVlcNotifications, "State: " + e.Data.ToString());
             form.Log("Connection state: " + e.Data.ToString());
             //form.ControlTextUpdate(lblVlcNotifications, e.Data.ToString());
+
+            if (!playIsOn && vlc.IsPlaying) //play vlc start
+            {
+                form.ControlShow(btnPlay, true);
+                form.ControlShow(form.btnSnapshot, true);
+                BtnPlay_Click(null, null);
+            }
         }
 
         private void Vlc_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
@@ -187,18 +134,13 @@ namespace GIShowCam.Gui
         {
             //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
             //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
-            form.ControlTextUpdate(lblVlcNotifications,
-                "State: " + vlc.State +
-                " & DecodedVideo: " + vlc.Media.Statistics.DecodedVideo +
-                " & DisplayedPictures: " + vlc.Media.Statistics.DisplayedPictures +
-                " & SentBytes: " + vlc.Media.Statistics.SentBytes);
 
-            if (!playIsOn && vlc.IsPlaying) //play vlc start
-            {
-                form.ControlShow(btnPlay, true);
-                form.ControlShow(btnSnapshot, true);
-                BtnPlay_Click(null, null);
-            }
+            if (vlc != null && vlc.Media != null)
+                form.ControlTextUpdate(lblVlcNotifications,
+                    "State: " + vlc.State +
+                    " & DecodedVideo: " + vlc.Media.Statistics.DecodedVideo +
+                    " & DisplayedPictures: " + vlc.Media.Statistics.DisplayedPictures +
+                    " & OO: " + comboAddress.SelectedIndex);
         }
 
         #region Additional Controls
@@ -210,13 +152,13 @@ namespace GIShowCam.Gui
             if (playIsOn)
             {
                 if (vlc.IsPlaying) vlc.Stop();
-                form.ControlShow(btnRecord, false);
+                form.ControlShow(form.btnRecord, false);
                 playIsOn = false;
             }
             else
             {
                 if (!vlc.IsPlaying) vlc.Play();
-                form.ControlShow(btnRecord, true);                
+                form.ControlShow(form.btnRecord, true);                
                 playIsOn = true;
             }
 

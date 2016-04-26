@@ -16,8 +16,6 @@ namespace GIShowCam
     {
         public bool isOn = true;
 
-        private int _aux;
-
         private readonly Dispatcher _dispatchDr;
 
         private GuiBase mainB;
@@ -37,7 +35,8 @@ namespace GIShowCam
 
             new GuiDeviceInfo(mainB, lblDev);
             new GuiControls(mainB, btnDevConnect, comboAddress, txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
-                btnPlay, btnSnapshot, btnRecord, lblVlcNotify);
+                btnPlay, lblVlcNotify);
+            new GuiRecord(mainB, btnSnapshot, btnRecord);
             
 
             
@@ -71,25 +70,24 @@ namespace GIShowCam
                 string ipTxt = "", sidTxt = "";
                 if (comboAddress.Text.Length > 3)
                 {
-                    int ips = comboAddress.Text.IndexOf('/', 6),
-                        ipf = comboAddress.Text.IndexOf('/', 7);
+                    int ips = comboAddress.Text.IndexOf('/', 6), ipf = comboAddress.Text.IndexOf('/', 7);
                     ipTxt = comboAddress.Text.Substring(ips + 1, ipf - ips - 1) + sidTxt;
                     sidTxt = comboAddress.Text.Substring(ipf + 1, comboAddress.Text.Length - ipf - 1) + sidTxt;
 
-                    ipTxt =  "IP: " + ipTxt + Environment.NewLine;
-                    sidTxt = "DEVICE: " + sidTxt+ Environment.NewLine;
+                    ipTxt =  " Ip: " + ipTxt + Environment.NewLine;
+                    sidTxt = " Adresa: " + sidTxt+ Environment.NewLine;
                 }
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
-                     Environment.NewLine + "Connection start " + Environment.NewLine +
-                     "ORA: " + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
+                     Environment.NewLine +
+                     " Start conexiune la: " + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
                     _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond) +
                     Environment.NewLine + ipTxt + sidTxt, true);
             }
             else
             {
                 _logTimeNow = DateTime.Now;
-                _aux = _logTimeNow.Subtract(_logTimeLast).Milliseconds;
-                InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev, _aux.ToString() + "ms " + s + Environment.NewLine, true);
+                InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
+                    _logTimeNow.Subtract(_logTimeLast).TotalMilliseconds.ToString() + " ms " + s + Environment.NewLine, true);
                 _logTimeLast = _logTimeNow;
             }
 

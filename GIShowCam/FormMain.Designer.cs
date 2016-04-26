@@ -351,8 +351,8 @@
         private System.Windows.Forms.Label lblDevUrl;
         private System.Windows.Forms.GroupBox groupBoxDev;
         private System.Windows.Forms.Label lblDev;
-        private System.Windows.Forms.Button btnSnapshot;
-        private System.Windows.Forms.Button btnRecord;
+        internal System.Windows.Forms.Button btnSnapshot;
+        internal System.Windows.Forms.Button btnRecord;
         private System.Windows.Forms.GroupBox groupBoxVlcFactors;
         private System.Windows.Forms.Label lblHeightF;
         private System.Windows.Forms.Label lblWidthF;
