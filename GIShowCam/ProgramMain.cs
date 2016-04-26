@@ -24,7 +24,7 @@ namespace GIShowCam
 
             SetDirectory();
 
-            //EnableLogConsole();
+            EnableLogConsole();
 
             AddVlcOptions();            
 

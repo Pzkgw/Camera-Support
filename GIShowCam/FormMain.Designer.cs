@@ -53,23 +53,29 @@
             this.lblWidthF = new System.Windows.Forms.Label();
             this.textBoxHeightF = new System.Windows.Forms.TextBox();
             this.textBoxWidthF = new System.Windows.Forms.TextBox();
+            this.groupBoxBtns = new System.Windows.Forms.GroupBox();
             this.tabHost.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDevice.SuspendLayout();
             this.groupBoxDev.SuspendLayout();
             this.groupBoxVlcFactors.SuspendLayout();
+            this.groupBoxBtns.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblVlcNotify
             // 
             this.lblVlcNotify.AutoSize = true;
-            this.lblVlcNotify.Location = new System.Drawing.Point(604, 9);
+            this.lblVlcNotify.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblVlcNotify.Location = new System.Drawing.Point(337, 4);
             this.lblVlcNotify.Name = "lblVlcNotify";
-            this.lblVlcNotify.Size = new System.Drawing.Size(0, 13);
+            this.lblVlcNotify.Size = new System.Drawing.Size(0, 15);
             this.lblVlcNotify.TabIndex = 0;
             // 
             // panelVlc
             // 
+            this.panelVlc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVlc.Location = new System.Drawing.Point(337, 22);
             this.panelVlc.Name = "panelVlc";
             this.panelVlc.Size = new System.Drawing.Size(766, 473);
@@ -77,6 +83,8 @@
             // 
             // tabHost
             // 
+            this.tabHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tabHost.Controls.Add(this.tabLog);
             this.tabHost.Controls.Add(this.tabDevice);
             this.tabHost.Location = new System.Drawing.Point(1, 0);
@@ -129,7 +137,7 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(785, 534);
+            this.btnPlay.Location = new System.Drawing.Point(120, 16);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(79, 37);
             this.btnPlay.TabIndex = 3;
@@ -191,6 +199,7 @@
             // 
             // groupBoxDev
             // 
+            this.groupBoxDev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBoxDev.Controls.Add(this.comboAddress);
             this.groupBoxDev.Controls.Add(this.btnDevConnect);
             this.groupBoxDev.Controls.Add(this.lblDevPass);
@@ -217,7 +226,7 @@
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
-            this.btnSnapshot.Location = new System.Drawing.Point(552, 528);
+            this.btnSnapshot.Location = new System.Drawing.Point(349, 16);
             this.btnSnapshot.Name = "btnSnapshot";
             this.btnSnapshot.Size = new System.Drawing.Size(85, 26);
             this.btnSnapshot.TabIndex = 5;
@@ -228,7 +237,7 @@
             // btnRecord
             // 
             this.btnRecord.Enabled = false;
-            this.btnRecord.Location = new System.Drawing.Point(552, 554);
+            this.btnRecord.Location = new System.Drawing.Point(348, 55);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(86, 49);
             this.btnRecord.TabIndex = 6;
@@ -238,6 +247,7 @@
             // 
             // groupBoxVlcFactors
             // 
+            this.groupBoxVlcFactors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxVlcFactors.Controls.Add(this.txtZoomF);
             this.groupBoxVlcFactors.Controls.Add(this.lblZoomF);
             this.groupBoxVlcFactors.Controls.Add(this.lblHeightF);
@@ -305,16 +315,27 @@
             this.textBoxWidthF.Text = "1";
             this.textBoxWidthF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // groupBoxBtns
+            // 
+            this.groupBoxBtns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxBtns.Controls.Add(this.btnPlay);
+            this.groupBoxBtns.Controls.Add(this.btnSnapshot);
+            this.groupBoxBtns.Controls.Add(this.btnRecord);
+            this.groupBoxBtns.Location = new System.Drawing.Point(552, 501);
+            this.groupBoxBtns.Name = "groupBoxBtns";
+            this.groupBoxBtns.Size = new System.Drawing.Size(440, 108);
+            this.groupBoxBtns.TabIndex = 8;
+            this.groupBoxBtns.TabStop = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 608);
+            this.Controls.Add(this.groupBoxBtns);
             this.Controls.Add(this.groupBoxVlcFactors);
-            this.Controls.Add(this.btnRecord);
-            this.Controls.Add(this.btnSnapshot);
             this.Controls.Add(this.groupBoxDev);
-            this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.tabHost);
             this.Controls.Add(this.panelVlc);
             this.Controls.Add(this.lblVlcNotify);
@@ -330,6 +351,7 @@
             this.groupBoxDev.PerformLayout();
             this.groupBoxVlcFactors.ResumeLayout(false);
             this.groupBoxVlcFactors.PerformLayout();
+            this.groupBoxBtns.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -362,5 +384,6 @@
         private System.Windows.Forms.Label lblZoomF;
         private System.Windows.Forms.TextBox txtDev;
         private System.Windows.Forms.ComboBox comboAddress;
+        private System.Windows.Forms.GroupBox groupBoxBtns;
     }
 }

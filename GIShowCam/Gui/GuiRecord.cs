@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Vlc.DotNet.Core.Medias;
 
 namespace GIShowCam.Gui
 {
@@ -37,14 +38,18 @@ namespace GIShowCam.Gui
                 else
                 {
                     //vlc.Media.AddOption("--color=NIOrandom", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
+                    Record("c:\\", "kk.mp4", 800);
                     recordIsOn = true;
                 }
 
 
-            btnRecord.Text = recordIsOn ? "Stop" : "Start" + Environment.NewLine + "Record";
+            btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Record";
         }
+        string _finalFilename, _tempFilename, _tempPath = "C:\\_tmp";
+        bool _WasError, _IsFinished;
+        int secondsToRecord;
+        DateTime timeStarted, timeToComplete;
 
-        /*
         //start a recording process
         public void Record(string url, string fileName, int durration)
         {
@@ -61,7 +66,7 @@ namespace GIShowCam.Gui
             timeToComplete = timeStarted.AddMinutes(durration);
 
             //Media to record
-            var media = new PathMedia(url);
+            //var media = new PathMedia(url);
             // Original options that worked well in previous version
             // string options = ":sout=#transcode{}:duplicate{dst=std{access=file,mux=mp4,dst=" + _tempFilename + "}}"; //works with display
             // tried to resolve issue with the following option removing the duplicate param
@@ -69,17 +74,17 @@ namespace GIShowCam.Gui
                                                                                     //Verified the incoming parameters were correct
             System.Windows.Forms.MessageBox.Show(url);
             //Catch possible errors from vlc
-            vlc.EncounteredError += vlc_EncounteredError;
+            //--vlc.EncounteredError += vlc_EncounteredError;
             //Call owner thread manager indicating process started
-            UpdateEvents(_finalFilename, durration, 0, false, false);
+            //--UpdateEvents(_finalFilename, durration, 0, false, false);
             //Setup the media options
-            media.AddOption(options);
+            vlc.Media.AddOption(options);
             //Setup the media MRL and start the process
-            vlc.Media = media;
+            //vlc.Media = media;
             //Start the timer used to stop the recording after X minutes
-            t1.Enabled = true;
+            //--t1.Enabled = true;
         }
-        */
+        
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {

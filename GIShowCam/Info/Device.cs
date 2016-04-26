@@ -14,6 +14,10 @@ namespace GIShowCam.Info
             this.parola = parola;
         }
 
+        public Device(string adresa) : this(adresa, null, null)
+        {
+        }
+
         public Device(Device device) : this(device.adresa, device.user, device.parola)
         {
         }

@@ -101,7 +101,10 @@ namespace GIShowCam.Gui
         private void Media_StateChanged(MediaBase sender, VlcEventArgs<Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States> e)
         {
             //form.ControlTextUpdate(lblVlcNotifications, "State: " + e.Data.ToString());
-            form.Log("Connection state: " + e.Data.ToString());
+            if (e.Data == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.NothingSpecial)
+                form.Log(null); //connection start
+            else
+                form.Log("Connection state: " + e.Data.ToString());
             //form.ControlTextUpdate(lblVlcNotifications, e.Data.ToString());
 
             if (!playIsOn && vlc.IsPlaying) //play vlc start
@@ -120,8 +123,7 @@ namespace GIShowCam.Gui
 
         void vlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-            vlc.Stop();
-            //listBoxPeUndeva.SelectedIndex += 1;
+
         }
 
         /// <summary>
@@ -137,10 +139,11 @@ namespace GIShowCam.Gui
 
             if (vlc != null && vlc.Media != null)
                 form.ControlTextUpdate(lblVlcNotifications,
-                    "State: " + vlc.State +
-                    " & DecodedVideo: " + vlc.Media.Statistics.DecodedVideo +
-                    " & DisplayedPictures: " + vlc.Media.Statistics.DisplayedPictures +
-                    " & OO: " + comboAddress.SelectedIndex);
+                    "DecodedVideo: " + vlc.Media.Statistics.DecodedVideo +
+                    "  InputBitrate: " + vlc.Media.Statistics.InputBitrate +
+                    "  DemuxBitrate: " + vlc.Media.Statistics.DemuxBitrate +
+                    "  DisplayedPictures: " + vlc.Media.Statistics.DisplayedPictures +
+                    "  LostPictures: " + vlc.Media.Statistics.LostPictures);
         }
 
         #region Additional Controls
@@ -153,12 +156,14 @@ namespace GIShowCam.Gui
             {
                 if (vlc.IsPlaying) vlc.Stop();
                 form.ControlShow(form.btnRecord, false);
+                form.ControlShow(form.btnSnapshot, false);
                 playIsOn = false;
             }
             else
             {
                 if (!vlc.IsPlaying) vlc.Play();
-                form.ControlShow(form.btnRecord, true);                
+                form.ControlShow(form.btnRecord, true);
+                form.ControlShow(form.btnSnapshot, true);
                 playIsOn = true;
             }
 

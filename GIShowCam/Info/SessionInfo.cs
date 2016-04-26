@@ -8,8 +8,11 @@ namespace GIShowCam.Info
 
         private int devID = 0;
 
-        private List<Device> devices = new List<Device>() {            
-            new Device(@"http://192.168.0.92/streaming/channels/2/httppreview", "admin", "1qaz@WSX"),
+        private List<Device> devices = new List<Device>() {
+            new Device("http://192.168.0.92/streaming/channels/2/httppreview", "admin", "1qaz@WSX"),
+            new Device("rtsp://192.168.0.101:554/0"),
+            new Device("rtsp://192.168.0.100:554/0"),
+            new Device("rtsp://192.168.0.104:554/0"),
             new Device("rtsp://10.10.10.78/axis-media/media.amp", "root", "cavi123,."),
             new Device("http://10.10.10.78/axis-cgi/mjpg/video.cgi", "root", "cavi123,.")
         } ;

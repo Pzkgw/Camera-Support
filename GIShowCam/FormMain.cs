@@ -29,7 +29,6 @@ namespace GIShowCam
             _dispatchDr = Dispatcher.CurrentDispatcher;
             //_logDispatch = new Dispatcher();
             _logTimeLast = DateTime.MinValue;
-            Log(null);
 
             mainB = new GuiBase(this, panelVlc);
 
@@ -63,10 +62,9 @@ namespace GIShowCam
 
         internal void Log(string s)
         {
-            if(_logTimeLast == DateTime.MinValue)
+            if(_logTimeLast == DateTime.MinValue)//connection start
             {
                 _logTimeLast = DateTime.Now;
-                //InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev, Environment.NewLine, true);
                 string ipTxt = "", sidTxt = "";
                 if (comboAddress.Text.Length > 3)
                 {
@@ -74,8 +72,8 @@ namespace GIShowCam
                     ipTxt = comboAddress.Text.Substring(ips + 1, ipf - ips - 1) + sidTxt;
                     sidTxt = comboAddress.Text.Substring(ipf + 1, comboAddress.Text.Length - ipf - 1) + sidTxt;
 
-                    ipTxt =  " Ip: " + ipTxt + Environment.NewLine;
-                    sidTxt = " Adresa: " + sidTxt+ Environment.NewLine;
+                    ipTxt =  " Adresa: " + ipTxt + Environment.NewLine;
+                    sidTxt = " Camera: " + sidTxt+ Environment.NewLine;
                 }
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
                      Environment.NewLine +
@@ -87,7 +85,7 @@ namespace GIShowCam
             {
                 _logTimeNow = DateTime.Now;
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
-                    _logTimeNow.Subtract(_logTimeLast).TotalMilliseconds.ToString() + " ms " + s + Environment.NewLine, true);
+                    ((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString() + " ms " + s + Environment.NewLine, true);
                 _logTimeLast = _logTimeNow;
             }
 

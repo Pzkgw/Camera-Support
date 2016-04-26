@@ -41,23 +41,12 @@ namespace GIShowCam.Gui
             vlc.Dock = DockStyle.Fill;
             vlc.BackColor = Color.Empty;
             vlc.Rate = 0.0f;
-            vlc.Location = new Point(0,0);
-            vlc.Size = new Size(panelVlc.Width, panelVlc.Height);
+            //vlc.Location = new Point(0,0);
+            //vlc.Size = new Size(panelVlc.Width, panelVlc.Height);
             //vlc.Width = panelVlc.Width;
             //vlc.Height = panelVlc.Height;
             //vlc.SetBounds(0, 0, panelVlc.Width, panelVlc.Height);
-
-
-            
-
-            panelVlc.Click += PanelVlc_Click;
         }
-
-        private void PanelVlc_Click(object sender, System.EventArgs e)
-        {
-            MessageBox.Show(" Da, e CLICK ! ");
-        }
-
 
         public GuiBase(GuiBase g)
         {
@@ -83,7 +72,7 @@ namespace GIShowCam.Gui
                 {
                     string path = info.host;
 
-                    if (((path[5] == '/') || (path[6] == '/')) && info.user.Length > 0)// http:// sau rtsp://
+                    if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
                     {
                         path = path.Insert(7, (info.user + ":" + info.password + "@"));
                     }
