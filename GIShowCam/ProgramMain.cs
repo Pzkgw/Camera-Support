@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GIShowCam.Info;
+using System;
 using System.Windows.Forms;
 using Vlc.DotNet.Core;
 
@@ -24,7 +25,7 @@ namespace GIShowCam
 
             SetDirectory();
 
-            EnableLogConsole();
+            if (SessionInfo.debug) EnableLogConsole();
 
             AddVlcOptions();            
 

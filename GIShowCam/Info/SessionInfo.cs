@@ -5,8 +5,12 @@ namespace GIShowCam.Info
 {
     class SessionInfo
     {
-
+        internal static readonly bool debug = true;
+        internal static bool log = true, fullVideo = false, videoLoop = true;
         private int devID = 0;
+
+        public static string snapshotDir = "C:\\";
+                
 
         private List<Device> devices = new List<Device>() {
             new Device("http://192.168.0.92/streaming/channels/2/httppreview", "admin", "1qaz@WSX"),
@@ -20,17 +24,18 @@ namespace GIShowCam.Info
         private Device cam;
 
         public SessionInfo()
-        {
-            cam = new Device(devices[devID]);// Current Info
+        {            
 
             // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
-            const string usr = "admin", pass = "admin",
+            const string //usr = "admin", pass = "admin",
                 firstStr = @"rtsp://10.10.10.202:554/cam/realmonitor?channel=",
                 lastStr = "&subtype=0";//&unicast=true&proto=Onvif
             for (int i = 1; i < 17; i++)
             {
-                devices.Add(new Device(firstStr + i + lastStr, usr, pass));
+                devices.Add(new Device(firstStr + i + lastStr));//, usr, pass
             }
+
+            cam = new Device(devices[devID]);// Current Info
         }
 
         internal void Select(int idx)
@@ -110,7 +115,7 @@ namespace GIShowCam.Info
         //"admin"
         //-------------->public static string pass = "";//-passwd --rtsp-pwd=
 
-        public static string snapshotDir = "C:\\";
+
 
 
         //public static string vlcPlugins = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\",

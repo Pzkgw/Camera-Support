@@ -54,6 +54,7 @@
             this.textBoxHeightF = new System.Windows.Forms.TextBox();
             this.textBoxWidthF = new System.Windows.Forms.TextBox();
             this.groupBoxBtns = new System.Windows.Forms.GroupBox();
+            this.chkPlayLoop = new System.Windows.Forms.CheckBox();
             this.tabHost.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDevice.SuspendLayout();
@@ -319,6 +320,7 @@
             // 
             this.groupBoxBtns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxBtns.Controls.Add(this.chkPlayLoop);
             this.groupBoxBtns.Controls.Add(this.btnPlay);
             this.groupBoxBtns.Controls.Add(this.btnSnapshot);
             this.groupBoxBtns.Controls.Add(this.btnRecord);
@@ -327,6 +329,18 @@
             this.groupBoxBtns.Size = new System.Drawing.Size(440, 108);
             this.groupBoxBtns.TabIndex = 8;
             this.groupBoxBtns.TabStop = false;
+            // 
+            // chkPlayLoop
+            // 
+            this.chkPlayLoop.AutoSize = true;
+            this.chkPlayLoop.Checked = true;
+            this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPlayLoop.Location = new System.Drawing.Point(120, 81);
+            this.chkPlayLoop.Name = "chkPlayLoop";
+            this.chkPlayLoop.Size = new System.Drawing.Size(90, 17);
+            this.chkPlayLoop.TabIndex = 7;
+            this.chkPlayLoop.Text = "Play continuu";
+            this.chkPlayLoop.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -352,6 +366,7 @@
             this.groupBoxVlcFactors.ResumeLayout(false);
             this.groupBoxVlcFactors.PerformLayout();
             this.groupBoxBtns.ResumeLayout(false);
+            this.groupBoxBtns.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -360,7 +375,7 @@
         #endregion
 
         private System.Windows.Forms.Label lblVlcNotify;
-        private System.Windows.Forms.Panel panelVlc;
+        internal System.Windows.Forms.Panel panelVlc;
         private System.Windows.Forms.TabControl tabHost;
         private System.Windows.Forms.TabPage tabDevice;
         private System.Windows.Forms.TabPage tabLog;
@@ -385,5 +400,6 @@
         private System.Windows.Forms.TextBox txtDev;
         private System.Windows.Forms.ComboBox comboAddress;
         private System.Windows.Forms.GroupBox groupBoxBtns;
+        private System.Windows.Forms.CheckBox chkPlayLoop;
     }
 }

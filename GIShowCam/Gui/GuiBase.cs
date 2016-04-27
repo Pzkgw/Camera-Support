@@ -5,6 +5,7 @@ using Vlc.DotNet.Forms;
 using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Medias;
 using System.Drawing;
+using System;
 
 namespace GIShowCam.Gui
 {
@@ -46,6 +47,16 @@ namespace GIShowCam.Gui
             //vlc.Width = panelVlc.Width;
             //vlc.Height = panelVlc.Height;
             //vlc.SetBounds(0, 0, panelVlc.Width, panelVlc.Height);
+        }
+
+        internal void FullVideo()
+        {
+            form.panelVlc.Location = new Point(0, 0);
+            form.panelVlc.Size = new Size(form.Width, form.Height);
+            form.panelVlc.Dock = DockStyle.Fill;
+            form.panelVlc.BringToFront();
+
+            VideoPlayInit();
         }
 
         public GuiBase(GuiBase g)

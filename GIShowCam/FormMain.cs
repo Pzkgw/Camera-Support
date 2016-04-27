@@ -1,4 +1,5 @@
 ﻿using GIShowCam.Gui;
+using GIShowCam.Info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,14 +36,18 @@ namespace GIShowCam
             VlcContext.Initialize();
 
             mainB = new GuiBase(this, panelVlc);
-
-            new GuiDeviceInfo(mainB, lblDev);
-            new GuiControls(mainB, btnDevConnect, comboAddress, txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
-                btnPlay, lblVlcNotify);
-            new GuiRecord(mainB, btnSnapshot, btnRecord);
-            
-
-            
+            if (!SessionInfo.fullVideo)
+            {
+                new GuiControls(mainB, btnDevConnect, comboAddress,
+                    txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
+                    btnPlay, chkPlayLoop, lblVlcNotify);
+                new GuiDeviceInfo(mainB, lblDev);
+                new GuiRecord(mainB, btnSnapshot, btnRecord);
+            }
+            else
+            {
+                mainB.FullVideo();
+            }
 
             FormClosing += FormMain_FormClosing;
         }

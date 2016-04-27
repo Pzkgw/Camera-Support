@@ -21,7 +21,7 @@ namespace GIShowCam.Gui
         public GuiControls(GuiBase mainB, Button btnDevConnect,
             ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass, 
             TextBox textBoxWidthF, TextBox textBoxHeightF,
-            Button btnPlay, Label lblVlcNotify) : base(mainB)
+            Button btnPlay, CheckBox chkLoop, Label lblVlcNotify) : base(mainB)
         {
 
             
@@ -46,6 +46,8 @@ namespace GIShowCam.Gui
 
             FillDeviceInfo();
 
+            chkLoop.CheckedChanged += ChkLoop_CheckedChanged;
+
             //TextBox changed events:
             comboAddress.TextChanged += TxtDevAddress_TextChanged;
             txtDevUser.TextChanged += TxtDevUser_TextChanged;
@@ -53,6 +55,28 @@ namespace GIShowCam.Gui
 
             textBoxWidthF.TextChanged += TextBoxWidthF_TextChanged;
             textBoxHeightF.TextChanged += textBoxHeightF_TextChanged;
+        }
+
+        private void ChkLoop_CheckedChanged(object sender, EventArgs e)
+        {
+            SessionInfo.videoLoop = ((CheckBox)sender).Checked;
+            if (vlc != null)
+                if (SessionInfo.videoLoop)
+                {
+                    form.panelVlc.Click -= PanelVlc_Click;
+                    vlc.Pause();
+                    vlc.Play();
+                }
+                else
+                {
+                    vlc.Pause();
+                    form.panelVlc.Click += PanelVlc_Click;
+                }
+        }
+
+        private void PanelVlc_Click(object sender, EventArgs e)
+        {
+            vlc.NextFrame();
         }
 
         private void FillDeviceInfo()
@@ -81,10 +105,6 @@ namespace GIShowCam.Gui
         {
             
         }
-
-
-        
-
 
 
         private void BtnDevConnect_Click(object sender, EventArgs e)
