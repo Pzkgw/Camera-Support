@@ -7,7 +7,7 @@ namespace GIShowCam.Info
     {
         internal static readonly bool debug = true;
         internal static bool log = true, fullVideo = false, videoLoop = true;
-        private int devID = 0;
+        internal int devID = 2;
 
         public static string snapshotDir = "C:\\";
                 
@@ -27,12 +27,12 @@ namespace GIShowCam.Info
         {            
 
             // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
-            const string //usr = "admin", pass = "admin",
+            const string usr = "admin", pass = "admin",
                 firstStr = @"rtsp://10.10.10.202:554/cam/realmonitor?channel=",
                 lastStr = "&subtype=0";//&unicast=true&proto=Onvif
             for (int i = 1; i < 17; i++)
             {
-                devices.Add(new Device(firstStr + i + lastStr));//, usr, pass
+                devices.Add(new Device(firstStr + i + lastStr, usr, pass));//
             }
 
             cam = new Device(devices[devID]);// Current Info

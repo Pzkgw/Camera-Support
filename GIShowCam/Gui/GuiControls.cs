@@ -16,18 +16,11 @@ namespace GIShowCam.Gui
 
         Button btnPlay;
 
-        bool playIsOn;
-
         public GuiControls(GuiBase mainB, Button btnDevConnect,
             ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass, 
             TextBox textBoxWidthF, TextBox textBoxHeightF,
-            Button btnPlay, CheckBox chkLoop, Label lblVlcNotify) : base(mainB)
+            Button btnPlay, CheckBox chkLoop, CheckBox chkFullVideo, Label lblVlcNotify) : base(mainB)
         {
-
-            
-            txtDevUser.Text = info.user;
-            txtDevPass.Text = info.password;
-            comboTxtAddress.Text = info.host;
 
             this.lblVlcNotifications = lblVlcNotify;
             this.btnPlay = btnPlay;
@@ -35,18 +28,19 @@ namespace GIShowCam.Gui
             this.txtDevUser = txtDevUser;
             this.txtDevPass = txtDevPass;
 
+            FillDeviceInfo();
+
             vlc.Playing += Vlc_Playing;            
             vlc.EndReached += vlcControl_EndReached;
             vlc.PositionChanged += VlcControlOnPositionChanged;
-
-            BtnDevConnect_Click(btnDevConnect, null);            
+            
 
             btnDevConnect.Click += BtnDevConnect_Click;
             btnPlay.Click += BtnPlay_Click;
 
-            FillDeviceInfo();
 
             chkLoop.CheckedChanged += ChkLoop_CheckedChanged;
+            chkFullVideo.CheckedChanged += ChkFullVideo_CheckedChanged;
 
             //TextBox changed events:
             comboAddress.TextChanged += TxtDevAddress_TextChanged;
@@ -55,6 +49,29 @@ namespace GIShowCam.Gui
 
             textBoxWidthF.TextChanged += TextBoxWidthF_TextChanged;
             textBoxHeightF.TextChanged += textBoxHeightF_TextChanged;
+
+
+            ComboAddress_SelectionChangeCommitted(null, null);
+        }
+
+        private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)
+        {
+            SessionInfo.fullVideo = ((CheckBox)sender).Checked;
+            if (vlc != null)
+                if (SessionInfo.fullVideo)
+                {
+                    SessionInfo.log = false;
+                    vlc.Pause();
+                    FullVideo(true, false);
+                    vlc.Play();
+                }
+                else
+                {
+                    SessionInfo.log = true;
+                    vlc.Pause();
+                    FullVideo(false, false);
+                    vlc.Play();
+                }
         }
 
         private void ChkLoop_CheckedChanged(object sender, EventArgs e)
@@ -83,7 +100,7 @@ namespace GIShowCam.Gui
         {
             foreach (string dev in info.GetDeviceList())
                 comboAddress.Items.Add(dev);
-            comboAddress.SelectedIndex = 0;
+            comboAddress.SelectedIndex = info.devID;
             comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
         }
 
@@ -113,7 +130,6 @@ namespace GIShowCam.Gui
             if (vlc != null && vlc.Media != null)
             {
                 vlc.Media.StateChanged += Media_StateChanged;
-                //vlc.NextFrame();
                 vlc.Play();
             }
         }
@@ -129,7 +145,6 @@ namespace GIShowCam.Gui
 
             if (e.Data == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Playing) //play vlc start
             {
-                playIsOn = true;
                 form.ControlShow(btnPlay, true);
                 form.ControlShow(form.btnSnapshot, true);
                 form.ControlShow(form.btnRecord, true);
@@ -137,10 +152,9 @@ namespace GIShowCam.Gui
             }
             else
             {
-                playIsOn = false;
                 form.ControlShow(form.btnSnapshot, false);
                 form.ControlShow(form.btnRecord, false);
-                BtnPlay_Click(null, null);                
+                //BtnPlay_Click(null, null);                
             }
         }
 
@@ -194,8 +208,11 @@ namespace GIShowCam.Gui
 
         private void BtnPlay_Click(object sender, EventArgs e)
         {
+            bool playing = false;
             if (sender != null)
-                if (playIsOn)
+            {
+                playing = vlc.Media.State == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Playing;
+                if (playing)
                 {
                     if (vlc.IsPlaying) vlc.Stop();
                 }
@@ -203,8 +220,9 @@ namespace GIShowCam.Gui
                 {
                     if (!vlc.IsPlaying) vlc.Play();
                 }
+            }
 
-            form.ControlTextUpdate(btnPlay, playIsOn ? "Stop" : "Play");
+            form.ControlTextUpdate(btnPlay, playing ? "Stop" : "Play");
         }
 
 

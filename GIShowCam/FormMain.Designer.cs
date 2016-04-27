@@ -55,6 +55,7 @@
             this.textBoxWidthF = new System.Windows.Forms.TextBox();
             this.groupBoxBtns = new System.Windows.Forms.GroupBox();
             this.chkPlayLoop = new System.Windows.Forms.CheckBox();
+            this.chkFullVid = new System.Windows.Forms.CheckBox();
             this.tabHost.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDevice.SuspendLayout();
@@ -320,6 +321,7 @@
             // 
             this.groupBoxBtns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxBtns.Controls.Add(this.chkFullVid);
             this.groupBoxBtns.Controls.Add(this.chkPlayLoop);
             this.groupBoxBtns.Controls.Add(this.btnPlay);
             this.groupBoxBtns.Controls.Add(this.btnSnapshot);
@@ -335,12 +337,22 @@
             this.chkPlayLoop.AutoSize = true;
             this.chkPlayLoop.Checked = true;
             this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPlayLoop.Location = new System.Drawing.Point(120, 81);
+            this.chkPlayLoop.Location = new System.Drawing.Point(231, 27);
             this.chkPlayLoop.Name = "chkPlayLoop";
             this.chkPlayLoop.Size = new System.Drawing.Size(90, 17);
             this.chkPlayLoop.TabIndex = 7;
             this.chkPlayLoop.Text = "Play continuu";
             this.chkPlayLoop.UseVisualStyleBackColor = true;
+            // 
+            // chkFullVid
+            // 
+            this.chkFullVid.AutoSize = true;
+            this.chkFullVid.Location = new System.Drawing.Point(231, 58);
+            this.chkFullVid.Name = "chkFullVid";
+            this.chkFullVid.Size = new System.Drawing.Size(71, 17);
+            this.chkFullVid.TabIndex = 8;
+            this.chkFullVid.Text = "Full video";
+            this.chkFullVid.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -401,5 +413,6 @@
         private System.Windows.Forms.ComboBox comboAddress;
         private System.Windows.Forms.GroupBox groupBoxBtns;
         private System.Windows.Forms.CheckBox chkPlayLoop;
+        private System.Windows.Forms.CheckBox chkFullVid;
     }
 }

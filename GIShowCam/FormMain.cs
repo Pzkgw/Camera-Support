@@ -40,13 +40,13 @@ namespace GIShowCam
             {
                 new GuiControls(mainB, btnDevConnect, comboAddress,
                     txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
-                    btnPlay, chkPlayLoop, lblVlcNotify);
+                    btnPlay, chkPlayLoop, chkFullVid, lblVlcNotify);
                 new GuiDeviceInfo(mainB, lblDev);
                 new GuiRecord(mainB, btnSnapshot, btnRecord);
             }
             else
             {
-                mainB.FullVideo();
+                mainB.FullVideo(true, true);
             }
 
             FormClosing += FormMain_FormClosing;
@@ -81,7 +81,7 @@ namespace GIShowCam
                     _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond)
                     , true, true);
             }
-            else
+
             {
                 _logTimeNow = DateTime.Now;
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,

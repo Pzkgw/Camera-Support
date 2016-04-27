@@ -18,6 +18,9 @@ namespace GIShowCam.Gui
         protected SessionInfo info;
 
 
+        private Point _vlcTop;
+        private Size _vlcSize;
+
         public GuiBase(FormMain formBase, Panel panelVlc)
         {
             
@@ -49,14 +52,29 @@ namespace GIShowCam.Gui
             //vlc.SetBounds(0, 0, panelVlc.Width, panelVlc.Height);
         }
 
-        internal void FullVideo()
+        internal void FullVideo(bool on, bool startInit)
         {
-            form.panelVlc.Location = new Point(0, 0);
-            form.panelVlc.Size = new Size(form.Width, form.Height);
-            form.panelVlc.Dock = DockStyle.Fill;
-            form.panelVlc.BringToFront();
+            if (on)
+            {
+                _vlcTop = form.panelVlc.Location;
+                _vlcSize = form.panelVlc.Size;
+                form.panelVlc.Location = new Point(0, 0);
+                form.panelVlc.Size = new Size(form.Width, form.Height);
+                form.panelVlc.Dock = DockStyle.Fill;
+                form.panelVlc.BringToFront();
+            }
+            else
+            {
+                form.panelVlc.Location = _vlcTop;
+                form.panelVlc.Size = _vlcSize;
+                form.panelVlc.Dock = DockStyle.None;
+                //form.panelVlc.SendToBack();
+            }
 
-            VideoPlayInit();
+            if (startInit)
+            {
+                VideoPlayInit();
+            }
         }
 
         public GuiBase(GuiBase g)
@@ -78,8 +96,11 @@ namespace GIShowCam.Gui
                     form.Restart();
                 }
 
-                vlc.Stop();
-                if (vlc.Media != null) vlc.Media.Dispose();
+                if (vlc.Media != null)
+                {
+                    vlc.Media.Dispose();
+                    vlc.Stop();
+                }
 
                 if (info.host.Count(s => s == '.') > 2)
                 {
