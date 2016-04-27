@@ -6,10 +6,14 @@ namespace GIShowCam.Info
     class SessionInfo
     {
         internal static readonly bool debug = true;
-        internal static bool log = true, fullVideo = false, videoLoop = true;
+        internal static bool log = true, fullVideo = false;
+        internal static string snapshotDir = "C:\\";
+
+
+        internal bool videoLoop = true;
         internal int devID = 2;
 
-        public static string snapshotDir = "C:\\";
+        
                 
 
         private List<Device> devices = new List<Device>() {

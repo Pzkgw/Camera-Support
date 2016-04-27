@@ -113,7 +113,7 @@ namespace GIShowCam.Gui
 
                     //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
                     LocationMedia media = new LocationMedia(path);
-                    media.AddOption("no-snapshot-preview");
+                    //media.AddOption("no-snapshot-preview");
                     //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
                     //media.AddOption("–-aspect-ratio=4:3");
                     //media.AddOption("--grayscale");

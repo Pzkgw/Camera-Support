@@ -60,10 +60,11 @@ namespace GIShowCam.Gui
             if (vlc != null)
                 if (SessionInfo.fullVideo)
                 {
+                    form.panelVlc.Click -= PanelVlc_Click;
                     SessionInfo.log = false;
                     vlc.Pause();
                     FullVideo(true, false);
-                    vlc.Play();
+                    if (info.videoLoop) vlc.Play(); else vlc.NextFrame();
                 }
                 else
                 {
@@ -76,9 +77,9 @@ namespace GIShowCam.Gui
 
         private void ChkLoop_CheckedChanged(object sender, EventArgs e)
         {
-            SessionInfo.videoLoop = ((CheckBox)sender).Checked;
+            info.videoLoop = ((CheckBox)sender).Checked;
             if (vlc != null)
-                if (SessionInfo.videoLoop)
+                if (info.videoLoop)
                 {
                     form.panelVlc.Click -= PanelVlc_Click;
                     vlc.Pause();
