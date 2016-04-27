@@ -63,10 +63,10 @@ vlc.Play();
                 }
 
 
-            btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Record";
+            btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Recording";
         }
         string _finalFilename, _tempFilename, _tempPath = "C:\\_tmp";
-        bool _WasError, _IsFinished;
+        //bool _WasError, _IsFinished;
         int secondsToRecord;
         DateTime timeStarted, timeToComplete;
 
@@ -78,8 +78,8 @@ vlc.Play();
             //Destination file name is initially a guid later to be moved and renamed upon completion
             //_tempPath was previously defined as "f:/MediaArchive"
             _tempFilename = System.IO.Path.Combine(_tempPath + Guid.NewGuid().ToString() + ".mp4");
-            _WasError = false; //indicate no error 
-            _IsFinished = false; //indicate successful completion of task
+            //_WasError = false; //indicate no error 
+            //_IsFinished = false; //indicate successful completion of task
                                  //Timer used to control duration of recording
             this.secondsToRecord = durration * 60; //Want seconds
             timeStarted = DateTime.Now;

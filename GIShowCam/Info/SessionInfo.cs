@@ -11,7 +11,7 @@ namespace GIShowCam.Info
 
 
         internal bool videoLoop = true;
-        internal int devID = 2;
+        internal int devID = 6;
 
 
 

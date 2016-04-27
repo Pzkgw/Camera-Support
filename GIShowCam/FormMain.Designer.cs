@@ -54,8 +54,8 @@
             this.textBoxHeightF = new System.Windows.Forms.TextBox();
             this.textBoxWidthF = new System.Windows.Forms.TextBox();
             this.groupBoxBtns = new System.Windows.Forms.GroupBox();
-            this.chkPlayLoop = new System.Windows.Forms.CheckBox();
             this.chkFullVid = new System.Windows.Forms.CheckBox();
+            this.chkPlayLoop = new System.Windows.Forms.CheckBox();
             this.tabHost.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDevice.SuspendLayout();
@@ -243,7 +243,6 @@
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(86, 49);
             this.btnRecord.TabIndex = 6;
-            this.btnRecord.Text = "Record";
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Visible = false;
             // 
@@ -332,6 +331,16 @@
             this.groupBoxBtns.TabIndex = 8;
             this.groupBoxBtns.TabStop = false;
             // 
+            // chkFullVid
+            // 
+            this.chkFullVid.AutoSize = true;
+            this.chkFullVid.Location = new System.Drawing.Point(231, 58);
+            this.chkFullVid.Name = "chkFullVid";
+            this.chkFullVid.Size = new System.Drawing.Size(71, 17);
+            this.chkFullVid.TabIndex = 8;
+            this.chkFullVid.Text = "Full video";
+            this.chkFullVid.UseVisualStyleBackColor = true;
+            // 
             // chkPlayLoop
             // 
             this.chkPlayLoop.AutoSize = true;
@@ -343,16 +352,6 @@
             this.chkPlayLoop.TabIndex = 7;
             this.chkPlayLoop.Text = "Play continuu";
             this.chkPlayLoop.UseVisualStyleBackColor = true;
-            // 
-            // chkFullVid
-            // 
-            this.chkFullVid.AutoSize = true;
-            this.chkFullVid.Location = new System.Drawing.Point(231, 58);
-            this.chkFullVid.Name = "chkFullVid";
-            this.chkFullVid.Size = new System.Drawing.Size(71, 17);
-            this.chkFullVid.TabIndex = 8;
-            this.chkFullVid.Text = "Full video";
-            this.chkFullVid.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 

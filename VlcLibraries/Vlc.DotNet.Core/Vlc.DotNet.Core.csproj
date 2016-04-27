@@ -55,7 +55,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Common\Vlc.DotNet.pfx.snk</AssemblyOriginatorKeyFile>
@@ -115,19 +115,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vlc.DotNet.Core.Interops\Vlc.DotNet.Core.Interops.csproj">
-      <Project>{7506DDE6-1D45-4FE0-8239-985C5F6EB605}</Project>
+      <Project>{7506dde6-1d45-4fe0-8239-985c5f6eb605}</Project>
       <Name>Vlc.DotNet.Core.Interops</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Common\Vlc.DotNet.pfx.snk">
-      <Link>Vlc.DotNet.pfx.snk</Link>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="YearStamp.MonthStamp.DayStamp.None" BuildVersion_UpdateFileVersion="False" BuildVersion_UseGlobalSettings="False" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_UseGlobalSettings="False" BuildVersion_UpdateFileVersion="False" BuildVersion_BuildVersioningStyle="YearStamp.MonthStamp.DayStamp.None" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

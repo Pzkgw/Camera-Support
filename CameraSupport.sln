@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vlc.DotNet Libraries", "Vlc.DotNet Libraries", "{52A08DF8-3850-4A08-BE20-F598308E9FBD}"
 	ProjectSection(SolutionItems) = preProject
 		VlcLibraries\Common\AssemblyInfoCommon.cs = VlcLibraries\Common\AssemblyInfoCommon.cs
-		VlcLibraries\Common\Vlc.DotNet.pfx.snk = VlcLibraries\Common\Vlc.DotNet.pfx.snk
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vlc.DotNet.Core.Interops", "VlcLibraries\Vlc.DotNet.Core.Interops\Vlc.DotNet.Core.Interops.csproj", "{7506DDE6-1D45-4FE0-8239-985C5F6EB605}"
