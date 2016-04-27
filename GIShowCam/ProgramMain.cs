@@ -66,8 +66,7 @@ namespace GIShowCam
                 ,"--no-video-deco"  // Window decorations (default enabled)
                 ,"--no-skip-frames" // Optional ::> Enables framedropping on MPEG2 stream (default enabled)
                 ,"--no-video-title-show" // Display the title of the video on top of the movie. (default enabled)
-                ,"--no-spu" // You can completely disable the sub-picture processing. (default enabled)
-                
+                ,"--no-spu" // You can completely disable the sub-picture processing. (default enabled)                
                 ,"--no-sub-autodetect-file" // Autodetect subtitle files (default enabled)
                 ,"--no-media-library" // The media library is automatically saved and reloaded each time you start VLC. (default enabled)
                 ,"--no-auto-preparse" // Automatically preparse files (default enabled)
@@ -92,7 +91,7 @@ namespace GIShowCam
             };
 
             foreach (string optString in optiuni) opt.AddOption(optString);
-            
+
 
             //VlcContext.StartupOptions.Options.
         }

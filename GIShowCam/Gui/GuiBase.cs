@@ -9,7 +9,7 @@ using System;
 
 namespace GIShowCam.Gui
 {
-    class GuiBase 
+    class GuiBase
     {
         protected FormMain form;
 
@@ -23,7 +23,7 @@ namespace GIShowCam.Gui
 
         public GuiBase(FormMain formBase, Panel panelVlc)
         {
-            
+
             this.form = formBase;
             info = new SessionInfo();
 
@@ -90,9 +90,9 @@ namespace GIShowCam.Gui
         {
             if (vlc != null)
             {
-                
+
                 if (vlc.IsPlaying)
-                {                    
+                {
                     form.Restart();
                 }
 
@@ -118,7 +118,7 @@ namespace GIShowCam.Gui
                     //media.AddOption("–-aspect-ratio=4:3");
                     //media.AddOption("--grayscale");
 
-                    
+
 
                     vlc.Media = media;
                 }
@@ -126,7 +126,7 @@ namespace GIShowCam.Gui
                 {
                     vlc.Media = new PathMedia(info.host);
                 }
-                
+
             }
         }
 
@@ -146,7 +146,7 @@ namespace GIShowCam.Gui
 
             VlcContext.CloseAll();
         }
-        
+
 
 
     }

@@ -12,6 +12,26 @@ namespace GIShowCam.Gui
     class GuiRecord : GuiBase
     {
 
+        /*
+
+      media[i] = new Vlc.DotNet.Core.Medias.LocationMedia("rtsp://192.168.192.40:554/ch0_unicast_firststream");
+       media[i].AddOption(":sout=#std{access=file,mux=ps,dst=d:\\tmp\\" + i.ToString() + ".mp4}");
+       cap[i] = new Vlc.DotNet.Forms.VlcControl();
+       cap[i].Play(media[i]);  
+
+    */
+
+        /*
+
+          this.vlc = new Vlc.DotNet.Forms.VlcControl();
+...
+// in button click handler
+MediaBase media = new LocationMedia("udp://@11.22.33.44:5555");
+media.AddOption(@"--sout=#duplicate{dst=file{dst=c:\temp\foo.mpg},dst=display}");
+vlc.Media = media;
+vlc.Play();
+
+*/
         private bool recordIsOn;
 
         Button btnSnapshot, btnRecord;
@@ -84,7 +104,7 @@ namespace GIShowCam.Gui
             //Start the timer used to stop the recording after X minutes
             //--t1.Enabled = true;
         }
-        
+
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {

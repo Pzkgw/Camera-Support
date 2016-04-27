@@ -29,9 +29,8 @@ namespace GIShowCam.Gui
             this.txtDevPass = txtDevPass;
 
             FillDeviceInfo();
-
-            vlc.Playing += Vlc_Playing;            
-            vlc.EndReached += vlcControl_EndReached;
+          
+            vlc.EndReached += VlcControl_EndReached;
             vlc.PositionChanged += VlcControlOnPositionChanged;
             
 
@@ -48,7 +47,7 @@ namespace GIShowCam.Gui
             txtDevPass.TextChanged += TxtDevPass_TextChanged;
 
             textBoxWidthF.TextChanged += TextBoxWidthF_TextChanged;
-            textBoxHeightF.TextChanged += textBoxHeightF_TextChanged;
+            textBoxHeightF.TextChanged += TextBoxHeightF_TextChanged;
 
 
             ComboAddress_SelectionChangeCommitted(null, null);
@@ -119,7 +118,7 @@ namespace GIShowCam.Gui
         {
 
         }
-        private void textBoxHeightF_TextChanged(object sender, EventArgs e)
+        private void TextBoxHeightF_TextChanged(object sender, EventArgs e)
         {
             
         }
@@ -131,6 +130,7 @@ namespace GIShowCam.Gui
             if (vlc != null && vlc.Media != null)
             {
                 vlc.Media.StateChanged += Media_StateChanged;
+               //VlcContext.
                 vlc.Play();
             }
         }
@@ -159,13 +159,7 @@ namespace GIShowCam.Gui
             }
         }
 
-        private void Vlc_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
-        {
-            //form.Log("Vlc play event: " + e.Data.ToString());
-        }
-
-
-        void vlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
+        void VlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
             if(vlc != null && vlc.Media != null)
             {

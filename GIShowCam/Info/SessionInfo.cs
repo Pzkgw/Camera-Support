@@ -13,8 +13,8 @@ namespace GIShowCam.Info
         internal bool videoLoop = true;
         internal int devID = 2;
 
-        
-                
+
+
 
         private List<Device> devices = new List<Device>() {
             new Device("http://192.168.0.92/streaming/channels/2/httppreview", "admin", "1qaz@WSX"),
@@ -23,12 +23,12 @@ namespace GIShowCam.Info
             new Device("rtsp://192.168.0.104:554/0"),
             new Device("rtsp://10.10.10.78/axis-media/media.amp", "root", "cavi123,."),
             new Device("http://10.10.10.78/axis-cgi/mjpg/video.cgi", "root", "cavi123,.")
-        } ;
+        };
 
         private Device cam;
 
         public SessionInfo()
-        {            
+        {
 
             // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
             const string usr = "admin", pass = "admin",

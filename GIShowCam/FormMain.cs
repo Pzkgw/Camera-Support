@@ -22,7 +22,7 @@ namespace GIShowCam
 
         private GuiBase mainB;
         private DateTime _logTimeLast, _logTimeNow;
-        
+
 
         public FormMain()
         {
@@ -71,7 +71,7 @@ namespace GIShowCam
 
         internal void Log(string s)
         {
-            if(_logTimeLast == DateTime.MinValue)//connection start
+            if (_logTimeLast == DateTime.MinValue)//connection start
             {
                 _logTimeLast = DateTime.Now;
 
@@ -114,7 +114,7 @@ namespace GIShowCam
         {
             if (add)
             {
-                if(logAppend)
+                if (logAppend)
                 {
                     string ipTxt = "", sidTxt = "";
                     if (comboAddress.Text.Length > 3)
