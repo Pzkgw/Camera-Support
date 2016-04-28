@@ -7,7 +7,7 @@ using Vlc.DotNet.Forms;
 
 namespace GIShowCam.Gui
 {
-    class GuiControls : GuiBase
+    public partial class GuiBase
     {
         Label lblVlcNotifications;
 
@@ -16,10 +16,10 @@ namespace GIShowCam.Gui
 
         Button btnPlay;
 
-        public GuiControls(GuiBase mainB, Button btnDevConnect,
+        public void InitGuiControls(GuiBase mainB, Button btnDevConnect,
             ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass, 
             TextBox textBoxWidthF, TextBox textBoxHeightF,
-            Button btnPlay, CheckBox chkLoop, CheckBox chkFullVideo, Label lblVlcNotify) : base(mainB)
+            Button btnPlay, CheckBox chkLoop, CheckBox chkFullVideo, Label lblVlcNotify)
         {
 
             this.lblVlcNotifications = lblVlcNotify;

@@ -9,7 +9,7 @@ using Vlc.DotNet.Core.Medias;
 
 namespace GIShowCam.Gui
 {
-    class GuiRecord : GuiBase
+    public partial class GuiBase
     {
 
         /*
@@ -35,7 +35,7 @@ vlc.Play();
         private bool recordIsOn;
 
         Button btnSnapshot, btnRecord;
-        public GuiRecord(GuiBase mainB, Button btnSnapshot, Button btnRecord) : base(mainB)
+        public void InitGuiRecord(GuiBase mainB, Button btnSnapshot, Button btnRecord)
         {
             this.btnRecord = btnRecord;
             this.btnSnapshot = btnSnapshot;

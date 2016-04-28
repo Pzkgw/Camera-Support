@@ -24,10 +24,7 @@ namespace Vlc.DotNet.Core.Interops.Signatures
                 public IntPtr next;
             }
 
-            public struct Rectangle
-            {
-                public int top, left, bottom, right;
-            }
+
 
             public enum VideoMarqueeOption
             {
@@ -43,6 +40,11 @@ namespace Vlc.DotNet.Core.Interops.Signatures
                 Y
             }
 
+            /*public struct Rectangle
+            {
+                public int top, left, bottom, right;
+            }
+
             public enum NavigationMode
             {
                 Activate = 0,
@@ -51,6 +53,7 @@ namespace Vlc.DotNet.Core.Interops.Signatures
                 Left,
                 Right
             }
+            */
 
             /// <summary>
             /// Create an empty Media Player object

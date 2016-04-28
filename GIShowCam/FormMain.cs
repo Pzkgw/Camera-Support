@@ -38,11 +38,11 @@ namespace GIShowCam
             mainB = new GuiBase(this, panelVlc);
             if (!SessionInfo.fullVideo)
             {
-                new GuiControls(mainB, btnDevConnect, comboAddress,
+                mainB.InitGuiControls(mainB, btnDevConnect, comboAddress,
                     txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
                     btnPlay, chkPlayLoop, chkFullVid, lblVlcNotify);
-                new GuiDeviceInfo(mainB, lblDev);
-                new GuiRecord(mainB, btnSnapshot, btnRecord);
+                mainB.InitGuiDeviceInfo(mainB, lblDev);
+                mainB.InitGuiRecord(mainB, btnSnapshot, btnRecord);
             }
             else
             {

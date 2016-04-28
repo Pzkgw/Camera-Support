@@ -9,13 +9,13 @@ using System;
 
 namespace GIShowCam.Gui
 {
-    class GuiBase
+    public partial class GuiBase
     {
-        protected FormMain form;
+        private FormMain form;
 
-        protected VlcControl vlc;
+        private VlcControl vlc;
 
-        protected SessionInfo info;
+        private SessionInfo info;
 
 
         private Point _vlcTop;

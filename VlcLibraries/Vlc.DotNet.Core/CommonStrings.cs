@@ -5,6 +5,8 @@
     ///</summary>
     public static class CommonStrings
     {
+        public const string VLC_DOTNET_PROPERTIES_CATEGORY = "CevaFrumos";
+
         /// <summary>
         /// "C:\Program Files (x86)\VideoLAN\VLC\"
         /// </summary>
@@ -24,7 +26,5 @@
         /// "C:\Program Files\VideoLAN\VLC\plugins\"
         /// </summary>
         public const string PLUGINS_PATH_DEFAULT_VALUE_X86 = @"C:\Program Files\VideoLAN\VLC\plugins\";
-
-        public const string VLC_DOTNET_PROPERTIES_CATEGORY = "VideoLan DotNet";
     }
 }

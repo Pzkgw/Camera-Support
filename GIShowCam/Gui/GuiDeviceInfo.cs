@@ -4,12 +4,12 @@ using Vlc.DotNet.Core;
 
 namespace GIShowCam.Gui
 {
-    class GuiDeviceInfo : GuiBase
+    public partial class GuiBase
     {
         Label lblDev;
         string strCommon = Environment.NewLine, strCommonLine = "";
 
-        public GuiDeviceInfo(GuiBase mainB,  Label lblDev) : base(mainB)
+        public void InitGuiDeviceInfo(GuiBase mainB,  Label lblDev)
         {
             this.lblDev = lblDev;
 
