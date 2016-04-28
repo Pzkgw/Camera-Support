@@ -76,7 +76,7 @@ namespace GIShowCam
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
                 ,"--no-playlist-autostart" // playlist auto start (default enabled)
                 ,"--no-snapshot-preview"
-                ,"--quiet" // deactivates all console messages
+                ,SessionInfo.debug?"":"--quiet" // deactivates all console messages
                 // 
 
                 //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)

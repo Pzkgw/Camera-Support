@@ -9,12 +9,12 @@ namespace GIShowCam.Info
         internal static bool log = true, fullVideo = false;
         internal static string snapshotDir = "C:\\";
 
-
         internal bool videoLoop = true;
         internal int devID = 6;
 
-
-
+        //public static string vlcPlugins = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\",
+        //   vlc = @"c:\Program Files (x86)\VideoLAN\VLC\";
+        // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
 
         private List<Device> devices = new List<Device>() {
             new Device("http://192.168.0.92/streaming/channels/2/httppreview", "admin", "1qaz@WSX"),
@@ -30,7 +30,7 @@ namespace GIShowCam.Info
         public SessionInfo()
         {
 
-            // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
+            
             const string usr = "admin", pass = "admin",
                 firstStr = @"rtsp://10.10.10.202:554/cam/realmonitor?channel=",
                 lastStr = "&subtype=0";//&unicast=true&proto=Onvif
@@ -96,34 +96,6 @@ namespace GIShowCam.Info
             }
         }
 
-        //http://10.10.10.202/onvif/device_service
-        //rtsp://10.10.10.78/axis-media/media.amp
-        //_camera = IPCameraFactory.GetCamera("rtsp://10.10.10.78/axis-media/media.amp", "root", "cavi123,.");
-
-
-
-        //"c:\2016-4-18-18-4-15.mpeg4"
-        // "rtsp://10.10.10.78/axis-media/media.amp";
-        //rtsp://10.10.10.202:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif
-        //-------------->public static string host = @"http://192.168.0.92/streaming/channels/2/httppreview";
-        // OPT: ?channel=1&subtype=0&unicast=true    SAU    ?channel=2&subtype=0&unicast=true&proto=Onvif
-
-        //--rtsp-user=username --rtsp-pwd=password
-        //"root" 
-        //"admin"
-        //-------------->public static string user = ;//-user -username --rtsp-user=
-
-
-
-        //"cavi123,."
-        //"admin"
-        //-------------->public static string pass = "";//-passwd --rtsp-pwd=
-
-
-
-
-        //public static string vlcPlugins = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\",
-        //   vlc = @"c:\Program Files (x86)\VideoLAN\VLC\";
 
     }
 }

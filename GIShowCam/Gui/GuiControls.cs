@@ -129,6 +129,8 @@ namespace GIShowCam.Gui
             VideoPlayInit();
             if (vlc != null && vlc.Media != null)
             {
+                //foreach(EventHandler evh in vlc.Media.StateChanged)
+                //vlc.Media.StateChanged -= Media_StateChanged;
                 vlc.Media.StateChanged += Media_StateChanged;
                //VlcContext.
                 vlc.Play();
@@ -163,6 +165,7 @@ namespace GIShowCam.Gui
         {
             if(vlc != null && vlc.Media != null)
             {
+                //System.Threading.Thread.Sleep(20);
                 BtnDevConnect_Click(null, null);
             }
             
@@ -204,7 +207,7 @@ namespace GIShowCam.Gui
         private void BtnPlay_Click(object sender, EventArgs e)
         {
             bool playing = false;
-            if (sender != null)
+            if (sender != null && vlc != null)
             {
                 playing = vlc.Media.State == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Playing;
                 if (playing)
