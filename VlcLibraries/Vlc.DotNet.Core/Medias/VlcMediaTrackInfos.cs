@@ -53,15 +53,11 @@ namespace Vlc.DotNet.Core.Medias
                         {
                             for (int i = 0; i < count; i++)
                             {
-#if SILVERLIGHT
-                                var mediaTrackInfos = new MediaTrackInfo();
-                                Marshal.PtrToStructure(currentMediaTrackInfosPtr, mediaTrackInfos);
-                                yield return mediaTrackInfos;
-#else
+
                                 yield return (MediaTrackInfo)Marshal.PtrToStructure(
                                     currentMediaTrackInfosPtr,
                                     typeof(MediaTrackInfo));
-#endif
+
                                 currentMediaTrackInfosPtr = new IntPtr(currentMediaTrackInfosPtr.ToInt64() + size);
                             }
                         }
@@ -106,15 +102,11 @@ namespace Vlc.DotNet.Core.Medias
                         {
                             for (int i = 0; i < count; i++)
                             {
-#if SILVERLIGHT
-                                var mediaTrackInfos = new MediaTrackInfo();
-                                Marshal.PtrToStructure(currentMediaTrackInfosPtr, mediaTrackInfos);
-                                yield return mediaTrackInfos;
-#else
+
                                 yield return (MediaTrackInfo)Marshal.PtrToStructure(
                                     currentMediaTrackInfosPtr,
                                     typeof(MediaTrackInfo));
-#endif
+
                                 currentMediaTrackInfosPtr = new IntPtr(currentMediaTrackInfosPtr.ToInt64() + size);
                             }
                         }

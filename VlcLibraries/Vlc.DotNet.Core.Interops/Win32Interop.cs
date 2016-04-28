@@ -97,12 +97,6 @@ namespace Vlc.DotNet.Core.Interops
             Copy = 0x00000001,
             Execute = 0x00000020
         }
-#if SILVERLIGHT
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr LocalFree(IntPtr handle);
 
-        [DllImport("kernel32.dll", EntryPoint = "LocalAlloc")]
-        public static extern IntPtr LocalAlloc(int uFlags, IntPtr sizetdwBytes);
-#endif
     }
 }

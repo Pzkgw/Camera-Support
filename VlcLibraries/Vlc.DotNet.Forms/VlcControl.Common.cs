@@ -9,13 +9,9 @@ using Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media;
 using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Core.Interops.Signatures.LibVlc.MediaListPlayer;
 
-#if WPF
-namespace Vlc.DotNet.Wpf
-#elif SILVERLIGHT
-namespace Vlc.DotNet.Silverlight
-#else
+
 namespace Vlc.DotNet.Forms
-#endif
+
 {
     /// <summary>
     /// Vlc control to play media
@@ -162,9 +158,9 @@ namespace Vlc.DotNet.Forms
         /// Gets or sets the current position of the playing media
         /// </summary>
         [Category(CommonStrings.VLC_DOTNET_PROPERTIES_CATEGORY)]
-#if !SILVERLIGHT
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
+
         public float Position
         {
             get
@@ -204,9 +200,9 @@ namespace Vlc.DotNet.Forms
         /// Gets or sets the current time of the playing media
         /// </summary>
         [Category(CommonStrings.VLC_DOTNET_PROPERTIES_CATEGORY)]
-#if !SILVERLIGHT
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
+
         public TimeSpan Time
         {
             get
@@ -279,9 +275,9 @@ namespace Vlc.DotNet.Forms
         /// </summary>
         [Category(CommonStrings.VLC_DOTNET_PROPERTIES_CATEGORY)]
         [Browsable(false)]
-#if !SILVERLIGHT
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
+
         public MediaBase Media
         {
             get
@@ -710,9 +706,9 @@ namespace Vlc.DotNet.Forms
         public VlcAudioOutputDevices AudioOutputDevices { get; private set; }
 
         [Category(CommonStrings.VLC_DOTNET_PROPERTIES_CATEGORY)]
-#if !SILVERLIGHT
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-#endif
+
         public VlcMediaListPlayer Medias { get; private set; }
 
         public PlaybackModes PlaybackMode

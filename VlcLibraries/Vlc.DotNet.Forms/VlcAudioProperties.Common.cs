@@ -3,13 +3,8 @@ using System.ComponentModel;
 using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Interops.Signatures.LibVlc.MediaPlayer.Audio;
 
-#if WPF
-namespace Vlc.DotNet.Wpf
-#elif SILVERLIGHT
-namespace Vlc.DotNet.Silverlight
-#else
 namespace Vlc.DotNet.Forms
-#endif
+
 {
     /// <summary>
     /// VlcAudioProperties class

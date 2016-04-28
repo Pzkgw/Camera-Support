@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-#if !SILVERLIGHT
+
 using System.ComponentModel;
-#endif
+
 
 namespace Vlc.DotNet.Core.Interops
 {

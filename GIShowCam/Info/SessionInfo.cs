@@ -27,10 +27,10 @@ namespace GIShowCam.Info
 
         private Device cam;
 
-        public SessionInfo()
+        internal SessionInfo()
         {
 
-            
+
             const string usr = "admin", pass = "admin",
                 firstStr = @"rtsp://10.10.10.202:554/cam/realmonitor?channel=",
                 lastStr = "&subtype=0";//&unicast=true&proto=Onvif

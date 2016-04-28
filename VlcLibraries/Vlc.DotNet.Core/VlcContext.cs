@@ -16,7 +16,7 @@ namespace Vlc.DotNet.Core
             StartupOptions = new VlcStartupOptions();
             HandleManager = new VlcHandleManager();
             IsInitialized = false;
-#if !SILVERLIGHT
+
             var processorArchitecture = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE");
             var processorArchiteW6432 = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432");
 
@@ -28,12 +28,12 @@ namespace Vlc.DotNet.Core
             }
             else
             {
-#endif
+
                 LibVlcPluginsPath = CommonStrings.PLUGINS_PATH_DEFAULT_VALUE_X86;
                 LibVlcDllsPath = CommonStrings.LIBVLC_DLLS_PATH_DEFAULT_VALUE_X86;
- #if !SILVERLIGHT
+
            }
-#endif
+
         }
 
         public static LibVlcInteropsManager InteropManager { get; private set; }

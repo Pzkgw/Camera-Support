@@ -29,12 +29,9 @@ namespace Vlc.DotNet.Core
             Description = IntPtrExtensions.ToStringAnsi(audioOutput.description);
             if (audioOutput.next != IntPtr.Zero)
             {
-#if SILVERLIGHT
-                var next = new AudioOutput();
-                Marshal.PtrToStructure(audioOutput.next, next);
-#else
+
                 var next = (AudioOutput)Marshal.PtrToStructure(audioOutput.next, typeof(AudioOutput));
-#endif
+
                 Next = new VlcAudioOutputDevice(next);
             }
         }

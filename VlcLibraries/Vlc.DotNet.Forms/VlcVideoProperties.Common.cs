@@ -5,16 +5,10 @@ using System.Runtime.InteropServices;
 using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Interops.Signatures.LibVlc.MediaPlayer;
 
-#if WPF
-using System.Windows;
-namespace Vlc.DotNet.Wpf
-#elif SILVERLIGHT
-using System.Windows;
-namespace Vlc.DotNet.Silverlight
-#else
+
 using System.Drawing;
 namespace Vlc.DotNet.Forms
-#endif
+
 {
     /// <summary>
     /// VlcVideoProperties class
@@ -50,11 +44,9 @@ namespace Vlc.DotNet.Forms
                     {
                         return Size.Empty;
                     }
-#if WPF
-                    return new Size(width, height);
-#else
+
                     return new Size((int)width, (int)height);
-#endif
+
                 }
 
                 return Size.Empty;
@@ -217,12 +209,9 @@ namespace Vlc.DotNet.Forms
                     var ptr = VlcContext.InteropManager.MediaPlayerInterops.VideoInterops.GetSpuDescription.Invoke(VlcContext.HandleManager.MediaPlayerHandles[myHostVlcControl]);
                     if (ptr != IntPtr.Zero)
                     {
-#if SILVERLIGHT
-                        var td = new TrackDescription();
-                        Marshal.PtrToStructure(ptr, td);
-#else
+
                         var td = (TrackDescription)Marshal.PtrToStructure(ptr, typeof(TrackDescription));
-#endif
+
                         return new VlcTrackDescription(td);
                     }
                 }

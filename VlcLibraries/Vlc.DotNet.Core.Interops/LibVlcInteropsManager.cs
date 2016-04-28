@@ -5,11 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Vlc.DotNet.Core.Interops.Signatures.LibVlc;
 
-#if SILVERLIGHT
 
-#else
 using System.ComponentModel;
-#endif
+
 
 namespace Vlc.DotNet.Core.Interops
 {
@@ -20,9 +18,9 @@ namespace Vlc.DotNet.Core.Interops
     {
         private IntPtr myLibVlcCoreDllHandle;
         private IntPtr myLibVlcDllHandle;
-#if !SILVERLIGHT
+
         private string myLibVlcDllsDirectory;
-#endif
+
 
         /// <summary>
         /// Initializes a new instance of the LibVlcInteropsManager class.
@@ -123,7 +121,7 @@ namespace Vlc.DotNet.Core.Interops
                 MediaListPlayerInterops.Dispose();
             MediaListPlayerInterops = null;
 
-#if !SILVERLIGHT
+
             bool contains;
             do
             {
@@ -159,7 +157,7 @@ namespace Vlc.DotNet.Core.Interops
                 }
                 Win32Interop.FreeLibrary(module.BaseAddress);
             }
-#endif
+
         }
 
         #endregion
@@ -176,9 +174,9 @@ namespace Vlc.DotNet.Core.Interops
             if (!File.Exists(libVlcCoreFilePath))
                 throw new FileNotFoundException("Libvlccore library not found in directory.");
 
-#if !SILVERLIGHT
+
             myLibVlcDllsDirectory = libVlcDllsDirectory;
-#endif
+
             myLibVlcCoreDllHandle = Win32Interop.LoadLibrary(libVlcCoreFilePath);
             if (myLibVlcCoreDllHandle == IntPtr.Zero)
                 throw new Win32Exception(Marshal.GetLastWin32Error());
