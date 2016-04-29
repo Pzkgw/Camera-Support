@@ -88,18 +88,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Core.Interops\Vlc.DotNet.Core.Interops.csproj">
       <Project>{7506dde6-1d45-4fe0-8239-985c5f6eb605}</Project>
       <Name>Vlc.DotNet.Core.Interops</Name>
     </ProjectReference>
     <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Core\Vlc.DotNet.Core.csproj">
-      <Project>{0DC24B0B-6862-4615-B62D-81795D2CDD07}</Project>
+      <Project>{0dc24b0b-6862-4615-b62d-81795d2cdd07}</Project>
       <Name>Vlc.DotNet.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Forms\Vlc.DotNet.Forms.csproj">
-      <Project>{A720906B-705B-4666-BBB9-AC54B9208BEB}</Project>
+      <Project>{a720906b-705b-4666-bbb9-ac54b9208beb}</Project>
       <Name>Vlc.DotNet.Forms</Name>
     </ProjectReference>
   </ItemGroup>
