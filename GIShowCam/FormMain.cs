@@ -32,10 +32,10 @@ namespace GIShowCam
             //_logDispatch = new Dispatcher();
             _logTimeLast = DateTime.MinValue;
 
-            VlcContext.CloseAll();
-            VlcContext.Initialize();
+            //VlcContext.CloseAll();
+            //VlcContext.Initialize();
 
-            mainB = new GuiBase(this, panelVlc);
+            mainB = new GuiBase(this);
             if (!SessionInfo.fullVideo)
             {
                 mainB.InitGuiControls(mainB, btnDevConnect, comboAddress,

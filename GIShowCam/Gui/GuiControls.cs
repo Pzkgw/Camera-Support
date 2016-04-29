@@ -2,12 +2,11 @@
 using System;
 using System.Windows.Forms;
 using Vlc.DotNet.Core;
-using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Forms;
 
 namespace GIShowCam.Gui
 {
-    public partial class GuiBase
+    internal partial class GuiBase
     {
         Label lblVlcNotifications;
 
@@ -17,7 +16,7 @@ namespace GIShowCam.Gui
         Button btnPlay;
 
         public void InitGuiControls(GuiBase mainB, Button btnDevConnect,
-            ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass, 
+            ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass,
             TextBox textBoxWidthF, TextBox textBoxHeightF,
             Button btnPlay, CheckBox chkLoop, CheckBox chkFullVideo, Label lblVlcNotify)
         {
@@ -29,10 +28,10 @@ namespace GIShowCam.Gui
             this.txtDevPass = txtDevPass;
 
             FillDeviceInfo();
-          
-            vlc.EndReached += VlcControl_EndReached;
-            vlc.PositionChanged += VlcControlOnPositionChanged;
-            
+
+            //vlc.EndReached += VlcControl_EndReached;
+            //vlc.PositionChanged += VlcControlOnPositionChanged;
+
 
             btnDevConnect.Click += BtnDevConnect_Click;
             btnPlay.Click += BtnPlay_Click;
@@ -63,7 +62,8 @@ namespace GIShowCam.Gui
                     SessionInfo.log = false;
                     vlc.Pause();
                     FullVideo(true, false);
-                    if (info.videoLoop) vlc.Play(); else vlc.NextFrame();
+                    //if (info.videoLoop) vlc.Play(); else vlc.NextFrame();
+                    vlc.Play();
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace GIShowCam.Gui
 
         private void PanelVlc_Click(object sender, EventArgs e)
         {
-            vlc.NextFrame();
+            //vlc.NextFrame();
         }
 
         private void FillDeviceInfo()
@@ -106,7 +106,7 @@ namespace GIShowCam.Gui
 
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            info.Select(comboAddress.SelectedIndex); 
+            info.Select(comboAddress.SelectedIndex);
             txtDevUser.Text = info.user;
             txtDevPass.Text = info.password;
             comboAddress.Text = info.host;
@@ -120,38 +120,39 @@ namespace GIShowCam.Gui
         }
         private void TextBoxHeightF_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
 
         private void BtnDevConnect_Click(object sender, EventArgs e)
         {
             VideoPlayInit();
-            if (vlc != null && vlc.Media != null)
+            if (vlc != null && vlc.GetCurrentMedia() != null)
             {
                 //foreach(EventHandler evh in vlc.Media.StateChanged)
                 //vlc.Media.StateChanged -= Media_StateChanged;
-                vlc.Media.StateChanged += Media_StateChanged;
-               //VlcContext.
+                vlc.MediaChanged += Vlc_MediaChanged;
+
+                //VlcContext.
                 vlc.Play();
             }
         }
 
-        private void Media_StateChanged(MediaBase sender, VlcEventArgs<Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States> e)
+        private void Vlc_MediaChanged(object sender, VlcMediaPlayerMediaChangedEventArgs e)
         {
             //form.ControlTextUpdate(lblVlcNotifications, "State: " + e.Data.ToString());
-            if (e.Data == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.NothingSpecial)
+            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial)
                 form.Log("Connection start"); //connection start
             else
-                form.Log("Connection state: " + e.Data.ToString());
+                form.Log("Connection state: " + vlc.State);
             //form.ControlTextUpdate(lblVlcNotifications, e.Data.ToString());
 
-            if (e.Data == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Playing) //play vlc start
+            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) //play vlc start
             {
                 form.ControlShow(btnPlay, true);
                 form.ControlShow(form.btnSnapshot, true);
                 form.ControlShow(form.btnRecord, true);
-                BtnPlay_Click(null, null);                
+                BtnPlay_Click(null, null);
             }
             else
             {
@@ -161,45 +162,46 @@ namespace GIShowCam.Gui
             }
         }
 
+        /*
         void VlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-            if(vlc != null && vlc.Media != null)
+            if (vlc != null && vlc.GetCurrentMedia() != null)
             {
                 //System.Threading.Thread.Sleep(20);
                 BtnDevConnect_Click(null, null);
             }
-            
-            /*
-            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Ended)
-            {
-                var subItems = vlc.Medias;
-                if (subItems.Count > 0)
-                {
-                    vlc.Play(subItems[0]);
-                }
-            }*/
-        }
-
-        /// <summary>
-        /// Event handler for "VlcControl.PositionChanged" event. 
-        /// Updates the label containing the playback position. 
-        /// </summary>
-        /// <param name="sender">Event sending. </param>
-        /// <param name="e">Event arguments, containing the current position. </param>
-        private void VlcControlOnPositionChanged(VlcControl sender, VlcEventArgs<float> e)
+        }*/
+        /*
+        if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Ended)
         {
-            //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
-            //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
+            var subItems = vlc.Medias;
+            if (subItems.Count > 0)
+            {
+                vlc.Play(subItems[0]);
+            }
+        }*/
 
-            if (vlc != null && vlc.Media != null)
-                form.ControlTextUpdate(lblVlcNotifications,
-                    "DecodedVideo: " + vlc.Media.Statistics.DecodedVideo +
-                    "  InputBitrate: " + vlc.Media.Statistics.InputBitrate +
-                    "  DemuxBitrate: " + vlc.Media.Statistics.DemuxBitrate +
-                    "  DisplayedPictures: " + vlc.Media.Statistics.DisplayedPictures +
-                    "  LostPictures: " + vlc.Media.Statistics.LostPictures);
-        }
+        /*
+                /// <summary>
+                /// Event handler for "VlcControl.PositionChanged" event. 
+                /// Updates the label containing the playback position. 
+                /// </summary>
+                /// <param name="sender">Event sending. </param>
+                /// <param name="e">Event arguments, containing the current position. </param>
+                private void VlcControlOnPositionChanged(VlcControl sender, VlcEventArgs<float> e)
+                {
+                    //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
+                    //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
 
+                    if (vlc != null && vlc.GetCurrentMedia() != null)
+                        form.ControlTextUpdate(lblVlcNotifications,
+                            "DecodedVideo: " + vlc.GetCurrentMedia().Statistics.DecodedVideo +
+                            "  InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
+                            "  DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
+                            "  DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
+                            "  LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures);
+                }
+                */
         #region Additional Controls
 
 
@@ -209,7 +211,7 @@ namespace GIShowCam.Gui
             bool playing = false;
             if (sender != null && vlc != null)
             {
-                playing = vlc.Media.State == Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.States.Playing;
+                playing = vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing;
                 if (playing)
                 {
                     if (vlc.IsPlaying) vlc.Stop();

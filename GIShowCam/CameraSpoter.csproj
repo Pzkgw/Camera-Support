@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -58,6 +58,7 @@
     <Compile Include="Gui\GuiControls.cs" />
     <Compile Include="Gui\GuiDeviceInfo.cs" />
     <Compile Include="Gui\GuiRecord.cs" />
+    <Compile Include="Gui\Vlc.cs" />
     <Compile Include="Info\Device.cs" />
     <Compile Include="Info\DeviceInfo.cs" />
     <Compile Include="Info\SessionInfo.cs" />

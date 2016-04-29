@@ -4,15 +4,15 @@ using Vlc.DotNet.Core;
 
 namespace GIShowCam.Gui
 {
-    public partial class GuiBase
+    internal partial class GuiBase
     {
         Label lblDev;
         string strCommon = Environment.NewLine, strCommonLine = "";
 
-        public void InitGuiDeviceInfo(GuiBase mainB,  Label lblDev)
+        public void InitGuiDeviceInfo(GuiBase mainB, Label lblDev)
         {
             this.lblDev = lblDev;
-
+            /*
             VlcStartupOptions opt = VlcContext.StartupOptions;
             strCommon = Environment.NewLine + "  Startup options:" + Environment.NewLine + Environment.NewLine;
 
@@ -34,11 +34,11 @@ namespace GIShowCam.Gui
                     (opt.Options[i].StartsWith("-") ? opt.Options[i].Substring(2, lengthStr - 2) : "void")) + new string(' ', 15);
                 // + ((i == opt.Options.Count - 1) ? "" : " | ")
             }
-
+            */
             strCommon += strCommonLine;
 
             FilDevInfo();
-            
+
         }
 
         private void FilDevInfo()
@@ -49,7 +49,7 @@ namespace GIShowCam.Gui
 
 
 
-            lblDev.Text = devInfo+ strCommon;
+            lblDev.Text = devInfo + strCommon;
         }
 
         #region Device Info

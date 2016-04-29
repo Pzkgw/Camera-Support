@@ -4,7 +4,7 @@ namespace Vlc.DotNet.Core.Interops.Signatures
 {
     public abstract class InteropObjectInstance : IDisposable
     {
-        internal IntPtr Pointer { get; set; }
+        public IntPtr Pointer { get; set; }
 
         private bool myIsDisposing = false;
 

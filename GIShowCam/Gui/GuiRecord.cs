@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Vlc.DotNet.Core.Medias;
 
 namespace GIShowCam.Gui
 {
-    public partial class GuiBase
+    internal partial class GuiBase
     {
 
         /*
@@ -80,7 +79,7 @@ vlc.Play();
             _tempFilename = System.IO.Path.Combine(_tempPath + Guid.NewGuid().ToString() + ".mp4");
             //_WasError = false; //indicate no error 
             //_IsFinished = false; //indicate successful completion of task
-                                 //Timer used to control duration of recording
+            //Timer used to control duration of recording
             this.secondsToRecord = durration * 60; //Want seconds
             timeStarted = DateTime.Now;
             timeToComplete = timeStarted.AddMinutes(durration);
@@ -98,7 +97,7 @@ vlc.Play();
             //Call owner thread manager indicating process started
             //--UpdateEvents(_finalFilename, durration, 0, false, false);
             //Setup the media options
-            vlc.Media.AddOption(options);
+            //vlc.Media.AddOption(options);
             //Setup the media MRL and start the process
             //vlc.Media = media;
             //Start the timer used to stop the recording after X minutes
@@ -109,7 +108,7 @@ vlc.Play();
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
             //vlc.Media.
-            vlc.TakeSnapshot(SessionInfo.snapshotDir, (uint)vlc.Width, (uint)vlc.Height);
+            //vlc.TakeSnapshot(SessionInfo.snapshotDir, (uint)vlc.Width, (uint)vlc.Height);
         }
 
 

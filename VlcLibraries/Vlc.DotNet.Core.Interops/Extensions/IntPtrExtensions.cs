@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Vlc.DotNet.Core.Interops
 {
-    internal static class IntPtrExtensions
+    public static class IntPtrExtensions
     {
 #if !NET20
         public static string ToStringAnsi(this IntPtr ptr)
