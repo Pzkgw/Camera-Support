@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using Vlc.DotNet.Core;
 
 namespace GIShowCam.Gui
 {
@@ -9,7 +8,7 @@ namespace GIShowCam.Gui
         Label lblDev;
         string strCommon = Environment.NewLine, strCommonLine = "";
 
-        public void InitGuiDeviceInfo(GuiBase mainB, Label lblDev)
+        internal void InitGuiDeviceInfo(GuiBase mainB, Label lblDev)
         {
             this.lblDev = lblDev;
             /*

@@ -2,7 +2,6 @@
 using System;
 using System.Windows.Forms;
 using Vlc.DotNet.Core;
-using Vlc.DotNet.Forms;
 
 namespace GIShowCam.Gui
 {
@@ -15,7 +14,7 @@ namespace GIShowCam.Gui
 
         Button btnPlay;
 
-        public void InitGuiControls(GuiBase mainB, Button btnDevConnect,
+        internal void InitGuiControls(GuiBase mainB, Button btnDevConnect,
             ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass,
             TextBox textBoxWidthF, TextBox textBoxHeightF,
             Button btnPlay, CheckBox chkLoop, CheckBox chkFullVideo, Label lblVlcNotify)

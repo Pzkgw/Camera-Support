@@ -1,5 +1,8 @@
 ﻿using GIShowCam.Info;
+using System;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 
@@ -9,13 +12,11 @@ namespace GIShowCam.Gui
     {
         private VlcControl vlc;
 
-        private SessionInfo info;
+        //private static VlcStartupOptions opt;
 
 
         private void InitVlc()
         {
-            info = new SessionInfo();
-
             //opt = VlcContext.StartupOptions;
 
             //opt.ScreenSaverEnabled = false;
@@ -24,7 +25,6 @@ namespace GIShowCam.Gui
 
             //if (SessionInfo.debug) EnableLogConsole();
 
-            AddVlcOptions();
 
             //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
             //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
@@ -36,10 +36,7 @@ namespace GIShowCam.Gui
 
 
             vlc = new VlcControl();
-            setVlcLibLocation();
             vlc.Name = "vlc";
-
-
             vlc.TabStop = false;
             vlc.Enabled = false;
             vlc.ImeMode = ImeMode.NoControl;
@@ -51,10 +48,15 @@ namespace GIShowCam.Gui
             //vlc.Width = panelVlc.Width;
             //vlc.Height = panelVlc.Height;
             //vlc.SetBounds(0, 0, panelVlc.Width, panelVlc.Height);
+
+            setVlcLibLocation();
+            AddVlcOptions();
+            vlc.EndInit();
+
         }
 
 
-        private static void AddVlcOptions()
+        private void AddVlcOptions()
         {
             string[] optiuni = new string[] { //--snapshot-format=jpg
                  "--no-fullscreen" //
@@ -108,10 +110,83 @@ namespace GIShowCam.Gui
 
             };
 
+            vlc.VlcMediaplayerOptions = optiuni;
             //foreach (string optString in optiuni) opt.AddOption(optString);
 
 
             //VlcContext.StartupOptions.Options.
+        }
+
+
+        private void setVlcLibLocation()
+        {
+            //vlc.VlcLibDirectoryNeeded += Vlc_VlcLibDirectoryNeeded;
+
+            string aP;
+            if (Environment.Is64BitOperatingSystem)
+                aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN\\VLC");
+            else
+                aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN\\VLC");
+
+            /*else if (!File.Exists(Path.Combine(aP, "libvlc.dll"))
+                           {
+                           Using fbdDialog As New FolderBrowserDialog()
+                           fbdDialog.Description = "Select VLC Path"
+                           fbdDialog.SelectedPath = Path.Combine(aP, "VideoLAN\VLC")
+
+                           If fbdDialog.ShowDialog() = DialogResult.OK Then
+                           e.VlcLibDirectory = New DirectoryInfo(fbdDialog.SelectedPath)
+                       }
+
+            e.VlcLibDirectory = new DirectoryInfo(aP);*/
+
+            vlc.VlcLibDirectory = new DirectoryInfo(aP);
+
+        }
+
+
+        protected void VideoPlayInit()
+        {
+            if (vlc != null)
+            {
+
+                if (vlc.IsPlaying)
+                {
+                    form.Restart();
+                }
+
+                if (vlc.GetCurrentMedia() != null)
+                {
+                    vlc.GetCurrentMedia().Dispose();
+                    vlc.Stop();
+                }
+
+                if (info.host.Count(s => s == '.') > 2)
+                {
+                    string path = info.host;
+
+                    if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
+                    {
+                        path = path.Insert(7, (info.user + ":" + info.password + "@"));
+                    }
+
+                    //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
+                    //LocationMedia media = new LocationMedia(path);
+                    //media.AddOption("no-snapshot-preview");
+                    //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
+                    //media.AddOption("–-aspect-ratio=4:3");
+                    //media.AddOption("--grayscale");
+
+
+
+                    vlc.SetMedia(path);
+                }
+                else
+                {
+                    vlc.SetMedia(info.host);
+                }
+
+            }
         }
 
         /*

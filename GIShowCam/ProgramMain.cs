@@ -1,15 +1,10 @@
-﻿using GIShowCam.Info;
-using System;
+﻿using System;
 using System.Windows.Forms;
-using Vlc.DotNet.Core;
 
 namespace GIShowCam
 {
     static class ProgramMain
     {
-
-        //private static VlcStartupOptions opt;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

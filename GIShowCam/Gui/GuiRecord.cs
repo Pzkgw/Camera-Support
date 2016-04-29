@@ -1,9 +1,5 @@
 ﻿using GIShowCam.Info;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GIShowCam.Gui
@@ -34,7 +30,7 @@ vlc.Play();
         private bool recordIsOn;
 
         Button btnSnapshot, btnRecord;
-        public void InitGuiRecord(GuiBase mainB, Button btnSnapshot, Button btnRecord)
+        internal void InitGuiRecord(GuiBase mainB, Button btnSnapshot, Button btnRecord)
         {
             this.btnRecord = btnRecord;
             this.btnSnapshot = btnSnapshot;
@@ -108,7 +104,7 @@ vlc.Play();
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
             //vlc.Media.
-            //vlc.TakeSnapshot(SessionInfo.snapshotDir, (uint)vlc.Width, (uint)vlc.Height);
+            vlc.TakeSnapshot(SessionInfo.snapshotDir);// , (uint)vlc.Width, (uint)vlc.Height
         }
 
 
