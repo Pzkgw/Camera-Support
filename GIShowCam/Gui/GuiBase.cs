@@ -46,16 +46,8 @@ namespace GIShowCam.Gui
             }
         }
 
-        #region Camera Video
 
- 
-
-
-        #endregion Camera Video
-
-
-
-
+        #region CleanUp
 
         internal void CleanUp()
         {
@@ -68,7 +60,7 @@ namespace GIShowCam.Gui
             vlc.Dispose();
         }
 
-
+        #endregion CleanUp
 
     }
 }

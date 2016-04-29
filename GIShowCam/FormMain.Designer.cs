@@ -56,6 +56,7 @@
             this.groupBoxBtns = new System.Windows.Forms.GroupBox();
             this.chkFullVid = new System.Windows.Forms.CheckBox();
             this.chkPlayLoop = new System.Windows.Forms.CheckBox();
+            this.lblAdd = new System.Windows.Forms.Label();
             this.tabHost.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDevice.SuspendLayout();
@@ -202,6 +203,7 @@
             // groupBoxDev
             // 
             this.groupBoxDev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxDev.Controls.Add(this.lblAdd);
             this.groupBoxDev.Controls.Add(this.comboAddress);
             this.groupBoxDev.Controls.Add(this.btnDevConnect);
             this.groupBoxDev.Controls.Add(this.lblDevPass);
@@ -353,6 +355,14 @@
             this.chkPlayLoop.Text = "Play continuu";
             this.chkPlayLoop.UseVisualStyleBackColor = true;
             // 
+            // lblAdd
+            // 
+            this.lblAdd.AutoSize = true;
+            this.lblAdd.Location = new System.Drawing.Point(374, 0);
+            this.lblAdd.Name = "lblAdd";
+            this.lblAdd.Size = new System.Drawing.Size(0, 15);
+            this.lblAdd.TabIndex = 8;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -413,5 +423,6 @@
         private System.Windows.Forms.GroupBox groupBoxBtns;
         private System.Windows.Forms.CheckBox chkPlayLoop;
         private System.Windows.Forms.CheckBox chkFullVid;
+        private System.Windows.Forms.Label lblAdd;
     }
 }

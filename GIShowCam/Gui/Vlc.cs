@@ -11,8 +11,7 @@ namespace GIShowCam.Gui
     internal partial class GuiBase
     {
         private VlcControl vlc;
-
-        //private static VlcStartupOptions opt;
+        //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
 
 
         private void InitVlc()
@@ -24,16 +23,6 @@ namespace GIShowCam.Gui
             //SetDirectory();
 
             //if (SessionInfo.debug) EnableLogConsole();
-
-
-            //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
-            //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
-            //VlcContext.StartupOptions.AddOption("--aspect-ratio=1:9");
-            //VlcContext.StartupOptions.AddOption("--autocrop");--crop-geometry "180 x 120 + 0 + 0"
-            //VlcContext.StartupOptions.AddOption("--crop-geometry \"" + panelVlc.Width + "x" + panelVlc.Height + " + 0 + 0\"");--aspect-ratio=16:9
-
-            //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
-
 
             vlc = new VlcControl();
             vlc.Name = "vlc";
@@ -53,8 +42,15 @@ namespace GIShowCam.Gui
             AddVlcOptions();
             vlc.EndInit();
 
+
+            vlc.Buffering += Vlc_Buffering;
+
         }
 
+        private void Vlc_Buffering(object sender, Vlc.DotNet.Core.VlcMediaPlayerBufferingEventArgs e)
+        {
+            form.Test(e.NewCache.ToString());
+        }
 
         private void AddVlcOptions()
         {
@@ -92,13 +88,9 @@ namespace GIShowCam.Gui
                 ,"--no-auto-preparse" // Automatically preparse files (default enabled)
                 ,"--no-advanced" //  Show advanced options (default enabled)
                 ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
-                ,SessionInfo.debug?"":"--no-stats" //    Collect statistics (default enabled)
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
                 ,"--no-playlist-autostart" // playlist auto start (default enabled)
                 ,"--no-snapshot-preview"
-                ,SessionInfo.debug?"":"--quiet" // deactivates all console messages
-                // 
-
                 //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
                 //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
                  
@@ -106,22 +98,17 @@ namespace GIShowCam.Gui
                 //,"--grayscale"
                 //,"--aspect-ratio=16:10"
                 //,"--croppadd-cropleft 100"
-
-
+                ,SessionInfo.debug?"--extraintf=logger":"--no-stats" //    Collect statistics (default enabled)
+                ,SessionInfo.debug?"--verbose=2":"--quiet" // deactivates all console messages
             };
 
             vlc.VlcMediaplayerOptions = optiuni;
             //foreach (string optString in optiuni) opt.AddOption(optString);
-
-
-            //VlcContext.StartupOptions.Options.
         }
 
 
         private void setVlcLibLocation()
         {
-            //vlc.VlcLibDirectoryNeeded += Vlc_VlcLibDirectoryNeeded;
-
             string aP;
             if (Environment.Is64BitOperatingSystem)
                 aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN\\VLC");
@@ -176,6 +163,14 @@ namespace GIShowCam.Gui
                     //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
                     //media.AddOption("–-aspect-ratio=4:3");
                     //media.AddOption("--grayscale");
+
+                    //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
+                    //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
+                    //VlcContext.StartupOptions.AddOption("--aspect-ratio=1:9");
+                    //VlcContext.StartupOptions.AddOption("--autocrop");--crop-geometry "180 x 120 + 0 + 0"
+                    //VlcContext.StartupOptions.AddOption("--crop-geometry \"" + panelVlc.Width + "x" + panelVlc.Height + " + 0 + 0\"");--aspect-ratio=16:9
+
+                    //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
 
 
 

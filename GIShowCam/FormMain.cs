@@ -41,6 +41,8 @@ namespace GIShowCam
                 mainB.FullVideo(true, true);
             }
 
+            panelVlc.BringToFront();
+
             FormClosing += FormMain_FormClosing;
         }
 
@@ -82,6 +84,11 @@ namespace GIShowCam
             }
 
 
+        }
+
+        internal void Test(string v)
+        {
+            InvokeGuiThread(new textUpdateDelegate(TextUpdate), lblAdd, v, false, false);
         }
 
         internal void ControlShow(Control ctrl, bool on)

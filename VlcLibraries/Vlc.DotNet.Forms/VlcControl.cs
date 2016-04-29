@@ -76,7 +76,6 @@ namespace Vlc.DotNet.Forms
             RegisterEvents();
         }
 
-        // work around http://stackoverflow.com/questions/34664/designmode-with-controls/708594
         private static bool IsInDesignMode()
         {
             return System.Reflection.Assembly.GetExecutingAssembly().Location.Contains("VisualStudio");

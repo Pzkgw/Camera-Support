@@ -130,21 +130,31 @@ namespace GIShowCam.Gui
             {
                 //foreach(EventHandler evh in vlc.Media.StateChanged)
                 //vlc.Media.StateChanged -= Media_StateChanged;
-                vlc.MediaChanged += Vlc_MediaChanged;
-
+                vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
+                vlc.EncounteredError += Vlc_EncounteredError;
                 //VlcContext.
                 vlc.Play();
             }
+            else
+            {
+                MessageBox.Show("Eroare la conexiune");
+            }
         }
 
-        private void Vlc_MediaChanged(object sender, VlcMediaPlayerMediaChangedEventArgs e)
+
+
+        private void Vlc_EncounteredError(object sender, VlcMediaPlayerEncounteredErrorEventArgs e)
         {
-            //form.ControlTextUpdate(lblVlcNotifications, "State: " + e.Data.ToString());
+            MessageBox.Show(e.ToString());
+        }
+
+        private void GuiBase_StateChanged(object sender, VlcMediaStateChangedEventArgs e)
+        {
+
             if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial)
                 form.Log("Connection start"); //connection start
             else
                 form.Log("Connection state: " + vlc.State);
-            //form.ControlTextUpdate(lblVlcNotifications, e.Data.ToString());
 
             if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) //play vlc start
             {
