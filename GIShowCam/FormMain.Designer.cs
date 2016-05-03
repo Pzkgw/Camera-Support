@@ -348,9 +348,9 @@
             this.chkFullVid.AutoSize = true;
             this.chkFullVid.Location = new System.Drawing.Point(231, 58);
             this.chkFullVid.Name = "chkFullVid";
-            this.chkFullVid.Size = new System.Drawing.Size(71, 17);
+            this.chkFullVid.Size = new System.Drawing.Size(104, 17);
             this.chkFullVid.TabIndex = 8;
-            this.chkFullVid.Text = "Full video";
+            this.chkFullVid.Text = "Video full screen";
             this.chkFullVid.UseVisualStyleBackColor = true;
             // 
             // chkPlayLoop
@@ -358,11 +358,12 @@
             this.chkPlayLoop.AutoSize = true;
             this.chkPlayLoop.Checked = true;
             this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPlayLoop.Enabled = false;
             this.chkPlayLoop.Location = new System.Drawing.Point(231, 27);
             this.chkPlayLoop.Name = "chkPlayLoop";
-            this.chkPlayLoop.Size = new System.Drawing.Size(90, 17);
+            this.chkPlayLoop.Size = new System.Drawing.Size(80, 17);
             this.chkPlayLoop.TabIndex = 7;
-            this.chkPlayLoop.Text = "Play continuu";
+            this.chkPlayLoop.Text = "Video Loop";
             this.chkPlayLoop.UseVisualStyleBackColor = true;
             // 
             // FormMain
@@ -397,7 +398,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblVlcNotify;
+        internal System.Windows.Forms.Label lblVlcNotify;
         internal System.Windows.Forms.Panel panelVlc;
         private System.Windows.Forms.TabControl tabHost;
         private System.Windows.Forms.TabPage tabDevice;

@@ -22,6 +22,7 @@ namespace GIShowCam.Gui
         private void BtnDevConnect_Click(object sender, EventArgs e)
         {
             VideoInit(false, false);
+
             if (vlc != null && vlc.GetCurrentMedia() != null)
             {
                 info.cam.data.IsStarted = true;
@@ -29,7 +30,8 @@ namespace GIShowCam.Gui
                 //vlc.Media.StateChanged -= Media_StateChanged;
                 vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
                 vlc.EncounteredError += Vlc_EncounteredError;
-                //VlcContext.
+                vlc.Buffering += Vlc_Buffering;
+                vlc.PositionChanged += Vlc_PositionChanged;
                 vlc.Play();
             }
             else
@@ -37,6 +39,8 @@ namespace GIShowCam.Gui
                 MessageBox.Show("Eroare la conexiune");
             }
         }
+
+
 
         private void GuiBase_StateChanged(object sender, VlcMediaStateChangedEventArgs e)
         {

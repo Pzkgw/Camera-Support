@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Vlc.DotNet.Core;
 
 namespace GIShowCam.Gui
 {
@@ -50,11 +51,30 @@ namespace GIShowCam.Gui
             form.lblDev.Text = devInfo + strCommon;
         }
 
-        #region Device Info
+        #region real time Device Info
+
+        /// <summary>
+        /// Event handler for "VlcControl.PositionChanged" event. 
+        /// Updates the label containing the playback position. 
+        /// </summary>
+        /// <param name="sender">Event sending. </param>
+        /// <param name="e">Event arguments, containing the current position. </param>
+        private void Vlc_PositionChanged(object sender, VlcMediaPlayerPositionChangedEventArgs e)
+        {
+            //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
+            //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
+
+            if (vlc != null && vlc.GetCurrentMedia() != null)
+                form.ControlTextUpdate(form.lblVlcNotify,
+                    "DecodedVideo: " + vlc.GetCurrentMedia().Statistics.DecodedVideo +
+                    "  InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
+                    "  DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
+                    "  DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
+                    "  LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures);
+        }
 
 
-
-        #endregion Device Info
+        #endregion real time Device Info
 
 
 

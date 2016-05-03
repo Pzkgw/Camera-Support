@@ -112,27 +112,6 @@ namespace GIShowCam.Gui
             }
         }*/
 
-        /*
-                /// <summary>
-                /// Event handler for "VlcControl.PositionChanged" event. 
-                /// Updates the label containing the playback position. 
-                /// </summary>
-                /// <param name="sender">Event sending. </param>
-                /// <param name="e">Event arguments, containing the current position. </param>
-                private void VlcControlOnPositionChanged(VlcControl sender, VlcEventArgs<float> e)
-                {
-                    //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
-                    //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
-
-                    if (vlc != null && vlc.GetCurrentMedia() != null)
-                        form.ControlTextUpdate(lblVlcNotifications,
-                            "DecodedVideo: " + vlc.GetCurrentMedia().Statistics.DecodedVideo +
-                            "  InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
-                            "  DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
-                            "  DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
-                            "  LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures);
-                }
-                */
         #region Additional Controls
 
 

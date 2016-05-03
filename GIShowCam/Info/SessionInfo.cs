@@ -4,7 +4,7 @@ namespace GIShowCam.Info
 {
     class SessionInfo
     {
-        internal static bool debug = false, log = true, fullVideo = false;
+        internal static bool debug = true, log = true, audio = false, fullVideo = false;
         internal static string snapshotDir = "C:\\";
 
         internal bool videoLoop = true;

@@ -75,9 +75,6 @@ namespace GIShowCam.Gui
 
                 //-------------------  DEFAULT ENABLED <--  to  -->  DISABLED  --------------------------------
                
-                ,"--aout=none" //  main NO audio output ( optional mai e si "--no-audio" )
-                ,"--no-sout-audio" //        ^^^  Enable audio stream output (default enabled)
-                //,"--no-audio" //             ^^^ ERR error la init cateodata when enabled
                 ,"--no-drop-late-frames" //drops frames that are late (arrive to the video output after their intended display date)
                 ,"--no-video-deco"  // Window decorations (default enabled)
                 ,"--no-skip-frames" // Optional ::> Enables framedropping on MPEG2 stream (default enabled)
@@ -100,6 +97,9 @@ namespace GIShowCam.Gui
                 //,"--croppadd-cropleft 100"
                 ,SessionInfo.debug?"--extraintf=logger":"--no-stats" //    Collect statistics (default enabled)
                 ,SessionInfo.debug?"--verbose=2":"--quiet" // deactivates all console messages
+                ,SessionInfo.audio?"--aout=none":"" //  main NO audio output ( optional mai e si "--no-audio" )
+                ,SessionInfo.audio?"--no-sout-audio":"" //        ^^^  Enable audio stream output (default enabled)
+                //,"--no-audio" //             ^^^ ERR error la init cateodata when enabled
             };
 
             vlc.VlcMediaplayerOptions = optiuni;
@@ -182,8 +182,7 @@ namespace GIShowCam.Gui
             {
                 vlc.SetMedia(info.host);
             }
-
-            vlc.Buffering += Vlc_Buffering;            
+                       
         }
 
         /*
