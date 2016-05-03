@@ -7,11 +7,15 @@ namespace GIShowCam.Info
         public string user;
         public string parola;
 
+        internal DeviceInfo data;
+
         public Device(string adresa, string user, string parola) : this()
         {
             this.adresa = adresa;
             this.user = user;
             this.parola = parola;
+
+            data = new DeviceInfo();
         }
 
         public Device(string adresa) : this(adresa, null, null)

@@ -50,6 +50,8 @@ namespace GIShowCam.Gui
         private void Vlc_Buffering(object sender, Vlc.DotNet.Core.VlcMediaPlayerBufferingEventArgs e)
         {
             form.Test(e.NewCache.ToString());
+
+            if (!info.cam.data.IsBuffering && !(e.NewCache < 100)) info.cam.data.IsBuffering = true;
         }
 
         private void AddVlcOptions()

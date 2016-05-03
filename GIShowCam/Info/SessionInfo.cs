@@ -4,8 +4,7 @@ namespace GIShowCam.Info
 {
     class SessionInfo
     {
-        internal static readonly bool debug = true;
-        internal static bool log = true, fullVideo = false;
+        internal static bool debug = false, log = true, fullVideo = false;
         internal static string snapshotDir = "C:\\";
 
         internal bool videoLoop = true;
@@ -24,7 +23,7 @@ namespace GIShowCam.Info
             new Device("http://10.10.10.78/axis-cgi/mjpg/video.cgi", "root", "cavi123,.")
         };
 
-        private Device cam;
+        internal Device cam;
 
         internal SessionInfo()
         {

@@ -79,7 +79,7 @@ namespace GIShowCam
             {
                 _logTimeNow = DateTime.Now;
                 InvokeGuiThread(new textUpdateDelegate(TextUpdate), txtDev,
-                    ((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString() + " ms " + s + Environment.NewLine, true, false);
+                    " " + s + "  " + ((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString() + " ms " + Environment.NewLine, true, false);
                 _logTimeLast = _logTimeNow;
             }
 
