@@ -26,6 +26,8 @@ namespace GIShowCam.Gui
             if (vlc != null && vlc.GetCurrentMedia() != null)
             {
                 info.cam.data.IsStarted = true;
+                info.cam.data.Start();
+                
                 //foreach(EventHandler evh in vlc.Media.StateChanged)
                 //vlc.Media.StateChanged -= Media_StateChanged;
                 vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;

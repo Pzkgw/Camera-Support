@@ -65,12 +65,25 @@ namespace GIShowCam.Gui
             //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
 
             if (vlc != null && vlc.GetCurrentMedia() != null)
+            {
                 form.ControlTextUpdate(form.lblVlcNotify,
                     "DecodedVideo: " + vlc.GetCurrentMedia().Statistics.DecodedVideo +
                     "  InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
                     "  DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
                     "  DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
                     "  LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures);
+
+                //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
+
+                if (!info.cam.data.IsVideoComplete &&
+                    info.cam.data.imgCount < (ulong)vlc.GetCurrentMedia().Statistics.DisplayedPictures)
+                {
+                    info.cam.data.imgCount =
+                       (ulong)vlc.GetCurrentMedia().Statistics.DisplayedPictures;
+                    info.cam.data.IsVideoComplete = true;
+                }
+                //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
+            }
         }
 
 

@@ -86,17 +86,18 @@ namespace GIShowCam.Gui
                 ,"--no-advanced" //  Show advanced options (default enabled)
                 ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
-                ,"--no-playlist-autostart" // playlist auto start (default enabled)
+                ,"--no-playlist-autostart" // playlist auto start (default enabled)                
                 ,"--no-snapshot-preview"
                 //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
                 //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
+                //,"--no-stats" //  NOT, folosita pt SendImagesCount  Collect statistics (default enabled)
                  
                 //,"--vout-filter=crop"
                 //,"--grayscale"
                 //,"--aspect-ratio=16:10"
                 //,"--croppadd-cropleft 100"
-                ,SessionInfo.debug?"--extraintf=logger":"--no-stats" //    Collect statistics (default enabled)
-                ,SessionInfo.debug?"--verbose=2":"--quiet" // deactivates all console messages
+                ,SessionInfo.debug?"--extraintf=logger":"" 
+                ,SessionInfo.debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages
                 ,SessionInfo.audio?"--aout=none":"" //  main NO audio output ( optional mai e si "--no-audio" )
                 ,SessionInfo.audio?"--no-sout-audio":"" //        ^^^  Enable audio stream output (default enabled)
                 //,"--no-audio" //             ^^^ ERR error la init cateodata when enabled

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace GIShowCam.Info
 {
@@ -6,16 +7,16 @@ namespace GIShowCam.Info
     class DeviceInfo
     {
         private bool[]
-            act = new bool[8],
+            act = new bool[9],
             inter = new bool[2];
+
+        internal ulong imgCount;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         internal DeviceInfo()
         {
-            int i = 0;
-            for (; i < act.Length; i++) act[i] = false;
-            for (i = 0; i < inter.Length; i++) inter[i] = false;
+
         }
 
         #region Stari Video
@@ -29,7 +30,7 @@ namespace GIShowCam.Info
             set
             {
                 act[0] = value;
-                OnPropertyChanged("IsStarted");
+                if (value) OnPropertyChanged("IsStarted");
             }
             get
             {
@@ -42,8 +43,7 @@ namespace GIShowCam.Info
             set
             {
                 act[1] = value;
-                OnPropertyChanged("IsOpening");
-
+                if (value) OnPropertyChanged("IsOpening");
             }
             get
             {
@@ -56,7 +56,7 @@ namespace GIShowCam.Info
             set
             {
                 act[2] = value;
-                OnPropertyChanged("IsBuffering");
+                if (value) OnPropertyChanged("IsBuffering");
 
             }
             get
@@ -70,7 +70,7 @@ namespace GIShowCam.Info
             set
             {
                 act[3] = value;
-                OnPropertyChanged("IsPlaying");
+                if (value) OnPropertyChanged("IsPlaying");
 
             }
             get
@@ -84,7 +84,7 @@ namespace GIShowCam.Info
             set
             {
                 act[4] = value;
-                OnPropertyChanged("IsPaused");
+                if (value) OnPropertyChanged("IsPaused");
 
             }
             get
@@ -98,7 +98,7 @@ namespace GIShowCam.Info
             set
             {
                 act[5] = value;
-                OnPropertyChanged("IsStopped");
+                if(value) OnPropertyChanged("IsStopped");
             }
             get
             {
@@ -111,7 +111,7 @@ namespace GIShowCam.Info
             set
             {
                 act[6] = value;
-                OnPropertyChanged("IsEnded");
+                if (value) OnPropertyChanged("IsEnded");
             }
             get
             {
@@ -126,11 +126,24 @@ namespace GIShowCam.Info
             set
             {
                 act[7] = value;
-                OnPropertyChanged("IsError");
+                if (value) OnPropertyChanged("IsError");
             }
             get
             {
                 return act[7];
+            }
+        }
+
+        internal bool IsVideoComplete//
+        {
+            set
+            {
+                act[8] = value;
+                if (value) OnPropertyChanged("IsVideoComplete");
+            }
+            get
+            {
+                return act[8];
             }
         }
 
@@ -139,9 +152,17 @@ namespace GIShowCam.Info
 
         protected void OnPropertyChanged(string name)
         {
+            if(SessionInfo.log)
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        internal void Start()
+        {
+            imgCount = 0u;
 
+            int i = 0;
+            for (; i < act.Length; i++) act[i] = false;
+            for (i = 0; i < inter.Length; i++) inter[i] = false;
+        }
     }
 }

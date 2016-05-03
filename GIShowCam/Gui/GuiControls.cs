@@ -124,11 +124,12 @@ namespace GIShowCam.Gui
                 playing = vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing;
                 if (playing)
                 {
-                    if (vlc.IsPlaying) vlc.Stop();
+                    vlc.Stop();
                 }
                 else
                 {
-                    if (!vlc.IsPlaying) vlc.Play();
+                    info.cam.data.Start();
+                    vlc.Play();
                 }
             }            
         }
