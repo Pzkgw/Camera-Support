@@ -55,6 +55,7 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\GuiBase.cs" />
+    <Compile Include="Gui\GuiConnect.cs" />
     <Compile Include="Gui\GuiControls.cs" />
     <Compile Include="Gui\GuiDeviceInfo.cs" />
     <Compile Include="Gui\GuiRecord.cs" />

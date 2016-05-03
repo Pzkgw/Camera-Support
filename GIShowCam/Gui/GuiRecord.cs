@@ -29,17 +29,14 @@ vlc.Play();
 */
         private bool recordIsOn;
 
-        Button btnSnapshot, btnRecord;
-        internal void InitGuiRecord(GuiBase mainB, Button btnSnapshot, Button btnRecord)
+        internal void InitGuiRecord()
         {
-            this.btnRecord = btnRecord;
-            this.btnSnapshot = btnSnapshot;
 
-            BtnRecord_Click(this.btnRecord, null);
+            BtnRecord_Click(form.btnRecord, null);
 
 
-            btnSnapshot.Click += BtnSnapshot_Click;
-            btnRecord.Click += BtnRecord_Click;
+            form.btnSnapshot.Click += BtnSnapshot_Click;
+            form.btnRecord.Click += BtnRecord_Click;
         }
 
         private void BtnRecord_Click(object sender, EventArgs e)
@@ -58,7 +55,7 @@ vlc.Play();
                 }
 
 
-            btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Recording";
+            form.btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Recording";
         }
         string _finalFilename, _tempFilename, _tempPath = "C:\\_tmp";
         //bool _WasError, _IsFinished;

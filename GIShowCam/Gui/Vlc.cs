@@ -41,9 +41,7 @@ namespace GIShowCam.Gui
             setVlcLibLocation();
             AddVlcOptions();
             vlc.EndInit();
-
-
-            vlc.Buffering += Vlc_Buffering;
+            
 
         }
 
@@ -136,54 +134,56 @@ namespace GIShowCam.Gui
 
         protected void VideoPlayInit()
         {
+
+            form.Restart();
+
+
             if (vlc != null)
             {
-
-                if (vlc.IsPlaying)
-                {
-                    form.Restart();
-                }
-
+                
                 if (vlc.GetCurrentMedia() != null)
                 {
                     vlc.GetCurrentMedia().Dispose();
                     vlc.Stop();
                 }
-
-                if (info.host.Count(s => s == '.') > 2)
-                {
-                    string path = info.host;
-
-                    if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
-                    {
-                        path = path.Insert(7, (info.user + ":" + info.password + "@"));
-                    }
-
-                    //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
-                    //LocationMedia media = new LocationMedia(path);
-                    //media.AddOption("no-snapshot-preview");
-                    //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
-                    //media.AddOption("–-aspect-ratio=4:3");
-                    //media.AddOption("--grayscale");
-
-                    //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
-                    //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
-                    //VlcContext.StartupOptions.AddOption("--aspect-ratio=1:9");
-                    //VlcContext.StartupOptions.AddOption("--autocrop");--crop-geometry "180 x 120 + 0 + 0"
-                    //VlcContext.StartupOptions.AddOption("--crop-geometry \"" + panelVlc.Width + "x" + panelVlc.Height + " + 0 + 0\"");--aspect-ratio=16:9
-
-                    //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
-
-
-
-                    vlc.SetMedia(path);
-                }
-                else
-                {
-                    vlc.SetMedia(info.host);
-                }
-
+                //vlc.Dispose();
             }
+
+
+            if (info.host.Count(s => s == '.') > 2)
+            {
+                string path = info.host;
+
+                if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
+                {
+                    path = path.Insert(7, (info.user + ":" + info.password + "@"));
+                }
+
+                //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
+                //LocationMedia media = new LocationMedia(path);
+                //media.AddOption("no-snapshot-preview");
+                //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
+                //media.AddOption("–-aspect-ratio=4:3");
+                //media.AddOption("--grayscale");
+
+                //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
+                //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
+                //VlcContext.StartupOptions.AddOption("--aspect-ratio=1:9");
+                //VlcContext.StartupOptions.AddOption("--autocrop");--crop-geometry "180 x 120 + 0 + 0"
+                //VlcContext.StartupOptions.AddOption("--crop-geometry \"" + panelVlc.Width + "x" + panelVlc.Height + " + 0 + 0\"");--aspect-ratio=16:9
+
+                //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
+
+
+
+                vlc.SetMedia(path);
+            }
+            else
+            {
+                vlc.SetMedia(info.host);
+            }
+
+            vlc.Buffering += Vlc_Buffering;            
         }
 
         /*

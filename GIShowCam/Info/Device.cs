@@ -1,7 +1,9 @@
 ﻿
+using System;
+
 namespace GIShowCam.Info
 {
-    public struct Device
+    public struct Device : IDisposable
     {
         public string adresa;
         public string user;
@@ -24,6 +26,11 @@ namespace GIShowCam.Info
 
         public Device(Device device) : this(device.adresa, device.user, device.parola)
         {
+        }
+
+        void IDisposable.Dispose()
+        {
+            data = null;
         }
     }
 }

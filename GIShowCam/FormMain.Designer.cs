@@ -43,6 +43,7 @@
             this.lblDevUser = new System.Windows.Forms.Label();
             this.lblDevPass = new System.Windows.Forms.Label();
             this.groupBoxDev = new System.Windows.Forms.GroupBox();
+            this.lblAdd = new System.Windows.Forms.Label();
             this.comboAddress = new System.Windows.Forms.ComboBox();
             this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
@@ -56,7 +57,6 @@
             this.groupBoxBtns = new System.Windows.Forms.GroupBox();
             this.chkFullVid = new System.Windows.Forms.CheckBox();
             this.chkPlayLoop = new System.Windows.Forms.CheckBox();
-            this.lblAdd = new System.Windows.Forms.Label();
             this.tabHost.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDevice.SuspendLayout();
@@ -110,6 +110,7 @@
             // txtDev
             // 
             this.txtDev.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDev.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txtDev.Location = new System.Drawing.Point(3, 3);
             this.txtDev.Multiline = true;
             this.txtDev.Name = "txtDev";
@@ -219,6 +220,14 @@
             this.groupBoxDev.TabStop = false;
             this.groupBoxDev.Text = "Device";
             // 
+            // lblAdd
+            // 
+            this.lblAdd.AutoSize = true;
+            this.lblAdd.Location = new System.Drawing.Point(374, 0);
+            this.lblAdd.Name = "lblAdd";
+            this.lblAdd.Size = new System.Drawing.Size(0, 15);
+            this.lblAdd.TabIndex = 8;
+            // 
             // comboAddress
             // 
             this.comboAddress.FormattingEnabled = true;
@@ -257,6 +266,7 @@
             this.groupBoxVlcFactors.Controls.Add(this.lblWidthF);
             this.groupBoxVlcFactors.Controls.Add(this.textBoxHeightF);
             this.groupBoxVlcFactors.Controls.Add(this.textBoxWidthF);
+            this.groupBoxVlcFactors.Enabled = false;
             this.groupBoxVlcFactors.Location = new System.Drawing.Point(998, 501);
             this.groupBoxVlcFactors.Name = "groupBoxVlcFactors";
             this.groupBoxVlcFactors.Size = new System.Drawing.Size(115, 108);
@@ -355,14 +365,6 @@
             this.chkPlayLoop.Text = "Play continuu";
             this.chkPlayLoop.UseVisualStyleBackColor = true;
             // 
-            // lblAdd
-            // 
-            this.lblAdd.AutoSize = true;
-            this.lblAdd.Location = new System.Drawing.Point(374, 0);
-            this.lblAdd.Name = "lblAdd";
-            this.lblAdd.Size = new System.Drawing.Size(0, 15);
-            this.lblAdd.TabIndex = 8;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -400,15 +402,15 @@
         private System.Windows.Forms.TabControl tabHost;
         private System.Windows.Forms.TabPage tabDevice;
         private System.Windows.Forms.TabPage tabLog;
-        private System.Windows.Forms.Button btnDevConnect;
-        private System.Windows.Forms.TextBox txtDevPass;
-        private System.Windows.Forms.TextBox txtDevUser;
-        private System.Windows.Forms.Button btnPlay;
+        internal System.Windows.Forms.Button btnDevConnect;
+        internal System.Windows.Forms.TextBox txtDevPass;
+        internal System.Windows.Forms.TextBox txtDevUser;
+        internal System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Label lblDevPass;
         private System.Windows.Forms.Label lblDevUser;
         private System.Windows.Forms.Label lblDevUrl;
         private System.Windows.Forms.GroupBox groupBoxDev;
-        private System.Windows.Forms.Label lblDev;
+        internal System.Windows.Forms.Label lblDev;
         internal System.Windows.Forms.Button btnSnapshot;
         internal System.Windows.Forms.Button btnRecord;
         private System.Windows.Forms.GroupBox groupBoxVlcFactors;
@@ -419,10 +421,10 @@
         private System.Windows.Forms.TextBox txtZoomF;
         private System.Windows.Forms.Label lblZoomF;
         private System.Windows.Forms.TextBox txtDev;
-        private System.Windows.Forms.ComboBox comboAddress;
+        internal System.Windows.Forms.ComboBox comboAddress;
         private System.Windows.Forms.GroupBox groupBoxBtns;
-        private System.Windows.Forms.CheckBox chkPlayLoop;
-        private System.Windows.Forms.CheckBox chkFullVid;
+        internal System.Windows.Forms.CheckBox chkPlayLoop;
+        internal System.Windows.Forms.CheckBox chkFullVid;
         private System.Windows.Forms.Label lblAdd;
     }
 }

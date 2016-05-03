@@ -28,17 +28,15 @@ namespace GIShowCam
             //VlcContext.Initialize();
 
             mainB = new GuiBase(this);
-            if (!SessionInfo.fullVideo)
+            if (SessionInfo.fullVideo)
             {
-                mainB.InitGuiControls(mainB, btnDevConnect, comboAddress,
-                    txtDevUser, txtDevPass, textBoxWidthF, textBoxHeightF,
-                    btnPlay, chkPlayLoop, chkFullVid, lblVlcNotify);
-                mainB.InitGuiDeviceInfo(mainB, lblDev);
-                mainB.InitGuiRecord(mainB, btnSnapshot, btnRecord);
+                mainB.VideoInit(true, true);
             }
             else
             {
-                mainB.FullVideo(true, true);
+                mainB.InitGuiControls();
+                mainB.InitGuiDeviceInfo();
+                mainB.InitGuiRecord();
             }
 
             panelVlc.BringToFront();

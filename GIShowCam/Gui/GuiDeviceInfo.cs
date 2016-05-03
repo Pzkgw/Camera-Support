@@ -5,12 +5,11 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-        Label lblDev;
         string strCommon = Environment.NewLine, strCommonLine = "";
 
-        internal void InitGuiDeviceInfo(GuiBase mainB, Label lblDev)
+        internal void InitGuiDeviceInfo()
         {
-            this.lblDev = lblDev;
+
             /*
             VlcStartupOptions opt = VlcContext.StartupOptions;
             strCommon = Environment.NewLine + "  Startup options:" + Environment.NewLine + Environment.NewLine;
@@ -48,7 +47,7 @@ namespace GIShowCam.Gui
 
 
 
-            lblDev.Text = devInfo + strCommon;
+            form.lblDev.Text = devInfo + strCommon;
         }
 
         #region Device Info

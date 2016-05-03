@@ -7,42 +7,29 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-        Label lblVlcNotifications;
-
-        ComboBox comboAddress;
-        TextBox txtDevUser, txtDevPass;
-
-        Button btnPlay;
-
-        internal void InitGuiControls(GuiBase mainB, Button btnDevConnect,
-            ComboBox comboTxtAddress, TextBox txtDevUser, TextBox txtDevPass,
-            TextBox textBoxWidthF, TextBox textBoxHeightF,
-            Button btnPlay, CheckBox chkLoop, CheckBox chkFullVideo, Label lblVlcNotify)
+        internal void InitGuiControls()
         {
 
-            this.lblVlcNotifications = lblVlcNotify;
-            this.btnPlay = btnPlay;
-            this.comboAddress = comboTxtAddress;
-            this.txtDevUser = txtDevUser;
-            this.txtDevPass = txtDevPass;
-
-            FillDeviceInfo();
+            foreach (string dev in info.GetDeviceList())
+                form.comboAddress.Items.Add(dev);
+            form.comboAddress.SelectedIndex = info.devID;
+            form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
 
             //vlc.EndReached += VlcControl_EndReached;
             //vlc.PositionChanged += VlcControlOnPositionChanged;
 
 
-            btnDevConnect.Click += BtnDevConnect_Click;
-            btnPlay.Click += BtnPlay_Click;
+            form.btnDevConnect.Click += BtnDevConnect_Click;
+            form.btnPlay.Click += BtnPlay_Click;
 
 
-            chkLoop.CheckedChanged += ChkLoop_CheckedChanged;
-            chkFullVideo.CheckedChanged += ChkFullVideo_CheckedChanged;
+            form.chkPlayLoop.CheckedChanged += ChkLoop_CheckedChanged;
+            form.chkFullVid.CheckedChanged += ChkFullVideo_CheckedChanged;
 
             //TextBox changed events:
-            comboAddress.TextChanged += TxtDevAddress_TextChanged;
-            txtDevUser.TextChanged += TxtDevUser_TextChanged;
-            txtDevPass.TextChanged += TxtDevPass_TextChanged;
+            form.comboAddress.TextChanged += TxtDevAddress_TextChanged;
+            form.txtDevUser.TextChanged += TxtDevUser_TextChanged;
+            form.txtDevPass.TextChanged += TxtDevPass_TextChanged;
 
             ComboAddress_SelectionChangeCommitted(null, null);
         }
@@ -56,7 +43,7 @@ namespace GIShowCam.Gui
                     form.panelVlc.Click -= PanelVlc_Click;
                     SessionInfo.log = false;
                     vlc.Pause();
-                    FullVideo(true, false);
+                    VideoInit(true, false);
                     //if (info.videoLoop) vlc.Play(); else vlc.NextFrame();
                     vlc.Play();
                 }
@@ -64,7 +51,7 @@ namespace GIShowCam.Gui
                 {
                     SessionInfo.log = true;
                     vlc.Pause();
-                    FullVideo(false, false);
+                    VideoInit(false, false);
                     vlc.Play();
                 }
         }
@@ -91,49 +78,12 @@ namespace GIShowCam.Gui
             //vlc.NextFrame();
         }
 
-        private void FillDeviceInfo()
-        {
-            foreach (string dev in info.GetDeviceList())
-                comboAddress.Items.Add(dev);
-            comboAddress.SelectedIndex = info.devID;
-            comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
-        }
-
-        private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            info.Select(comboAddress.SelectedIndex);
-            info.cam.data.PropertyChanged += Data_PropertyChanged;
-            txtDevUser.Text = info.user;
-            txtDevPass.Text = info.password;
-            comboAddress.Text = info.host;
-
-            BtnDevConnect_Click(null, null);
-        }
 
         private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             form.Log(e.PropertyName);
+            form.ControlTextUpdate(form.btnPlay, (vlc != null && vlc.IsPlaying) ? "Stop" : "Play");
         }
-
-        private void BtnDevConnect_Click(object sender, EventArgs e)
-        {
-            VideoPlayInit();
-            if (vlc != null && vlc.GetCurrentMedia() != null)
-            {
-                info.cam.data.IsStarted = true;
-                //foreach(EventHandler evh in vlc.Media.StateChanged)
-                //vlc.Media.StateChanged -= Media_StateChanged;
-                vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
-                vlc.EncounteredError += Vlc_EncounteredError;
-                //VlcContext.
-                vlc.Play();
-            }
-            else
-            {
-                MessageBox.Show("Eroare la conexiune");
-            }
-        }
-
 
 
         private void Vlc_EncounteredError(object sender, VlcMediaPlayerEncounteredErrorEventArgs e)
@@ -141,56 +91,7 @@ namespace GIShowCam.Gui
             MessageBox.Show(e.ToString());
         }
 
-        private void GuiBase_StateChanged(object sender, VlcMediaStateChangedEventArgs e)
-        {
-            /*
-            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial)
-                form.Log("Connection start"); //connection start
-            else
-                form.Log("Connection state: " + vlc.State);*/
 
-            switch (vlc.State)
-            {
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Opening:
-                    info.cam.data.IsOpening = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Buffering:
-                    //info.cam.data.IsBuffering = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:
-                    info.cam.data.IsPlaying = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Paused:
-                    info.cam.data.IsPaused = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Stopped:
-                    info.cam.data.IsStopped = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Ended:
-                    info.cam.data.IsEnded = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Error:
-                    info.cam.data.IsError = true;
-                    break;
-                default:
-                    break;
-            }
-
-
-            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) //play vlc start
-            {
-                form.ControlShow(btnPlay, true);
-                form.ControlShow(form.btnSnapshot, true);
-                form.ControlShow(form.btnRecord, true);
-                BtnPlay_Click(null, null);
-            }
-            else
-            {
-                form.ControlShow(form.btnSnapshot, false);
-                form.ControlShow(form.btnRecord, false);
-                //BtnPlay_Click(null, null);                
-            }
-        }
 
         /*
         void VlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
@@ -250,30 +151,26 @@ namespace GIShowCam.Gui
                 {
                     if (!vlc.IsPlaying) vlc.Play();
                 }
-            }
-
-            form.ControlTextUpdate(btnPlay, playing ? "Stop" : "Play");
+            }            
         }
-
-
-        #endregion Additional Controls
-
 
         private void TxtDevPass_TextChanged(object sender, EventArgs e)
         {
-            info.password = txtDevPass.Text;
+            info.password = form.txtDevPass.Text;
         }
 
         private void TxtDevUser_TextChanged(object sender, EventArgs e)
         {
-            info.user = txtDevUser.Text;
+            info.user = form.txtDevUser.Text;
         }
 
         private void TxtDevAddress_TextChanged(object sender, EventArgs e)
         {
-            info.host = comboAddress.Text;
+            info.host = form.comboAddress.Text;
         }
 
+
+        #endregion Additional Controls
 
     }
 }
