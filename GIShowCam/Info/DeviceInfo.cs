@@ -134,7 +134,7 @@ namespace GIShowCam.Info
             }
         }
 
-        internal bool IsVideoComplete//
+        internal bool IsVideoComplete//1000
         {
             set
             {

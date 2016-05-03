@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Vlc.DotNet.Core;
 
@@ -27,7 +29,7 @@ namespace GIShowCam.Gui
             {
                 info.cam.data.IsStarted = true;
                 info.cam.data.Start();
-                
+
                 //foreach(EventHandler evh in vlc.Media.StateChanged)
                 //vlc.Media.StateChanged -= Media_StateChanged;
                 vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
@@ -100,7 +102,62 @@ namespace GIShowCam.Gui
             }
         }
 
+        protected void VideoPlayInit()
+        {
 
+            form.Restart();
+
+            if (vlc == null)
+            {
+                InitVlcStart();
+                vlc.Parent = form.panelVlc;
+                vlc.initEndNeeded = true;
+            }
+            else
+            {
+
+                // if (vlc.GetCurrentMedia() != null){    vlc.GetCurrentMedia().Dispose();    vlc.Stop();    vlc.Unregister(); } 
+                //vlc.Dispose();
+                //vlc = null;
+                vlc.Stop();
+            }
+
+            string path = info.host;
+
+            if (path.Count(s => s == '.') > 2)
+            {
+
+                if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
+                {
+                    path = path.Insert(7, (info.user + ":" + info.password + "@"));
+                }
+
+                //vlc rtsp://10.10.10.78/axis-media/media.amp --rtsp-user=root --rtsp-pwd=cavi123,.
+                //LocationMedia media = new LocationMedia(path);
+                //media.AddOption("no-snapshot-preview");
+                //media.AddOption("-vvv");//optional : "Verbose verbose verbose". Verbose output
+                //media.AddOption("–-aspect-ratio=4:3");
+                //media.AddOption("--grayscale");
+
+                //VlcContext.StartupOptions.AddOption("--width=" + panelVlc.Width);
+                //VlcContext.StartupOptions.AddOption("--height=" + panelVlc.Height);
+                //VlcContext.StartupOptions.AddOption("--aspect-ratio=1:9");
+                //VlcContext.StartupOptions.AddOption("--autocrop");--crop-geometry "180 x 120 + 0 + 0"
+                //VlcContext.StartupOptions.AddOption("--crop-geometry \"" + panelVlc.Width + "x" + panelVlc.Height + " + 0 + 0\"");--aspect-ratio=16:9
+
+                //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
+
+                //vlc.GetCurrentMedia().ParseAsync();
+            }
+
+            if (vlc.initEndNeeded)
+            {
+                InitVlcEnd();
+                vlc.initEndNeeded = false;
+            }
+            vlc.SetMedia(path);
+
+        }
 
     }
 }

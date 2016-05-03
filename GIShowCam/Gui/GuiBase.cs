@@ -16,9 +16,6 @@ namespace GIShowCam.Gui
         {
             info = new SessionInfo();
             form = formBase;
-
-            InitVlc();
-            vlc.Parent = form.panelVlc;
         }
 
 
