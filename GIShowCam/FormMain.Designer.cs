@@ -81,7 +81,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVlc.Location = new System.Drawing.Point(337, 22);
             this.panelVlc.Name = "panelVlc";
-            this.panelVlc.Size = new System.Drawing.Size(766, 473);
+            this.panelVlc.Size = new System.Drawing.Size(906, 740);
             this.panelVlc.TabIndex = 1;
             // 
             // tabHost
@@ -93,7 +93,7 @@
             this.tabHost.Location = new System.Drawing.Point(1, 0);
             this.tabHost.Name = "tabHost";
             this.tabHost.SelectedIndex = 0;
-            this.tabHost.Size = new System.Drawing.Size(330, 495);
+            this.tabHost.Size = new System.Drawing.Size(330, 762);
             this.tabHost.TabIndex = 2;
             // 
             // tabLog
@@ -102,7 +102,7 @@
             this.tabLog.Location = new System.Drawing.Point(4, 22);
             this.tabLog.Name = "tabLog";
             this.tabLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLog.Size = new System.Drawing.Size(322, 469);
+            this.tabLog.Size = new System.Drawing.Size(322, 736);
             this.tabLog.TabIndex = 1;
             this.tabLog.Text = "Log";
             this.tabLog.UseVisualStyleBackColor = true;
@@ -115,7 +115,7 @@
             this.txtDev.Multiline = true;
             this.txtDev.Name = "txtDev";
             this.txtDev.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDev.Size = new System.Drawing.Size(316, 463);
+            this.txtDev.Size = new System.Drawing.Size(316, 730);
             this.txtDev.TabIndex = 0;
             // 
             // tabDevice
@@ -124,7 +124,7 @@
             this.tabDevice.Location = new System.Drawing.Point(4, 22);
             this.tabDevice.Name = "tabDevice";
             this.tabDevice.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDevice.Size = new System.Drawing.Size(322, 469);
+            this.tabDevice.Size = new System.Drawing.Size(322, 736);
             this.tabDevice.TabIndex = 0;
             this.tabDevice.Text = "Device";
             this.tabDevice.UseVisualStyleBackColor = true;
@@ -141,9 +141,9 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(120, 16);
+            this.btnPlay.Location = new System.Drawing.Point(209, 23);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(79, 37);
+            this.btnPlay.Size = new System.Drawing.Size(106, 34);
             this.btnPlay.TabIndex = 3;
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Visible = false;
@@ -213,7 +213,7 @@
             this.groupBoxDev.Controls.Add(this.txtDevUser);
             this.groupBoxDev.Controls.Add(this.txtDevPass);
             this.groupBoxDev.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.groupBoxDev.Location = new System.Drawing.Point(1, 501);
+            this.groupBoxDev.Location = new System.Drawing.Point(1, 768);
             this.groupBoxDev.Name = "groupBoxDev";
             this.groupBoxDev.Size = new System.Drawing.Size(545, 108);
             this.groupBoxDev.TabIndex = 4;
@@ -239,7 +239,7 @@
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
-            this.btnSnapshot.Location = new System.Drawing.Point(349, 16);
+            this.btnSnapshot.Location = new System.Drawing.Point(488, 21);
             this.btnSnapshot.Name = "btnSnapshot";
             this.btnSnapshot.Size = new System.Drawing.Size(85, 26);
             this.btnSnapshot.TabIndex = 5;
@@ -250,7 +250,7 @@
             // btnRecord
             // 
             this.btnRecord.Enabled = false;
-            this.btnRecord.Location = new System.Drawing.Point(348, 55);
+            this.btnRecord.Location = new System.Drawing.Point(488, 55);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(86, 49);
             this.btnRecord.TabIndex = 6;
@@ -267,7 +267,7 @@
             this.groupBoxVlcFactors.Controls.Add(this.textBoxHeightF);
             this.groupBoxVlcFactors.Controls.Add(this.textBoxWidthF);
             this.groupBoxVlcFactors.Enabled = false;
-            this.groupBoxVlcFactors.Location = new System.Drawing.Point(998, 501);
+            this.groupBoxVlcFactors.Location = new System.Drawing.Point(1138, 768);
             this.groupBoxVlcFactors.Name = "groupBoxVlcFactors";
             this.groupBoxVlcFactors.Size = new System.Drawing.Size(115, 108);
             this.groupBoxVlcFactors.TabIndex = 7;
@@ -337,16 +337,16 @@
             this.groupBoxBtns.Controls.Add(this.btnPlay);
             this.groupBoxBtns.Controls.Add(this.btnSnapshot);
             this.groupBoxBtns.Controls.Add(this.btnRecord);
-            this.groupBoxBtns.Location = new System.Drawing.Point(552, 501);
+            this.groupBoxBtns.Location = new System.Drawing.Point(552, 768);
             this.groupBoxBtns.Name = "groupBoxBtns";
-            this.groupBoxBtns.Size = new System.Drawing.Size(440, 108);
+            this.groupBoxBtns.Size = new System.Drawing.Size(580, 108);
             this.groupBoxBtns.TabIndex = 8;
             this.groupBoxBtns.TabStop = false;
             // 
             // chkFullVid
             // 
             this.chkFullVid.AutoSize = true;
-            this.chkFullVid.Location = new System.Drawing.Point(231, 58);
+            this.chkFullVid.Location = new System.Drawing.Point(6, 71);
             this.chkFullVid.Name = "chkFullVid";
             this.chkFullVid.Size = new System.Drawing.Size(104, 17);
             this.chkFullVid.TabIndex = 8;
@@ -359,7 +359,7 @@
             this.chkPlayLoop.Checked = true;
             this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPlayLoop.Enabled = false;
-            this.chkPlayLoop.Location = new System.Drawing.Point(231, 27);
+            this.chkPlayLoop.Location = new System.Drawing.Point(6, 33);
             this.chkPlayLoop.Name = "chkPlayLoop";
             this.chkPlayLoop.Size = new System.Drawing.Size(80, 17);
             this.chkPlayLoop.TabIndex = 7;
@@ -370,7 +370,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1116, 608);
+            this.ClientSize = new System.Drawing.Size(1256, 875);
             this.Controls.Add(this.groupBoxBtns);
             this.Controls.Add(this.groupBoxVlcFactors);
             this.Controls.Add(this.groupBoxDev);
@@ -379,7 +379,7 @@
             this.Controls.Add(this.lblVlcNotify);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormMain";
+            this.Text = "Camera view";
             this.tabHost.ResumeLayout(false);
             this.tabLog.ResumeLayout(false);
             this.tabLog.PerformLayout();

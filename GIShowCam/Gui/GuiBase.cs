@@ -1,5 +1,7 @@
 ﻿using GIShowCam.Info;
+using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace GIShowCam.Gui
 {
@@ -15,9 +17,15 @@ namespace GIShowCam.Gui
         {
             info = new SessionInfo();
             form = formBase;
-        }
-        
 
+            form.panelVlc.Click += PanelVlc_Click;
+        }
+
+        private void PanelVlc_Click(object sender, EventArgs e)
+        {
+            //vlc.NextFrame();
+            MessageBox.Show("  Bravo !  ");
+        }
 
         #region CleanUp
 

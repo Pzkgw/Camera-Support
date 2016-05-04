@@ -98,7 +98,7 @@ namespace GIShowCam.Info
             set
             {
                 act[5] = value;
-                if(value) OnPropertyChanged("IsStopped");
+                if(!value) OnPropertyChanged("IsStopped");
             }
             get
             {

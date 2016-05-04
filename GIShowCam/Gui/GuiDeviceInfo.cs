@@ -66,11 +66,12 @@ namespace GIShowCam.Gui
             if (vlc != null && vlc.GetCurrentMedia() != null)
             {
                 form.ControlTextUpdate(form.lblVlcNotify,
-                    "DecodedVideo: " + vlc.GetCurrentMedia().Statistics.DecodedVideo +
-                    "  InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
-                    "  DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
-                    "  DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
-                    "  LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures);
+                    "Time: " + vlc.Time +
+                    ", DecodedVideo: " + vlc.GetCurrentMedia().Statistics.DecodedVideo +
+                    ", InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
+                    ", DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
+                    ", DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
+                    ", LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures);
 
                 //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
 

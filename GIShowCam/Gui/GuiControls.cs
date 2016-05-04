@@ -39,10 +39,9 @@ namespace GIShowCam.Gui
             if (vlc != null)
                 if (SessionInfo.fullVideo)
                 {
-                    form.panelVlc.Click -= PanelVlc_Click;
                     SessionInfo.log = false;
                     vlc.Pause();
-                    VideoInit(true, false);
+                    VideoInit(true, true);
                     //if (info.videoLoop) vlc.Play(); else vlc.NextFrame();
                     vlc.Play();
                 }
@@ -50,7 +49,7 @@ namespace GIShowCam.Gui
                 {
                     SessionInfo.log = true;
                     vlc.Pause();
-                    VideoInit(false, false);
+                    VideoInit(false, true);
                     vlc.Play();
                 }
         }
@@ -61,24 +60,14 @@ namespace GIShowCam.Gui
             if (vlc != null)
                 if (info.videoLoop)
                 {
-                    form.panelVlc.Click -= PanelVlc_Click;
                     vlc.Pause();
                     vlc.Play();
                 }
                 else
                 {
                     vlc.Pause();
-                    form.panelVlc.Click += PanelVlc_Click;
                 }
         }
-
-        private void PanelVlc_Click(object sender, EventArgs e)
-        {
-            //vlc.NextFrame();
-        }
-
-
-
 
 
 
@@ -99,9 +88,7 @@ namespace GIShowCam.Gui
             {
                 vlc.Play(subItems[0]);
             }
-        }*/
-
-        #region Additional Controls
+        }*/        
 
 
 
@@ -123,6 +110,8 @@ namespace GIShowCam.Gui
             }            
         }
 
+        #region Detalii pt connection textboxes
+
         private void TxtDevPass_TextChanged(object sender, EventArgs e)
         {
             info.password = form.txtDevPass.Text;
@@ -138,8 +127,7 @@ namespace GIShowCam.Gui
             info.host = form.comboAddress.Text;
         }
 
-
-        #endregion Additional Controls
+        #endregion Detalii pt connection textboxes
 
     }
 }
