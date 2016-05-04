@@ -78,11 +78,12 @@ namespace GIShowCam.Gui
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Ended:
                     info.cam.data.IsEnded = true;
+                    /*
                     vlc.Stop();
+                    info.cam.data.IsStopped = true;
+                    (new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start();  */                  
                     //vlc.Dispose();
                     //GC.Collect();
-                    //ComboAddress_SelectionChangeCommitted(null, null);
-                    //VideoInit(false, false);
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Error:
                     info.cam.data.IsError = true;

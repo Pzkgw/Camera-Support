@@ -43,7 +43,17 @@ namespace GIShowCam.Info
         internal void SelectCamera(int idx)
         {
             devID = idx;
-            cam = new Device(devices[idx]);
+            SelectCamera(devices[idx].adresa, devices[idx].user, devices[idx].parola);
+        }
+
+        internal void SelectCamera()
+        {
+            SelectCamera(host, user, password);
+        }
+            
+        private void SelectCamera(string h, string u, string p)
+        {
+            cam = new Device(host, user, password);
         }
 
         public string[] GetDeviceList()

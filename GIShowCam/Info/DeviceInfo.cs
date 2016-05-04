@@ -16,7 +16,7 @@ namespace GIShowCam.Info
 
         internal DeviceInfo()
         {
-
+            Start();
         }
 
         #region Stari Video
@@ -163,6 +163,8 @@ namespace GIShowCam.Info
             int i = 0;
             for (; i < act.Length; i++) act[i] = false;
             for (i = 0; i < inter.Length; i++) inter[i] = false;
+
+            IsStarted = true;
         }
     }
 }

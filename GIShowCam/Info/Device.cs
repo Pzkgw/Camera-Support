@@ -19,7 +19,7 @@ namespace GIShowCam.Info
 
             data = new DeviceInfo();
         }
-
+        
         public Device(string adresa) : this(adresa, null, null)
         {
         }

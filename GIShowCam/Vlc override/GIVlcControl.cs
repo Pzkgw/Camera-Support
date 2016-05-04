@@ -1,5 +1,6 @@
 ﻿
 
+using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 
 namespace GIShowCam.Vlc_override
@@ -9,25 +10,31 @@ namespace GIShowCam.Vlc_override
 
         internal bool initEndNeeded;
 
-        protected override void Dispose(bool disposing)
+        internal void MpPlay()
         {
-            base.Dispose(disposing); // o sa cheme vlc.HandleDestroyed event
+            //(new System.Threading.Thread(delegate () { Play(); })).Start();
+            Play();
         }
+
+        internal void MpStop(bool preDel)
+        {
+            
+            //(new System.Threading.Thread(delegate () { Stop(); })).Start();
+            Stop();
+            if (preDel) GetCurrentMedia().Dispose();
+        }
+
+        internal void MpPause()
+        {
+            //(new System.Threading.Thread(delegate () { Pause(); })).Start();
+            Pause();
+        }
+
         /*
-               internal void Unregister()
-               {
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            OnPaint(e);
+        }*/
 
-                   if (myVlcMediaPlayer != null)
-                   {
-                       UnregisterEvents();
-                       if (IsPlaying) Stop();
-                       //myVlcMediaPlayer.Dispose();
-                   }
-                   //myVlcMediaPlayer = null;
-                   //base.Dispose(disposing);
-               }
-               //base.Dispose(false);
-
-               } */
     }
 }

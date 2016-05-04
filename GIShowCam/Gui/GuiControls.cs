@@ -97,7 +97,6 @@ namespace GIShowCam.Gui
                 }
                 else
                 {
-                    info.cam.data.Start();
                     vlc.Play();
                 }
             }            

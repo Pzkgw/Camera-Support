@@ -29,7 +29,7 @@ namespace GIShowCam.Gui
 
             if(vlc != null)
             {
-                vlc.Pause();
+                vlc.MpPause();
             }
 
 
@@ -74,7 +74,7 @@ namespace GIShowCam.Gui
                 }
                 else
                 {
-                    vlc.Stop();
+                    vlc.MpStop(true);                    
                 }
 
                 string path = info.host;
@@ -112,13 +112,12 @@ namespace GIShowCam.Gui
         /// <returns></returns>
         private void Vlc_MediaChanged(object sender, VlcMediaPlayerMediaChangedEventArgs e)
         {
-            info.cam.data.IsStarted = true;
-            info.cam.data.Start();
+            info.SelectCamera();
 
             info.cam.data.PropertyChanged += Data_PropertyChanged;
             vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
 
-            vlc.Play();
+            vlc.MpPlay();
         }
 
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
