@@ -48,8 +48,8 @@ namespace GIShowCam.Gui
 
 
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            info.Select(form.comboAddress.SelectedIndex);
+        {            
+            info.SelectCamera(form.comboAddress.SelectedIndex);
             info.cam.data.PropertyChanged += Data_PropertyChanged;
             form.txtDevUser.Text = info.user;
             form.txtDevPass.Text = info.password;

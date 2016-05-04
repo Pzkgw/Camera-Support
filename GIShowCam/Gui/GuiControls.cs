@@ -8,16 +8,6 @@ namespace GIShowCam.Gui
     {
         internal void InitGuiControls()
         {
-
-            foreach (string dev in info.GetDeviceList())
-                form.comboAddress.Items.Add(dev);
-            form.comboAddress.SelectedIndex = info.devID;
-            form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
-
-            //vlc.EndReached += VlcControl_EndReached;
-            //vlc.PositionChanged += VlcControlOnPositionChanged;
-
-
             form.btnDevConnect.Click += BtnDevConnect_Click;
             form.btnPlay.Click += BtnPlay_Click;
 
@@ -30,7 +20,16 @@ namespace GIShowCam.Gui
             form.txtDevUser.TextChanged += TxtDevUser_TextChanged;
             form.txtDevPass.TextChanged += TxtDevPass_TextChanged;
 
+            foreach (string dev in info.GetDeviceList()) form.comboAddress.Items.Add(dev);
+
+
+            form.comboAddress.SelectedIndex = info.devID;
             ComboAddress_SelectionChangeCommitted(null, null);
+            
+                       
+
+            
+            form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
         }
 
         private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)

@@ -63,12 +63,21 @@ namespace GIShowCam.Gui
                     //info.cam.data.IsBuffering = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:
+                    //BtnPlay_Click(null, null);
                     info.cam.data.IsPlaying = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Paused:
                     info.cam.data.IsPaused = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Stopped:
+                    if (!info.cam.data.IsStopped)
+                    {
+                        if(!info.cam.data.IsPlaying)
+                            form.ControlShow(form.btnPlay, false);
+                        form.ControlShow(form.btnSnapshot, false);
+                        form.ControlShow(form.btnRecord, false);
+                    }
+
                     info.cam.data.IsStopped = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Ended:
@@ -84,21 +93,6 @@ namespace GIShowCam.Gui
                     break;
                 default:
                     break;
-            }
-
-
-            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) //play vlc start
-            {
-                form.ControlShow(form.btnPlay, true);
-                form.ControlShow(form.btnSnapshot, true);
-                form.ControlShow(form.btnRecord, true);
-                BtnPlay_Click(null, null);
-            }
-            else
-            {
-                form.ControlShow(form.btnSnapshot, false);
-                form.ControlShow(form.btnRecord, false);
-                //BtnPlay_Click(null, null);                
             }
         }
 

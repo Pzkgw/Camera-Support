@@ -58,7 +58,7 @@ vlc.Play();
                 MessageBox.Show(" Not implementat ");
             }
 
-            form.btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Recording";
+            form.btnRecord.Text = "Recording" + Environment.NewLine + (recordIsOn ? "Stop" : "Start");
         }
 
         /*

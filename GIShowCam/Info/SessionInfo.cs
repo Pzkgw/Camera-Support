@@ -40,8 +40,9 @@ namespace GIShowCam.Info
             cam = new Device(devices[devID]);// Current Info
         }
 
-        internal void Select(int idx)
+        internal void SelectCamera(int idx)
         {
+            devID = idx;
             cam = new Device(devices[idx]);
         }
 
