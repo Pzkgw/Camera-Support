@@ -32,7 +32,7 @@ vlc.Play();
         internal void InitGuiRecord()
         {
 
-            BtnRecord_Click(form.btnRecord, null);
+            BtnRecord_Click(null, null);
 
 
             form.btnSnapshot.Click += BtnSnapshot_Click;
@@ -41,22 +41,27 @@ vlc.Play();
 
         private void BtnRecord_Click(object sender, EventArgs e)
         {
-            if (e != null)
-                if (recordIsOn)
-                {
-                    //vlc.Media.AddOption("--color=random", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
-                    recordIsOn = false;
-                }
-                else
-                {
-                    //vlc.Media.AddOption("--color=NIOrandom", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
-                    Record("c:\\", "kk.mp4", 800);
-                    recordIsOn = true;
-                }
 
+            if (e != null)
+            {
+                /* if (recordIsOn)
+               {
+                   //vlc.Media.AddOption("--color=random", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
+                   recordIsOn = false;
+               }
+               else
+               {
+                   //vlc.Media.AddOption("--color=NIOrandom", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
+                   Record("c:\\", "kk.mp4", 800);
+                   recordIsOn = true;
+               }*/
+                MessageBox.Show(" Not implementat ");
+            }
 
             form.btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Recording";
         }
+
+        /*
         string _finalFilename, _tempFilename, _tempPath = "C:\\_tmp";
         //bool _WasError, _IsFinished;
         int secondsToRecord;
@@ -95,7 +100,7 @@ vlc.Play();
             //vlc.Media = media;
             //Start the timer used to stop the recording after X minutes
             //--t1.Enabled = true;
-        }
+        }*/
 
 
         private void BtnSnapshot_Click(object sender, EventArgs e)

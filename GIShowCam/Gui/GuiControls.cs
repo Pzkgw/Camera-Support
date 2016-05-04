@@ -1,7 +1,6 @@
 ﻿using GIShowCam.Info;
 using System;
 using System.Windows.Forms;
-using Vlc.DotNet.Core;
 
 namespace GIShowCam.Gui
 {
@@ -79,17 +78,7 @@ namespace GIShowCam.Gui
         }
 
 
-        private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            form.Log(e.PropertyName);
-            form.ControlTextUpdate(form.btnPlay, (vlc != null && vlc.IsPlaying) ? "Stop" : "Play");
-        }
 
-
-        private void Vlc_EncounteredError(object sender, VlcMediaPlayerEncounteredErrorEventArgs e)
-        {
-            MessageBox.Show(e.ToString());
-        }
 
 
 

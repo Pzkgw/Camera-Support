@@ -1,50 +1,42 @@
 ﻿using GIShowCam.Info;
-using GIShowCam.Vlc_override;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using Vlc.DotNet.Forms;
+using Vlc.DotNet.Core;
 
+//  -- Vlc Options & Events --
 namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-        private GIVlcControl vlc;
+
+
         //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
 
-
-        private void InitVlcStart()
+        /// <summary>
+        /// Events de adaugat dupa re-initializare
+        /// Pre-Cleanup nu-i necesar -> Media a fost disposed
+        /// </summary>
+        /// <returns></returns>
+        private void SignEvents()
         {
-            //opt = VlcContext.StartupOptions;
-
-            //opt.ScreenSaverEnabled = false;
-
-            //SetDirectory();
-
-            //if (SessionInfo.debug) EnableLogConsole();
-
-            vlc = new GIVlcControl();
-            vlc.Name = "vlc";
-            vlc.TabStop = false;
-            vlc.Enabled = false;
-            vlc.ImeMode = ImeMode.NoControl;
-            vlc.Dock = DockStyle.Fill;
-            vlc.BackColor = Color.Empty;
-            //vlc.Rate = 0.0f;
-            //vlc.Location = new Point(0,0);
-            //vlc.Size = new Size(panelVlc.Width, panelVlc.Height);
-            //vlc.Width = panelVlc.Width;
-            //vlc.Height = panelVlc.Height;
-            //vlc.SetBounds(0, 0, panelVlc.Width, panelVlc.Height);
+            //
+            //foreach(EventHandler evh in vlc.Media.StateChanged)
+            //vlc.Media.StateChanged -= Media_StateChanged;
+            vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
+            vlc.EncounteredError += Vlc_EncounteredError;
+            vlc.Buffering += Vlc_Buffering;
+            vlc.PositionChanged += Vlc_PositionChanged;
         }
 
-        private void InitVlcEnd()
+        private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            vlc.VlcLibDirectory = new DirectoryInfo(GetVlcLibLocation());
-            vlc.VlcMediaplayerOptions = GetVlcOptions();
-            vlc.EndInit();
+            form.Log(e.PropertyName);
+            form.ControlTextUpdate(form.btnPlay, (vlc != null && vlc.IsPlaying) ? "Stop" : "Play");
+        }
+
+
+        private void Vlc_EncounteredError(object sender, VlcMediaPlayerEncounteredErrorEventArgs e)
+        {
+            MessageBox.Show(e.ToString());
         }
 
         private void Vlc_Buffering(object sender, Vlc.DotNet.Core.VlcMediaPlayerBufferingEventArgs e)
@@ -52,6 +44,62 @@ namespace GIShowCam.Gui
             form.Test(e.NewCache.ToString());
 
             if (!info.cam.data.IsBuffering && !(e.NewCache < 100)) info.cam.data.IsBuffering = true;
+        }
+
+        private void GuiBase_StateChanged(object sender, VlcMediaStateChangedEventArgs e)
+        {
+            /*
+            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial)
+                form.Log("Connection start"); //connection start
+            else
+                form.Log("Connection state: " + vlc.State);*/
+
+            switch (vlc.State)
+            {
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Opening:
+                    info.cam.data.IsOpening = true;
+                    break;
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Buffering:
+                    //info.cam.data.IsBuffering = true;
+                    break;
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:
+                    info.cam.data.IsPlaying = true;
+                    break;
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Paused:
+                    info.cam.data.IsPaused = true;
+                    break;
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Stopped:
+                    info.cam.data.IsStopped = true;
+                    break;
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Ended:
+                    info.cam.data.IsEnded = true;
+                    vlc.Stop();
+                    //vlc.Dispose();
+                    //GC.Collect();
+                    //ComboAddress_SelectionChangeCommitted(null, null);
+                    //VideoInit(false, false);
+                    break;
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Error:
+                    info.cam.data.IsError = true;
+                    break;
+                default:
+                    break;
+            }
+
+
+            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) //play vlc start
+            {
+                form.ControlShow(form.btnPlay, true);
+                form.ControlShow(form.btnSnapshot, true);
+                form.ControlShow(form.btnRecord, true);
+                BtnPlay_Click(null, null);
+            }
+            else
+            {
+                form.ControlShow(form.btnSnapshot, false);
+                form.ControlShow(form.btnRecord, false);
+                //BtnPlay_Click(null, null);                
+            }
         }
 
         private string[] GetVlcOptions()
@@ -110,12 +158,13 @@ namespace GIShowCam.Gui
 
         private string GetVlcLibLocation()
         {
+            /*
             string aP;
             if (Environment.Is64BitOperatingSystem)
                 aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN\\VLC");
             else
                 aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN\\VLC");
-
+                */
             /*else if (!File.Exists(Path.Combine(aP, "libvlc.dll"))
                            {
                            Using fbdDialog As New FolderBrowserDialog()
@@ -128,7 +177,7 @@ namespace GIShowCam.Gui
 
             e.VlcLibDirectory = new DirectoryInfo(aP);*/
 
-            return aP;
+            return "c:\\Program Files (x86)\\VideoLAN\\VLC";//aP;
         }
  
 

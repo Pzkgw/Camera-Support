@@ -1,5 +1,4 @@
 ﻿using GIShowCam.Info;
-using System.Windows.Forms;
 using System.Drawing;
 
 namespace GIShowCam.Gui
@@ -17,30 +16,7 @@ namespace GIShowCam.Gui
             info = new SessionInfo();
             form = formBase;
         }
-
-
-        internal void VideoInit(bool fullView, bool allowResize)
-        {
-            if (allowResize)
-                if (fullView)
-                {
-                    _vlcTop = form.panelVlc.Location;
-                    _vlcSize = form.panelVlc.Size;
-                    form.panelVlc.Location = new Point(0, 0);
-                    form.panelVlc.Size = new Size(form.Width, form.Height);
-                    form.panelVlc.Dock = DockStyle.Fill;
-                    form.panelVlc.BringToFront();
-                }
-                else
-                {
-                    form.panelVlc.Location = _vlcTop;
-                    form.panelVlc.Size = _vlcSize;
-                    form.panelVlc.Dock = DockStyle.None;
-                    //form.panelVlc.SendToBack();
-                }
-
-            VideoPlayInit();
-        }
+        
 
 
         #region CleanUp
