@@ -112,7 +112,7 @@ namespace GIShowCam.Gui
         /// <returns></returns>
         private void Vlc_MediaChanged(object sender, VlcMediaPlayerMediaChangedEventArgs e)
         {
-            info.SelectCamera();
+            info.SelectCamera(); // comboBox change cheama al doilea select aici 
 
             info.cam.data.PropertyChanged += Data_PropertyChanged;
             vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;

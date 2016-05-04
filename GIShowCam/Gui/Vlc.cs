@@ -7,7 +7,7 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-
+        private bool btnsShowOnPlay; 
 
         //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
 
@@ -56,10 +56,10 @@ namespace GIShowCam.Gui
                     info.cam.data.IsOpening = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Buffering:
-                    //info.cam.data.IsBuffering = true;
+                    info.cam.data.IsBuffering = true;
                     break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:
-                    //BtnPlay_Click(null, null);
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:                    
+
                     info.cam.data.IsPlaying = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Paused:
@@ -68,10 +68,7 @@ namespace GIShowCam.Gui
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Stopped:
                     if (!info.cam.data.IsStopped)
                     {
-                        if(!info.cam.data.IsPlaying)
-                            form.ControlShow(form.btnPlay, false);
-                        form.ControlShow(form.btnSnapshot, false);
-                        form.ControlShow(form.btnRecord, false);
+                        SetBtnsVisibilityOnPlay(false);
                     }
 
                     info.cam.data.IsStopped = true;
@@ -91,6 +88,19 @@ namespace GIShowCam.Gui
                 default:
                     break;
             }
+        }
+
+        private void SetBtnsVisibilityOnPlay(bool on)
+        {
+            if (btnsShowOnPlay != on)
+            {
+                if (on || (!on && !info.cam.data.IsPlaying))
+                    form.ControlShow(form.btnPlay, on);
+                form.ControlShow(form.btnSnapshot, on);
+                form.ControlShow(form.btnRecord, on);
+            }
+
+            btnsShowOnPlay = on;
         }
 
         private string[] GetVlcOptions()

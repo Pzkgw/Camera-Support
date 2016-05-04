@@ -141,9 +141,9 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(266, 17);
+            this.btnPlay.Location = new System.Drawing.Point(266, 11);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(84, 47);
+            this.btnPlay.Size = new System.Drawing.Size(84, 37);
             this.btnPlay.TabIndex = 3;
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Visible = false;
@@ -239,9 +239,9 @@
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
-            this.btnSnapshot.Location = new System.Drawing.Point(11, 23);
+            this.btnSnapshot.Location = new System.Drawing.Point(488, 11);
             this.btnSnapshot.Name = "btnSnapshot";
-            this.btnSnapshot.Size = new System.Drawing.Size(85, 36);
+            this.btnSnapshot.Size = new System.Drawing.Size(86, 37);
             this.btnSnapshot.TabIndex = 5;
             this.btnSnapshot.Text = "Snapshot";
             this.btnSnapshot.UseVisualStyleBackColor = true;
@@ -250,9 +250,9 @@
             // btnRecord
             // 
             this.btnRecord.Enabled = false;
-            this.btnRecord.Location = new System.Drawing.Point(488, 23);
+            this.btnRecord.Location = new System.Drawing.Point(488, 57);
             this.btnRecord.Name = "btnRecord";
-            this.btnRecord.Size = new System.Drawing.Size(86, 36);
+            this.btnRecord.Size = new System.Drawing.Size(86, 42);
             this.btnRecord.TabIndex = 6;
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Visible = false;
@@ -346,7 +346,7 @@
             // chkFullVid
             // 
             this.chkFullVid.AutoSize = true;
-            this.chkFullVid.Location = new System.Drawing.Point(11, 78);
+            this.chkFullVid.Location = new System.Drawing.Point(11, 57);
             this.chkFullVid.Name = "chkFullVid";
             this.chkFullVid.Size = new System.Drawing.Size(104, 17);
             this.chkFullVid.TabIndex = 8;
@@ -359,7 +359,7 @@
             this.chkPlayLoop.Checked = true;
             this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPlayLoop.Enabled = false;
-            this.chkPlayLoop.Location = new System.Drawing.Point(488, 78);
+            this.chkPlayLoop.Location = new System.Drawing.Point(11, 31);
             this.chkPlayLoop.Name = "chkPlayLoop";
             this.chkPlayLoop.Size = new System.Drawing.Size(80, 17);
             this.chkPlayLoop.TabIndex = 7;

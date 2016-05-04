@@ -81,11 +81,7 @@ namespace GIShowCam.Gui
                     info.cam.data.imgCount =
                        (ulong)vlc.GetCurrentMedia().Statistics.DisplayedPictures;
                     info.cam.data.IsVideoComplete = true;
-
-                    form.ControlShow(form.btnPlay, true);
-                    form.ControlShow(form.btnSnapshot, true);
-                    form.ControlShow(form.btnRecord, true);
-
+                    SetBtnsVisibilityOnPlay(true);
                 }
                 //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
             }

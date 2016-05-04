@@ -53,7 +53,7 @@ namespace GIShowCam.Info
             
         private void SelectCamera(string h, string u, string p)
         {
-            cam = new Device(host, user, password);
+            cam = new Device(h, u, p);
         }
 
         public string[] GetDeviceList()
