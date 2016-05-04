@@ -12,19 +12,15 @@ namespace GIShowCam.Gui
         //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
 
         /// <summary>
-        /// Events de adaugat dupa re-initializare
-        /// Pre-Cleanup nu-i necesar -> Media a fost disposed
+        /// vlc events
         /// </summary>
         /// <returns></returns>
-        private void SignEvents()
+        private void AddVlcEvents()
         {
-            //
-            //foreach(EventHandler evh in vlc.Media.StateChanged)
-            //vlc.Media.StateChanged -= Media_StateChanged;
-            vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
-            vlc.EncounteredError += Vlc_EncounteredError;
             vlc.Buffering += Vlc_Buffering;
+            vlc.EncounteredError += Vlc_EncounteredError;            
             vlc.PositionChanged += Vlc_PositionChanged;
+            vlc.MediaChanged += Vlc_MediaChanged;
         }
 
         private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -103,6 +99,7 @@ namespace GIShowCam.Gui
                 ,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on startingto play media.
+                ,"--rtsp-tcp"
                 //,"--grayscale" //  merge doar daca e enabled in configuration
                 //,"--no-video" //  no video
                 //,"--image-duration=5" // 

@@ -23,12 +23,8 @@ namespace GIShowCam.Gui
             foreach (string dev in info.GetDeviceList()) form.comboAddress.Items.Add(dev);
 
 
-            form.comboAddress.SelectedIndex = info.devID;
-            ComboAddress_SelectionChangeCommitted(null, null);
-            
-                       
+            form.comboAddress.SelectedIndex = info.devID;         
 
-            
             form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
         }
 
@@ -39,22 +35,20 @@ namespace GIShowCam.Gui
                 if (SessionInfo.fullVideo)
                 {
                     SessionInfo.log = false;
-                    vlc.Pause();
-                    VideoInit(true, true);
-                    //if (info.videoLoop) vlc.Play(); else vlc.NextFrame();
+                    VideoInit(true, true, false);
                     vlc.Play();
                 }
                 else
                 {
                     SessionInfo.log = true;
-                    vlc.Pause();
-                    VideoInit(false, true);
+                    VideoInit(false, true, false);
                     vlc.Play();
                 }
         }
 
         private void ChkLoop_CheckedChanged(object sender, EventArgs e)
         {
+            /*
             info.videoLoop = ((CheckBox)sender).Checked;
             if (vlc != null)
                 if (info.videoLoop)
@@ -65,7 +59,7 @@ namespace GIShowCam.Gui
                 else
                 {
                     vlc.Pause();
-                }
+                }*/
         }
 
 

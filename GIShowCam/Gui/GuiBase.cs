@@ -10,9 +10,6 @@ namespace GIShowCam.Gui
         private SessionInfo info;
         private FormMain form;
 
-        private Point _vlcTop;
-        private Size _vlcSize;
-
         public GuiBase(FormMain formBase)
         {
             info = new SessionInfo();
@@ -23,8 +20,16 @@ namespace GIShowCam.Gui
 
         private void PanelVlc_Click(object sender, EventArgs e)
         {
-            //vlc.NextFrame();
-            MessageBox.Show("  Bravo !  ");
+            if (form.chkFullVid.Checked)
+            {
+                form.chkFullVid.Checked = false;
+            }
+            else
+            {
+                MessageBox.Show("  Bravo !  ");
+            }
+
+
         }
 
         #region CleanUp

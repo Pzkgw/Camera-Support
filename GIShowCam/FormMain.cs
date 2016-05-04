@@ -30,13 +30,15 @@ namespace GIShowCam
             mainB = new GuiBase(this);
             if (SessionInfo.fullVideo)
             {
-                mainB.VideoInit(true, true);
+                mainB.VideoInit(true, true, true);
             }
             else
             {
                 mainB.InitGuiControls();
                 mainB.InitGuiDeviceInfo();
                 mainB.InitGuiRecord();
+
+                mainB.VideoInit(false, false, true);
             }
 
             panelVlc.BringToFront();
@@ -47,8 +49,9 @@ namespace GIShowCam
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             mainB.CleanUp();
+            base.Dispose();
         }
-        internal void Restart()
+        internal void RestartConnection()
         {
             _logTimeLast = DateTime.MinValue;
         }

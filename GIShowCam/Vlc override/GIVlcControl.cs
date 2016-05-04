@@ -11,7 +11,7 @@ namespace GIShowCam.Vlc_override
 
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
+            base.Dispose(disposing); // o sa cheme vlc.HandleDestroyed event
         }
         /*
                internal void Unregister()
