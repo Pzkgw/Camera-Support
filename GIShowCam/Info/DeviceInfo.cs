@@ -10,7 +10,7 @@ namespace GIShowCam.Info
             act = new bool[9],
             inter = new bool[2];
 
-        internal ulong imgCount;
+        internal int imgCount;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -158,7 +158,7 @@ namespace GIShowCam.Info
 
         internal void Start()
         {
-            imgCount = 0u;
+            imgCount = 0;
 
             int i = 0;
             for (; i < act.Length; i++) act[i] = false;

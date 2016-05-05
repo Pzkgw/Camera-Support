@@ -62,29 +62,31 @@ namespace GIShowCam.Gui
         {
             //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
             //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
-
-            if (vlc != null && vlc.GetCurrentMedia() != null)
+            if (vlc != null)
             {
-                form.ControlTextUpdate(form.lblVlcNotify,
-                    "Time: " + vlc.Time +
-                    ", DecodedVideo: " + vlc.GetCurrentMedia().Statistics.DecodedVideo +
-                    ", InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
-                    ", DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
-                    ", DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
-                    ", LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures +
-                    ", FPS: " + 0);
-
-                //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
-
-                if (!info.cam.data.IsVideoComplete &&
-                    info.cam.data.imgCount < (ulong)vlc.GetCurrentMedia().Statistics.DisplayedPictures)
+                VlcMedia media = vlc.GetCurrentMedia();
+                if (media != null)
                 {
-                    info.cam.data.imgCount =
-                       (ulong)vlc.GetCurrentMedia().Statistics.DisplayedPictures;
-                    info.cam.data.IsVideoComplete = true;
-                    SetBtnsVisibilityOnPlay(true);
+                    form.ControlTextUpdate(form.lblVlcNotify,
+                        "Time: " + vlc.Time +
+                        ", DecodedVideo: " + media.Statistics.DecodedVideo +
+                        ", InputBitrate: " + media.Statistics.InputBitrate +
+                        ", DemuxBitrate: " + media.Statistics.DemuxBitrate +
+                        ", DisplayedPictures: " + media.Statistics.DisplayedPictures +
+                        ", LostPictures: " + media.Statistics.LostPictures +
+                        ", FPS: " + 0);
+
+                    //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
+
+                    if (!info.cam.data.IsVideoComplete &&
+                        info.cam.data.imgCount < media.Statistics.DisplayedPictures)
+                    {
+                        info.cam.data.imgCount = media.Statistics.DisplayedPictures;
+                        info.cam.data.IsVideoComplete = true;
+                        SetBtnsVisibilityOnPlay(true);
+                    }
+                    //form.Log("Poze = " + media.Statistics.DisplayedPictures);
                 }
-                //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
             }
         }
 

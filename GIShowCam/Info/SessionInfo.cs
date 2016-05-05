@@ -15,7 +15,7 @@ namespace GIShowCam.Info
         // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
 
         private List<Device> devices = new List<Device>() {
-            new Device("http://192.168.0.92/streaming/channels/2/httppreview", "admin", "1qaz@WSX"),
+            new Device("http://192.168.0.92/streaming/channels/1/httppreview", "admin", "1qaz@WSX"),
             new Device("rtsp://192.168.0.101:554/0"),
             new Device("rtsp://192.168.0.100:554/0"),
             new Device("rtsp://192.168.0.104:554/0"),

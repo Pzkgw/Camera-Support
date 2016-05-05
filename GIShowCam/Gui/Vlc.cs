@@ -58,8 +58,7 @@ namespace GIShowCam.Gui
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Buffering:
                     info.cam.data.IsBuffering = true;
                     break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:                    
-
+                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:
                     info.cam.data.IsPlaying = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Paused:
@@ -70,7 +69,6 @@ namespace GIShowCam.Gui
                     {
                         SetBtnsVisibilityOnPlay(false);
                     }
-
                     info.cam.data.IsStopped = true;
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Ended:
@@ -94,8 +92,7 @@ namespace GIShowCam.Gui
         {
             if (btnsShowOnPlay != on)
             {
-                if (on || (!on && !info.cam.data.IsPlaying))
-                    form.ControlShow(form.btnPlay, on);
+                if (on || (!on && !info.cam.data.IsPlaying)) form.ControlShow(form.btnPlay, on);
                 form.ControlShow(form.btnSnapshot, on);
                 form.ControlShow(form.btnRecord, on);
             }
