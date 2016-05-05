@@ -71,7 +71,8 @@ namespace GIShowCam.Gui
                     ", InputBitrate: " + vlc.GetCurrentMedia().Statistics.InputBitrate +
                     ", DemuxBitrate: " + vlc.GetCurrentMedia().Statistics.DemuxBitrate +
                     ", DisplayedPictures: " + vlc.GetCurrentMedia().Statistics.DisplayedPictures +
-                    ", LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures);
+                    ", LostPictures: " + vlc.GetCurrentMedia().Statistics.LostPictures +
+                    ", FPS: " + 0);
 
                 //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
 

@@ -72,6 +72,9 @@
     <Compile Include="Vlc override\GIVlcControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Vlc override\GIVlcControlEvents.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
