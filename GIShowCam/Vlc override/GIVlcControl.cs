@@ -22,7 +22,7 @@ namespace GIShowCam.Vlc_override
 
         #region VlcControl Init
 
-        public GIVlcControl()
+        internal GIVlcControl()
         {
             InitializeComponent();
         }
@@ -34,15 +34,15 @@ namespace GIShowCam.Vlc_override
         }
 
         [Category("Media Player")]
-        public string[] VlcMediaplayerOptions { get; set; }
+        internal string[] VlcMediaplayerOptions { get; set; }
 
         [Category("Media Player")]
         [Editor(typeof(DirectoryEditor), typeof(UITypeEditor))]
-        public DirectoryInfo VlcLibDirectory { get; set; }
+        internal DirectoryInfo VlcLibDirectory { get; set; }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public bool IsPlaying
+        internal bool IsPlaying
         {
             get
             {
@@ -88,7 +88,7 @@ namespace GIShowCam.Vlc_override
             return System.Reflection.Assembly.GetExecutingAssembly().Location.Contains("VisualStudio");
         }
 
-        public event EventHandler<VlcLibDirectoryNeededEventArgs> VlcLibDirectoryNeeded;
+        internal event EventHandler<VlcLibDirectoryNeededEventArgs> VlcLibDirectoryNeeded;
 
         bool disposed = false;
 
@@ -97,6 +97,16 @@ namespace GIShowCam.Vlc_override
             base.Dispose();
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        internal void CleanUp()
+        {
+            if (myVlcMediaPlayer != null)
+            {
+                UnregisterEvents();
+                if (IsPlaying) Stop(true);
+            }
+            myVlcMediaPlayer = null;
         }
 
         protected override void Dispose(bool disposing)
@@ -110,7 +120,7 @@ namespace GIShowCam.Vlc_override
                         UnregisterEvents();
                         if (IsPlaying)
                             Stop(false);
-                       // myVlcMediaPlayer.Dispose();
+                        // myVlcMediaPlayer.Dispose();
                     }
                     myVlcMediaPlayer = null;
                     base.Dispose(disposing);
@@ -119,7 +129,7 @@ namespace GIShowCam.Vlc_override
             }
         }
 
-        public DirectoryInfo OnVlcLibDirectoryNeeded()
+        internal DirectoryInfo OnVlcLibDirectoryNeeded()
         {
             var del = VlcLibDirectoryNeeded;
             if (del != null)
@@ -134,65 +144,53 @@ namespace GIShowCam.Vlc_override
 
         #region VlcControl Functions & Properties
 
-        public void Play()
+        internal void Play()
         {
-            //EndInit();
-            if (myVlcMediaPlayer != null)
-            {
-                myVlcMediaPlayer.Play();
-            }
+            myVlcMediaPlayer.Play();
         }
 
-        public void Play(FileInfo file, params string[] options)
+        internal void Play(FileInfo file, params string[] options)
         {
-            //EndInit();
-            if (myVlcMediaPlayer != null)
+            myVlcMediaPlayer.SetMedia(file, options);
+            Play();
+
+        }
+
+        internal void Play(Uri uri, params string[] options)
+        {
+            myVlcMediaPlayer.SetMedia(uri, options);
+            Play();
+
+        }
+
+        internal void Play(string mrl, params string[] options)
+        {
+
+            lock (myEventSyncLocker)
             {
-                myVlcMediaPlayer.SetMedia(file, options);
+                myVlcMediaPlayer.SetMedia(mrl, options);
+                //(new System.Threading.Thread(delegate () { Play(); })).Start();
                 Play();
             }
-        }
 
-        public void Play(Uri uri, params string[] options)
-        {
-            //EndInit();
-            if (myVlcMediaPlayer != null)
-            {
-                myVlcMediaPlayer.SetMedia(uri, options);
-                Play();
-            }
-        }
-
-        public void Play(string mrl, params string[] options)
-        {
-            //EndInit();
-            if (myVlcMediaPlayer != null)
-            {
-                lock (myEventSyncLocker)
-                {
-                    myVlcMediaPlayer.SetMedia(mrl, options);
-                    //(new System.Threading.Thread(delegate () { Play(); })).Start();
-                    Play();
-                }
-            }
         }
 
 
-        public void SetMedia(FileInfo file, params string[] options)
+        internal void SetMedia(FileInfo file, params string[] options)
         {
             myVlcMediaPlayer.SetMedia(file, options);
         }
 
 
-        public void SetMedia(Uri file, params string[] options)
+        internal void SetMedia(Uri file, params string[] options)
         {
             SetMedia(file.AbsolutePath, options);
         }
-          public void SetMedia(string mrl, params string[] options)
+        internal void SetMedia(string mrl, params string[] options)
         {
             myVlcMediaPlayer.SetMedia(mrl, options);
         }
-        public void Pause()
+        internal void Pause()
         {
             //EndInit();
             if (myVlcMediaPlayer != null)
@@ -204,7 +202,7 @@ namespace GIShowCam.Vlc_override
             }
         }
 
-        public void Stop(bool preDel)
+        internal void Stop(bool preDel)
         {
             //EndInit();
             if (myVlcMediaPlayer != null)
@@ -212,12 +210,16 @@ namespace GIShowCam.Vlc_override
                 lock (myEventSyncLocker)
                 {
                     myVlcMediaPlayer.Stop();
-                    if (preDel) myVlcMediaPlayer.Dispose();
+                    if (preDel)
+                    {
+                        myVlcMediaPlayer.Dispose();
+                        myVlcMediaPlayer = null;
+                    }
                 }
             }
         }
 
-        public VlcMedia GetCurrentMedia()
+        internal VlcMedia GetCurrentMedia()
         {
             //EndInit();
             if (myVlcMediaPlayer != null)
@@ -230,14 +232,14 @@ namespace GIShowCam.Vlc_override
             }
         }
 
-        public void TakeSnapshot(string fileName)
+        internal void TakeSnapshot(string fileName)
         {
             myVlcMediaPlayer.TakeSnapshot(new FileInfo(fileName));
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public float Position
+        internal float Position
         {
             get
             {
@@ -261,7 +263,7 @@ namespace GIShowCam.Vlc_override
         }
 
         [Browsable(false)]
-        public IChapterManagement Chapter
+        internal IChapterManagement Chapter
         {
             get
             {
@@ -278,7 +280,7 @@ namespace GIShowCam.Vlc_override
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public float Rate
+        internal float Rate
         {
             get
             {
@@ -301,7 +303,7 @@ namespace GIShowCam.Vlc_override
         }
 
         [Browsable(false)]
-        public MediaStates State
+        internal MediaStates State
         {
             get
             {
@@ -317,7 +319,7 @@ namespace GIShowCam.Vlc_override
         }
 
         [Browsable(false)]
-        public ISubTitlesManagement SubTitles
+        internal ISubTitlesManagement SubTitles
         {
             get
             {
@@ -334,7 +336,7 @@ namespace GIShowCam.Vlc_override
         }
 
         [Browsable(false)]
-        public IVideoManagement Video
+        internal IVideoManagement Video
         {
             get
             {
@@ -350,7 +352,7 @@ namespace GIShowCam.Vlc_override
         }
 
         [Browsable(false)]
-        public IAudioManagement Audio
+        internal IAudioManagement Audio
         {
             get
             {
@@ -366,7 +368,7 @@ namespace GIShowCam.Vlc_override
         }
 
         [Browsable(false)]
-        public long Length
+        internal long Length
         {
             get
             {
@@ -384,7 +386,7 @@ namespace GIShowCam.Vlc_override
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public long Time
+        internal long Time
         {
             get
             {
@@ -407,7 +409,7 @@ namespace GIShowCam.Vlc_override
         }
 
         [Browsable(false)]
-        public int Spu
+        internal int Spu
         {
             get
             {
@@ -426,7 +428,7 @@ namespace GIShowCam.Vlc_override
             }
         }
 
-      #endregion
+        #endregion
 
 
 

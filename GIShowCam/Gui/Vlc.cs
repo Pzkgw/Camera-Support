@@ -145,10 +145,11 @@ namespace GIShowCam.Gui
                 //,"--grayscale"
                 //,"--aspect-ratio=16:10"
                 //,"--croppadd-cropleft 100"
-                ,SessionInfo.debug?"--extraintf=logger":"" 
-                ,SessionInfo.debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages
-                ,SessionInfo.audio?"--aout=none":"" //  main NO audio output ( optional mai e si "--no-audio" )
-                ,SessionInfo.audio?"--no-sout-audio":"" //        ^^^  Enable audio stream output (default enabled)
+                
+                ,SessionInfo.debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages  
+                ,SessionInfo.debug?"--extraintf=logger":null
+                ,SessionInfo.audio?"--no-sout-audio":null //        ^^^  Enable audio stream output (default enabled)
+                ,SessionInfo.audio?"--aout=none":null //  main NO audio output ( optional mai e si "--no-audio" )
                 //,"--no-audio" //             ^^^ ERR error la init cateodata when enabled
             };
             //foreach (string optString in optiuni) opt.AddOption(optString);
@@ -178,7 +179,7 @@ namespace GIShowCam.Gui
 
             return "c:\\Program Files (x86)\\VideoLAN\\VLC";//aP;
         }
- 
+
 
         /*
         private static void SetDirectory()
@@ -206,6 +207,21 @@ namespace GIShowCam.Gui
             opt.LogOptions.Verbosity = VlcLogVerbosities.Debug;
         }*/
 
+
+        #region CleanUp
+
+        internal void CleanUp()
+        {
+            form.isOn = false;// avoid event send
+            //if (vlc.IsPlaying) vlc.Stop(true);
+            //if (vlc.Media != null) vlc.Media.Dispose();
+            //if (vlc != null) vlc.Dispose();
+
+            //VlcContext.CloseAll();
+            vlc.CleanUp();
+        }
+
+        #endregion CleanUp
 
     }
 }

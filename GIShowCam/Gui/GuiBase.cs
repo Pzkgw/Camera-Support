@@ -32,20 +32,7 @@ namespace GIShowCam.Gui
 
         }
 
-        #region CleanUp
 
-        internal void CleanUp()
-        {
-            form.isOn = false;// avoid event send
-            //if (vlc.IsPlaying) vlc.Stop(true);
-            //if (vlc.Media != null) vlc.Media.Dispose();
-            //if (vlc != null) vlc.Dispose();
-
-            //VlcContext.CloseAll();
-            vlc.Dispose();
-        }
-
-        #endregion CleanUp
 
     }
 }

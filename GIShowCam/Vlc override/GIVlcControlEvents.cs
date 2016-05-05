@@ -13,7 +13,7 @@ namespace GIShowCam.Vlc_override
 
         private object myEventSyncLocker = new object();
 
-        private void RegisterEvents()
+        internal void RegisterEvents()
         {
             myVlcMediaPlayer.Backward += OnBackwardInternal;
             myVlcMediaPlayer.Buffering += OnBufferingInternal;
@@ -36,7 +36,7 @@ namespace GIShowCam.Vlc_override
             myVlcMediaPlayer.VideoOutChanged += OnVideoOutChangedInternal;
         }
 
-        private void UnregisterEvents()
+        internal void UnregisterEvents()
         {
             myVlcMediaPlayer.Backward -= OnBackwardInternal;
             myVlcMediaPlayer.Buffering -= OnBufferingInternal;

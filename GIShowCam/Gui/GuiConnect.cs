@@ -30,7 +30,8 @@ namespace GIShowCam.Gui
 
             if (vlc != null)
             {
-                vlc.Pause();
+                vlc.UnregisterEvents();
+                vlc.Stop(allowVlcMediaReinit);
             }
 
 
@@ -75,7 +76,7 @@ namespace GIShowCam.Gui
                 }
                 else
                 {
-                    vlc.Stop(false);
+                    //vlc.Stop(true);
                 }
 
                 string path = info.host;
@@ -94,12 +95,15 @@ namespace GIShowCam.Gui
                 if (vlc.initEndNeeded)
                 {
                     vlc.VlcLibDirectory = new DirectoryInfo(GetVlcLibLocation());
-                    vlc.EndInit();
+                    
                     vlc.initEndNeeded = false;
                 }
 
-                
-                vlc.SetMedia(path, GetVlcOptions());
+                vlc.EndInit();
+                //(new System.Threading.Thread(delegate () { vlc.SetMedia(path, GetVlcOptions()); })).Start();
+                //vlc.VlcMediaplayerOptions = GetVlcOptions();
+                vlc.SetMedia(path);
+                vlc.RegisterEvents();
             }
             //form.isOn = true;
         }
