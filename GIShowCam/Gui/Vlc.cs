@@ -1,4 +1,5 @@
 ﻿using GIShowCam.Info;
+using System.Linq;
 using System.Windows.Forms;
 using Vlc.DotNet.Core;
 
@@ -102,28 +103,14 @@ namespace GIShowCam.Gui
 
         private string[] GetVlcOptions()
         {
-            return new string[] { //--snapshot-format=jpg
+            if (SessionInfo.vlcOptions == null)
+            {
+                SessionInfo.vlcOptions = new string[] { //--snapshot-format=jpg
                  "--no-fullscreen" //
                 ,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on startingto play media.
                 ,"--rtsp-tcp"
-                //,"--grayscale" //  merge doar daca e enabled in configuration
-                //,"--no-video" //  no video
-                //,"--image-duration=5" // 
-                //,"--ffmpeg-hw" // 
-                //,"--video-filter=none" // 
-                //,"--live-caching=10000" // 
-                //,"--network-caching=1000" //
-                //,"--vout none" // ERR => VlcCOntrol
-                //,"--disable-debug" // ERR => VlcCOntrol
-                //,"--avcodec - hw = vaapi"// ERR => VlcCOntrol <= fara hw-acceleration
-                //,"--aspect-ratio=16:9" ,"--fullscreen" ,"--file-caching=3000" // OUT => fullscreen video
-                //,"--audio-visual=goom", "--no-fullscreen", "--file-caching=300" // OUT => audio files
-
-
-                //-------------------  DEFAULT ENABLED <--  to  -->  DISABLED  --------------------------------
-               
                 ,"--no-drop-late-frames" //drops frames that are late (arrive to the video output after their intended display date)
                 ,"--no-video-deco"  // Window decorations (default enabled)
                 ,"--no-skip-frames" // Optional ::> Enables framedropping on MPEG2 stream (default enabled)
@@ -135,24 +122,43 @@ namespace GIShowCam.Gui
                 ,"--no-advanced" //  Show advanced options (default enabled)
                 ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
-                ,"--no-playlist-autostart" // playlist auto start (default enabled)                
+                ,"--no-playlist-autostart" // playlist auto start (default enabled) 
                 ,"--no-snapshot-preview"
-                //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
-                //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
-                //,"--no-stats" //  NOT, folosita pt SendImagesCount  Collect statistics (default enabled)
-                 
-                //,"--vout-filter=crop"
-                //,"--grayscale"
-                //,"--aspect-ratio=16:10"
-                //,"--croppadd-cropleft 100"
-                
                 ,SessionInfo.debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages  
                 ,SessionInfo.debug?"--extraintf=logger":null
                 ,SessionInfo.audio?"--no-sout-audio":null //        ^^^  Enable audio stream output (default enabled)
                 ,SessionInfo.audio?"--aout=none":null //  main NO audio output ( optional mai e si "--no-audio" )
                 //,"--no-audio" //             ^^^ ERR error la init cateodata when enabled
-            };
-            //foreach (string optString in optiuni) opt.AddOption(optString);
+            }.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+            }
+
+
+            return SessionInfo.vlcOptions;
+
+
+            //  ---  Alte incercari:
+            //,"--grayscale" //  merge doar daca e enabled in configuration
+            //,"--no-video" //  no video
+            //,"--image-duration=5" // 
+            //,"--ffmpeg-hw" // 
+            //,"--video-filter=none" // 
+            //,"--live-caching=10000" // 
+            //,"--network-caching=1000" //
+            //,"--vout none" // ERR => VlcCOntrol
+            //,"--disable-debug" // ERR => VlcCOntrol
+            //,"--avcodec - hw = vaapi"// ERR => VlcCOntrol <= fara hw-acceleration
+            //,"--aspect-ratio=16:9" ,"--fullscreen" ,"--file-caching=3000" // OUT => fullscreen video
+            //,"--audio-visual=goom", "--no-fullscreen", "--file-caching=300" // OUT => audio files
+
+            //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
+            //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
+            //,"--no-stats" //  NOT, folosita pt SendImagesCount  Collect statistics (default enabled)
+
+            //,"--vout-filter=crop"
+            //,"--grayscale"
+            //,"--aspect-ratio=16:10"
+            //,"--croppadd-cropleft 100"
         }
 
 
