@@ -92,7 +92,7 @@ namespace GIShowCam.Vlc_override
 
         bool disposed = false;
 
-        protected new void Dispose()
+        internal new void Dispose()
         {
             base.Dispose();
             Dispose(true);
@@ -109,8 +109,8 @@ namespace GIShowCam.Vlc_override
                     {
                         UnregisterEvents();
                         if (IsPlaying)
-                            Stop();
-                        myVlcMediaPlayer.Dispose();
+                            Stop(false);
+                       // myVlcMediaPlayer.Dispose();
                     }
                     myVlcMediaPlayer = null;
                     base.Dispose(disposing);
@@ -168,28 +168,53 @@ namespace GIShowCam.Vlc_override
             //EndInit();
             if (myVlcMediaPlayer != null)
             {
-                myVlcMediaPlayer.SetMedia(mrl, options);
-                Play();
+                lock (myEventSyncLocker)
+                {
+                    myVlcMediaPlayer.SetMedia(mrl, options);
+                    //(new System.Threading.Thread(delegate () { Play(); })).Start();
+                    Play();
+                }
             }
         }
 
+
+        public void SetMedia(FileInfo file, params string[] options)
+        {
+            myVlcMediaPlayer.SetMedia(file, options);
+        }
+
+
+        public void SetMedia(Uri file, params string[] options)
+        {
+            SetMedia(file.AbsolutePath, options);
+        }
+          public void SetMedia(string mrl, params string[] options)
+        {
+            myVlcMediaPlayer.SetMedia(mrl, options);
+        }
         public void Pause()
         {
             //EndInit();
             if (myVlcMediaPlayer != null)
             {
-                myVlcMediaPlayer.Pause();
+                lock (myEventSyncLocker)
+                {
+                    myVlcMediaPlayer.Pause();
+                }
             }
         }
 
-        public void Stop()
+        public void Stop(bool preDel)
         {
             //EndInit();
             if (myVlcMediaPlayer != null)
             {
-                myVlcMediaPlayer.Stop();
+                lock (myEventSyncLocker)
+                {
+                    myVlcMediaPlayer.Stop();
+                    if (preDel) myVlcMediaPlayer.Dispose();
+                }
             }
-
         }
 
         public VlcMedia GetCurrentMedia()
@@ -207,8 +232,7 @@ namespace GIShowCam.Vlc_override
 
         public void TakeSnapshot(string fileName)
         {
-            FileInfo fileInfo = new FileInfo(fileName);
-            myVlcMediaPlayer.TakeSnapshot(fileInfo);
+            myVlcMediaPlayer.TakeSnapshot(new FileInfo(fileName));
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -402,52 +426,9 @@ namespace GIShowCam.Vlc_override
             }
         }
 
-        public void SetMedia(FileInfo file, params string[] options)
-        {
-            //EndInit();
-            myVlcMediaPlayer.SetMedia(file, options);
-        }
-
-        public void SetMedia(Uri file, params string[] options)
-        {
-            //EndInit();
-            myVlcMediaPlayer.SetMedia(file, options);
-        }
-
-        public void SetMedia(string mrl, params string[] options)
-        {
-            //EndInit();
-            myVlcMediaPlayer.SetMedia(mrl, options);
-        }
-        #endregion
+      #endregion
 
 
-
-        internal void MpPlay()
-        {
-            //(new System.Threading.Thread(delegate () { Play(); })).Start();
-            Play();
-        }
-
-        internal void MpStop(bool preDel)
-        {
-            
-            //(new System.Threading.Thread(delegate () { Stop(); })).Start();
-            Stop();
-            if (preDel) GetCurrentMedia().Dispose();
-        }
-
-        internal void MpPause()
-        {
-            //(new System.Threading.Thread(delegate () { Pause(); })).Start();
-            Pause();
-        }
-
-        /*
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            OnPaint(e);
-        }*/
 
     }
 }

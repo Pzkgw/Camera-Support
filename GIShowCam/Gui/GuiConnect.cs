@@ -20,6 +20,7 @@ namespace GIShowCam.Gui
 
         internal void VideoInit(bool fullView, bool allowResize, bool allowVlcMediaReinit)
         {
+            form.isOn = false;
             /*
             if (vlc == null)
             {
@@ -27,9 +28,9 @@ namespace GIShowCam.Gui
                 _vlcSize = form.panelVlc.Size;
             }*/
 
-            if(vlc != null)
+            if (vlc != null)
             {
-                vlc.MpPause();
+                vlc.Pause();
             }
 
 
@@ -74,7 +75,7 @@ namespace GIShowCam.Gui
                 }
                 else
                 {
-                    vlc.MpStop(true);                    
+                    vlc.Stop(false);
                 }
 
                 string path = info.host;
@@ -92,16 +93,15 @@ namespace GIShowCam.Gui
 
                 if (vlc.initEndNeeded)
                 {
-
                     vlc.VlcLibDirectory = new DirectoryInfo(GetVlcLibLocation());
-                    vlc.VlcMediaplayerOptions = GetVlcOptions();
                     vlc.EndInit();
-
                     vlc.initEndNeeded = false;
                 }
-                vlc.SetMedia(path);
-            }
 
+                
+                vlc.SetMedia(path, GetVlcOptions());
+            }
+            form.isOn = true;
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace GIShowCam.Gui
             info.cam.data.PropertyChanged += Data_PropertyChanged;
             vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
 
-            vlc.MpPlay();
+            vlc.Play();
         }
 
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)

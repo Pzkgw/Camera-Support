@@ -37,7 +37,7 @@ namespace GIShowCam.Gui
         internal void CleanUp()
         {
             form.isOn = false;// avoid event send
-            if (vlc.IsPlaying) vlc.Stop();
+            //if (vlc.IsPlaying) vlc.Stop(true);
             //if (vlc.Media != null) vlc.Media.Dispose();
             //if (vlc != null) vlc.Dispose();
 
