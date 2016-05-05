@@ -146,7 +146,6 @@
             this.btnPlay.Size = new System.Drawing.Size(84, 37);
             this.btnPlay.TabIndex = 3;
             this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Visible = false;
             // 
             // txtDevUser
             // 
@@ -245,7 +244,6 @@
             this.btnSnapshot.TabIndex = 5;
             this.btnSnapshot.Text = "Snapshot";
             this.btnSnapshot.UseVisualStyleBackColor = true;
-            this.btnSnapshot.Visible = false;
             // 
             // btnRecord
             // 
@@ -255,7 +253,6 @@
             this.btnRecord.Size = new System.Drawing.Size(86, 42);
             this.btnRecord.TabIndex = 6;
             this.btnRecord.UseVisualStyleBackColor = true;
-            this.btnRecord.Visible = false;
             // 
             // groupBoxVlcFactors
             // 

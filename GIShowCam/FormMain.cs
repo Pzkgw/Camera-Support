@@ -146,7 +146,7 @@ namespace GIShowCam
         private void ControlEnable(Control ctrl, bool enabled)
         {
             ctrl.Enabled = enabled;
-            ctrl.Visible = enabled;
+            //ctrl.Visible = enabled;
         }
 
 

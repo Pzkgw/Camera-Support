@@ -20,7 +20,7 @@ namespace GIShowCam.Gui
 
         internal void VideoInit(bool fullView, bool allowResize, bool allowVlcMediaReinit)
         {
-            form.isOn = false;
+            //form.isOn = false;
             /*
             if (vlc == null)
             {
@@ -101,7 +101,7 @@ namespace GIShowCam.Gui
                 
                 vlc.SetMedia(path, GetVlcOptions());
             }
-            form.isOn = true;
+            //form.isOn = true;
         }
 
         /// <summary>
