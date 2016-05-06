@@ -2,13 +2,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing.Design;
 using System.IO;
 using System.Windows.Forms;
 using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Interops.Signatures;
-using Vlc.DotNet.Forms;
-using Vlc.DotNet.Forms.TypeEditors;
 
 namespace GIShowCam.Vlc_override
 {
@@ -36,8 +33,6 @@ namespace GIShowCam.Vlc_override
         [Category("Media Player")]
         internal string[] VlcMediaplayerOptions { get; set; }
 
-        [Category("Media Player")]
-        [Editor(typeof(DirectoryEditor), typeof(UITypeEditor))]
         internal DirectoryInfo VlcLibDirectory { get; set; }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -66,7 +61,7 @@ namespace GIShowCam.Vlc_override
         {
             if (IsInDesignMode() || myVlcMediaPlayer != null)
                 return;
-            if (VlcLibDirectory == null && (VlcLibDirectory = OnVlcLibDirectoryNeeded()) == null)
+            if (VlcLibDirectory == null)
             {
                 throw new Exception("'VlcLibDirectory' must be set.");
             }
@@ -88,7 +83,7 @@ namespace GIShowCam.Vlc_override
             return System.Reflection.Assembly.GetExecutingAssembly().Location.Contains("VisualStudio");
         }
 
-        internal event EventHandler<VlcLibDirectoryNeededEventArgs> VlcLibDirectoryNeeded;
+
 
         bool disposed = false;
 
@@ -129,17 +124,6 @@ namespace GIShowCam.Vlc_override
             }
         }
 
-        internal DirectoryInfo OnVlcLibDirectoryNeeded()
-        {
-            var del = VlcLibDirectoryNeeded;
-            if (del != null)
-            {
-                var args = new VlcLibDirectoryNeededEventArgs();
-                del(this, args);
-                return args.VlcLibDirectory;
-            }
-            return null;
-        }
         #endregion
 
         #region VlcControl Functions & Properties
@@ -202,6 +186,7 @@ namespace GIShowCam.Vlc_override
             }
         }
 
+        //momentan: preDelete doar la final
         internal void Stop(bool preDel)
         {
             //EndInit();
@@ -214,6 +199,7 @@ namespace GIShowCam.Vlc_override
                     {
                         myVlcMediaPlayer.Dispose();
                         myVlcMediaPlayer = null;
+                        //myVlcMediaPlayer.DisposeMedia();
                     }
                 }
             }

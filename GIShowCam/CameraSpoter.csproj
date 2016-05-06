@@ -109,10 +109,6 @@
       <Project>{0dc24b0b-6862-4615-b62d-81795d2cdd07}</Project>
       <Name>Vlc.DotNet.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Forms\Vlc.DotNet.Forms.csproj">
-      <Project>{a720906b-705b-4666-bbb9-ac54b9208beb}</Project>
-      <Name>Vlc.DotNet.Forms</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

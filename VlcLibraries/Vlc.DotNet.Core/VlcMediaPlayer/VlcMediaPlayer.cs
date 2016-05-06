@@ -131,6 +131,21 @@ namespace Vlc.DotNet.Core
             Manager.Dispose();
         }
 
+        public void DisposeMedia()
+        {
+            if (myMediaPlayerInstance == IntPtr.Zero)
+                return;
+            UnregisterEvents();
+            if (IsPlaying())
+                Stop();
+
+            if (VlcMedia.LoadedMedias.ContainsKey(this))
+                foreach (var loadedMedia in VlcMedia.LoadedMedias[this])
+                {
+                    loadedMedia.Dispose();
+                }
+        }
+
         ~VlcMediaPlayer()
         {
             Dispose(false);
