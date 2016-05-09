@@ -26,7 +26,7 @@ namespace GIShowCam.Gui
             }
             else
             {
-                MessageBox.Show("  Bravo !  ");
+                if (SessionInfo.showMessageBoxes) MessageBox.Show("  Bravo !  ");
             }
 
 

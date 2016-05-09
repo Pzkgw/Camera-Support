@@ -1,6 +1,7 @@
 ﻿using GIShowCam.Gui;
 using GIShowCam.Info;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
@@ -62,6 +63,28 @@ namespace GIShowCam
         internal void ControlTextUpdate(Control ctrl, string s)
         {
             InvokeGuiThread(new textUpdateDelegate(TextUpdate), ctrl, s, false, false);
+        }
+
+        private delegate void AddVlcDelegate(Vlc_override.GIVlcControl ctrl);
+
+        private void AddVlcPrivate(Vlc_override.GIVlcControl ctrl)
+        {
+            ctrl.Parent = this.panelVlc;
+        }
+
+        internal void AddVlc(Vlc_override.GIVlcControl ctrl)
+        {
+            //InvokeGuiThread(delegate() { ctrl.Parent = this.panelVlc;}, ctrl, s, false, false);
+            InvokeGuiThread(new AddVlcDelegate(AddVlcPrivate), ctrl);
+        }
+
+        internal void WaitForVlc(int msTimeout)
+        {
+            _dispatchDr.BeginInvoke(DispatcherPriority.Normal,
+                new Action(delegate ()
+                {
+                    Thread.Sleep(1000);
+                }));
         }
 
         internal void Log(string s)

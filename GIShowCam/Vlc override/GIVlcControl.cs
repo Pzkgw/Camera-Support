@@ -118,7 +118,7 @@ namespace GIShowCam.Vlc_override
                         // myVlcMediaPlayer.Dispose();
                     }
                     myVlcMediaPlayer = null;
-                    base.Dispose(disposing);
+                    //base.Dispose(disposing);
                 }
                 disposed = true;
             }

@@ -69,7 +69,8 @@ namespace GIShowCam.Gui
                     vlc.ImeMode = ImeMode.NoControl;
                     vlc.Dock = DockStyle.Fill;
 
-                    vlc.Parent = form.panelVlc;
+                    
+                    //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
                     vlc.initEndNeeded = true;
 
                     AddVlcEvents();
@@ -94,6 +95,8 @@ namespace GIShowCam.Gui
                     vlc.VlcMediaplayerOptions = GetVlcOptions();
                     vlc.EndInit();
                     vlc.initEndNeeded = false;
+                    form.AddVlc(vlc);
+                    
                 }
                 
                 //vlc.VlcMediaplayerOptions = GetVlcOptions();
@@ -108,12 +111,7 @@ namespace GIShowCam.Gui
                 vlc.RegisterEvents();
                 //vlc.VlcMediaplayerOptions = null;
             }
-            //form.isOn = true;
-        }
-
-        void uu()
-        {
-            vlc.VlcMediaplayerOptions = GetVlcOptions();
+            form.isOn = true;
         }
 
         /// <summary>

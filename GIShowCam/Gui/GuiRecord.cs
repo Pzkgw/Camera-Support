@@ -55,7 +55,7 @@ vlc.Play();
                    Record("c:\\", "kk.mp4", 800);
                    recordIsOn = true;
                }*/
-                MessageBox.Show(" Not implementat ");
+                if (SessionInfo.showMessageBoxes) MessageBox.Show(" Not implementat ");
             }
 
             form.btnRecord.Text = "Recording" + Environment.NewLine + (recordIsOn ? "Stop" : "Start");

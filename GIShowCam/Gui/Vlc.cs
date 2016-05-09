@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using Vlc.DotNet.Core;
+using System;
 
 //  -- Vlc Options & Events --
 namespace GIShowCam.Gui
@@ -33,7 +34,8 @@ namespace GIShowCam.Gui
 
         private void Vlc_EncounteredError(object sender, VlcMediaPlayerEncounteredErrorEventArgs e)
         {
-            MessageBox.Show(e.ToString());
+            //if (SessionInfo.showMessageBoxes) MessageBox.Show(e.ToString());
+            form.Log(e.ToString());
         }
 
         private void Vlc_Buffering(object sender, Vlc.DotNet.Core.VlcMediaPlayerBufferingEventArgs e)
@@ -74,19 +76,30 @@ namespace GIShowCam.Gui
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Ended:
                     info.cam.data.IsEnded = true;
-                    /*
-                    vlc.Stop();
-                    info.cam.data.IsStopped = true;
-                    (new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start();  */                  
-                    //vlc.Dispose();
-                    //GC.Collect();
+                    VlcReinit();
                     break;
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Error:
                     info.cam.data.IsError = true;
+                    VlcReinit();
                     break;
                 default:
                     break;
             }
+        }
+
+        private void VlcReinit()
+        {
+            form.isOn = false;
+            form.AddVlc(null);
+            vlc.Dispose();
+            vlc = null;
+
+            form.WaitForVlc(1040);
+            BtnDevConnect_Click(null, null);
+            
+            //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
+            //vlc.Dispose();
+            //GC.Collect();
         }
 
         private void SetBtnsVisibilityOnPlay(bool on)
@@ -107,10 +120,10 @@ namespace GIShowCam.Gui
             {
                 SessionInfo.vlcOptions = new string[] { //--snapshot-format=jpg
                  "--no-fullscreen" //
-                ,"--one-instance"  //  Allow only one running instance (default disabled)
+                //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on startingto play media.
-                ,"--rtsp-tcp"
+                //,"--rtsp-tcp"
                 ,"--no-drop-late-frames" //drops frames that are late (arrive to the video output after their intended display date)
                 ,"--no-video-deco"  // Window decorations (default enabled)
                 ,"--no-skip-frames" // Optional ::> Enables framedropping on MPEG2 stream (default enabled)

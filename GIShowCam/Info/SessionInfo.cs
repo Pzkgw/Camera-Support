@@ -4,13 +4,15 @@ namespace GIShowCam.Info
 {
     class SessionInfo
     {
-        internal static bool debug = true, log = true, audio = false, fullVideo = false;
+        internal static bool
+            debug = false, log = true, showMessageBoxes = true,
+            audio = false, fullVideo = false;
 
         internal static string[] vlcOptions;
         internal static string snapshotDir = "C:\\";
 
         internal bool videoLoop = true;
-        internal int devID = 4;
+        internal int devID = 6;
 
         //public static string vlcPlugins = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\",
         //   vlc = @"c:\Program Files (x86)\VideoLAN\VLC\";
