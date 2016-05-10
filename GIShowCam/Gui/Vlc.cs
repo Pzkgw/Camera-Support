@@ -1,17 +1,29 @@
 ﻿using GIShowCam.Info;
 using System.Linq;
-using System.Windows.Forms;
 using System;
 using Declarations.Events;
+using Implementation;
+using Declarations.Players;
+using Declarations;
+using Declarations.Media;
 
 //  -- Vlc Options & Events --
 namespace GIShowCam.Gui
 {
     internal partial class GuiBase
-    {
-        private bool btnsShowOnPlay; 
+    {       
+
+        IMediaPlayerFactory m_factory;
+        IDiskPlayer m_player;
+        IMedia m_media;
 
         //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
+
+        private void vlcInit()
+        {
+            m_factory = new MediaPlayerFactory(GetVlcOptions(), SessionInfo.vlcDir);
+            m_player = m_factory.CreatePlayer<IDiskPlayer>();
+        }
 
         /// <summary>
         /// vlc events
@@ -25,11 +37,15 @@ namespace GIShowCam.Gui
             vlc.PositionChanged += Vlc_PositionChanged;
             vlc.MediaChanged += Vlc_MediaChanged;*/
 
+            m_player.Events.MediaChanged += new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
             m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
             m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
             m_player.Events.MediaEnded += new EventHandler(Events_MediaEnded);
             m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
+
+
         }
+
 
         private void AddEventsMedia()
         {
@@ -40,22 +56,27 @@ namespace GIShowCam.Gui
 
         #region events
 
+        void Events_MediaChanged(object sender, MediaPlayerMediaChanged e)
+        {
+
+        }
+
         void Events_PlayerStopped(object sender, EventArgs e)
         {
-            UISync.Execute(() => InitControls());
+            //UISync.Execute(() => InitControls());
         }
 
         void Events_MediaEnded(object sender, EventArgs e)
         {
-            UISync.Execute(() => InitControls());
+            //UISync.Execute(() => InitControls());
         }
-
-        private void InitControls()
-        {/*
-            trackBar1.Value = 0;
-            lblTime.Text = "00:00:00";
-            lblDuration.Text = "00:00:00";*/
-        }
+        /*
+                private void InitControls()
+                {
+                    trackBar1.Value = 0;
+                    lblTime.Text = "00:00:00";
+                    lblDuration.Text = "00:00:00";
+                }*/
 
         void Events_TimeChanged(object sender, MediaPlayerTimeChanged e)
         {
@@ -67,10 +88,10 @@ namespace GIShowCam.Gui
             //UISync.Execute(() => trackBar1.Value = (int)(e.NewPosition * 100));
         }
 
-        void Events_StateChanged(object sender, MediaStateChange e)
-        {
-            //UISync.Execute(() => label1.Text = e.NewState.ToString());
-        }
+        //void Events_StateChanged(object sender, MediaStateChange e)
+        //{
+        //UISync.Execute(() => label1.Text = e.NewState.ToString());
+        //}
 
         void Events_DurationChanged(object sender, MediaDurationChange e)
         {
@@ -87,9 +108,48 @@ namespace GIShowCam.Gui
 
         private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            form.Log(e.PropertyName);
+            Log(e.PropertyName);
             //form.ControlTextUpdate(form.btnPlay, (vlc != null && vlc.IsPlaying) ? "Stop" : "Play");
         }
+
+        private void Events_StateChanged(object sender, MediaStateChange e)
+        {
+            switch (e.NewState)
+            {
+                case Declarations.MediaState.Opening:
+                    info.cam.data.IsOpening = true;
+                    break;
+                case Declarations.MediaState.Buffering:
+                    info.cam.data.IsBuffering = true;
+                    break;
+                case Declarations.MediaState.Playing:
+                    info.cam.data.IsPlaying = true;
+                    break;
+                case Declarations.MediaState.Paused:
+                    info.cam.data.IsPaused = true;
+                    break;
+                case Declarations.MediaState.Stopped:
+                    if (!info.cam.data.IsStopped)
+                    {
+                        //SetBtnsVisibilityOnPlay(false);
+                    }
+                    info.cam.data.IsStopped = true;
+                    break;
+                case Declarations.MediaState.Ended:
+                    info.cam.data.IsEnded = true;
+                    VlcReinit();
+                    break;
+                case Declarations.MediaState.Error:
+                    info.cam.data.IsError = true;
+                    VlcReinit();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
         /*
 
         private void Vlc_EncounteredError(object sender, VlcMediaPlayerEncounteredErrorEventArgs e)
@@ -105,44 +165,14 @@ namespace GIShowCam.Gui
             if (!info.cam.data.IsBuffering && !(e.NewCache < 100)) info.cam.data.IsBuffering = true;
         }
 
-        private void GuiBase_StateChanged(object sender, VlcMediaStateChangedEventArgs e)
-        {
-            switch (vlc.State)
-            {
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Opening:
-                    info.cam.data.IsOpening = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Buffering:
-                    info.cam.data.IsBuffering = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing:
-                    info.cam.data.IsPlaying = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Paused:
-                    info.cam.data.IsPaused = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Stopped:
-                    if (!info.cam.data.IsStopped)
-                    {
-                        SetBtnsVisibilityOnPlay(false);
-                    }
-                    info.cam.data.IsStopped = true;
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Ended:
-                    info.cam.data.IsEnded = true;
-                    VlcReinit();
-                    break;
-                case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Error:
-                    info.cam.data.IsError = true;
-                    VlcReinit();
-                    break;
-                default:
-                    break;
-            }
-        }*/
+*/
 
         private void VlcReinit()
-        {/*
+        {
+            UISync.on = false;
+            BtnDevConnect_Click(null, null);
+
+            /*
             form.isOn = false;
             form.AddVlc(null);
             vlc.Dispose();
@@ -158,13 +188,15 @@ namespace GIShowCam.Gui
 
         private void SetBtnsVisibilityOnPlay(bool on)
         {
+            /*
             if (btnsShowOnPlay != on)
             {
-                if (on || (!on && !info.cam.data.IsPlaying)) form.ControlShow(form.btnPlay, on);
+                if (on || (!on && !info.cam.data.IsPlaying))
+                    form.ControlShow(form.btnPlay, on);
                 form.ControlShow(form.btnSnapshot, on);
                 form.ControlShow(form.btnRecord, on);
             }
-
+            */
             btnsShowOnPlay = on;
         }
 
@@ -174,6 +206,10 @@ namespace GIShowCam.Gui
             {
                 SessionInfo.vlcOptions = new string[] { //--snapshot-format=jpg
                  "--no-fullscreen" //
+                 ,"--ignore-config"
+                 ,"--no-osd"
+                 ,"--disable-screensaver"
+                 ,"--plugin-path=./plugins"
                 //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on startingto play media.
@@ -202,6 +238,16 @@ namespace GIShowCam.Gui
 
 
             return SessionInfo.vlcOptions;
+
+            /*      --- Nvlc Init
+
+            "-I",
+                        "dumy",
+                        "--ignore-config",
+                        "--no-osd",
+                        "--disable-screensaver",
+                        "--plugin-path=./plugins"*/
+
 
 
             //  ---  Alte incercari:
@@ -285,13 +331,12 @@ namespace GIShowCam.Gui
 
         internal void CleanUp()
         {
-            form.isOn = false;// avoid event send
-            //if (vlc.IsPlaying) vlc.Stop(true);
-            //if (vlc.Media != null) vlc.Media.Dispose();
-            //if (vlc != null) vlc.Dispose();
+            UISync.on = false;// avoid event send
 
-            //VlcContext.CloseAll();
-            //vlc.CleanUp();
+            m_media.Dispose();
+            m_player.Dispose();
+            m_factory.Dispose();
+
         }
 
         #endregion CleanUp

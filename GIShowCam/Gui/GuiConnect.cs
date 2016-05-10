@@ -3,6 +3,7 @@ using Declarations;
 using Declarations.Events;
 using Declarations.Media;
 using Declarations.Players;
+using GIShowCam.Info;
 using Implementation;
 using System;
 using System.ComponentModel;
@@ -17,11 +18,6 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-
-        IMediaPlayerFactory m_factory;
-        IDiskPlayer m_player;
-        IMedia m_media;
-
         private Point _vlcTop;
         private Size _vlcSize;
 
@@ -35,12 +31,14 @@ namespace GIShowCam.Gui
                 _vlcSize = form.panelVlc.Size;
             }*/
 
-            /*
-            if (vlc != null)
+            
+            if (m_media != null)
             {
-                vlc.UnregisterEvents();
+                m_media.Dispose();
+                m_media = null;
+                //vlc.UnregisterEvents();
                 //vlc.Stop(allowVlcMediaReinit);
-            }*/
+            }
 
 
             if (allowResize)
@@ -63,43 +61,28 @@ namespace GIShowCam.Gui
 
             if (allowVlcMediaReinit)
             {
-                form.RestartConnection();
+                RestartConnection();
 
-                if (m_factory == null)
-                {
-                    //try {
-                    m_factory = new MediaPlayerFactory(new string[]
-                    {
-                        "-I",
-                        "dumy",
-                        "--ignore-config",
-                        "--no-osd",
-                        "--disable-screensaver",
-                        "--plugin-path=./plugins"
-                    }, @"C:\Program Files (x86)\VideoLAN\VLC");
-                    m_player = m_factory.CreatePlayer<IDiskPlayer>();
-                    openMedia(getPath());
-                    UISync.Init(this.form);
-                    m_player.WindowHandle = form.panelVlc.Handle;
-                    //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
+
+                openMedia(getPath());
 
 
 
-                    //(new System.Threading.Thread(delegate () {
-                    // openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
-                    //})).Start();
-                    //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
-                    //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
+                //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
+                //(new System.Threading.Thread(delegate () {
+                // openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
+                //})).Start();
+                //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
+                //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
 
-                    AddEventsPlayer();
+                AddEventsPlayer();
 
-                    //}
-                    //catch (Exception e) { MessageBox.Show(e.Message); }          
+                //} catch (Exception e) { MessageBox.Show(e.Message); }          
 
-                }
+
 
             }
-            form.isOn = true;
+            
         }
 
         private string getPath()
@@ -121,14 +104,27 @@ namespace GIShowCam.Gui
 
         private void openMedia(string addr)
         {
+            m_player.WindowHandle = new IntPtr(); // start pentru UISync
             m_media = m_factory.CreateMedia<IMedia>(addr);
             //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
-            AddEventsMedia();
+
 
             m_player.Open(m_media);
             m_media.Parse(true);
 
+            AddEventsMedia();
+
+            info.SelectCamera(); // II'nd comboBox change select
+            m_player.WindowHandle = form.panelVlc.Handle; // start pentru UISync
+
+
+
+            //vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
+
             m_player.Play();
+
+            UISync.on = true;
+            info.cam.data.PropertyChanged += Data_PropertyChanged; // doar dupa conexiune de handle
 
             /*      --- OLD APPROACH
             if (vlc.initEndNeeded)
@@ -186,15 +182,16 @@ namespace GIShowCam.Gui
         private class UISync
         {
             private static ISynchronizeInvoke Sync;
+            internal static bool on = true;
 
-            public static void Init(ISynchronizeInvoke sync)
+            internal static void Init(ISynchronizeInvoke sync)
             {
                 Sync = sync;
             }
 
-            public static void Execute(Action action)
+            internal static void Execute(Action action)
             {
-                Sync.BeginInvoke(action, null);
+                if (on) Sync.BeginInvoke(action, null);
             }
         }
 

@@ -418,11 +418,11 @@
         private System.Windows.Forms.TextBox textBoxWidthF;
         private System.Windows.Forms.TextBox txtZoomF;
         private System.Windows.Forms.Label lblZoomF;
-        private System.Windows.Forms.TextBox txtDev;
+        internal System.Windows.Forms.TextBox txtDev;
         internal System.Windows.Forms.ComboBox comboAddress;
         private System.Windows.Forms.GroupBox groupBoxBtns;
         internal System.Windows.Forms.CheckBox chkPlayLoop;
         internal System.Windows.Forms.CheckBox chkFullVid;
-        private System.Windows.Forms.Label lblAdd;
+        internal System.Windows.Forms.Label lblAdd;
     }
 }

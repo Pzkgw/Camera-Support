@@ -1,6 +1,5 @@
 ﻿using GIShowCam.Info;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace GIShowCam.Gui
@@ -10,14 +9,21 @@ namespace GIShowCam.Gui
         private SessionInfo info;
         private FormMain form;
 
-        public GuiBase(FormMain formBase)
+        internal GuiBase(FormMain formBase)
         {
+            UISync.Init(formBase);
             info = new SessionInfo();
+
+            _logTimeLast = DateTime.MinValue;
             form = formBase;
 
-            form.panelVlc.Click += PanelVlc_Click;
-        }
+            vlcInit();
 
+            //form.panelVlc.BringToFront();
+            //form.panelVlc.Click += PanelVlc_Click;
+
+        }
+        /*
         private void PanelVlc_Click(object sender, EventArgs e)
         {
             if (form.chkFullVid.Checked)
@@ -30,7 +36,7 @@ namespace GIShowCam.Gui
             }
 
 
-        }
+        }*/
 
 
 

@@ -62,6 +62,7 @@
     <Compile Include="Gui\GuiConnect.cs" />
     <Compile Include="Gui\GuiControls.cs" />
     <Compile Include="Gui\GuiDeviceInfo.cs" />
+    <Compile Include="Gui\GuiEvents.cs" />
     <Compile Include="Gui\GuiRecord.cs" />
     <Compile Include="Gui\Vlc.cs" />
     <Compile Include="Info\Device.cs" />

@@ -14,8 +14,7 @@ namespace GIShowCam.Info
         internal bool videoLoop = true;
         internal int devID = 6;
 
-        //public static string vlcPlugins = @"C:\Program Files (x86)\VideoLAN\VLC\plugins\",
-        //   vlc = @"c:\Program Files (x86)\VideoLAN\VLC\";
+        public static string vlcDir = @"C:\Program Files (x86)\VideoLAN\VLC";
         // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
 
         private List<Device> devices = new List<Device>() {

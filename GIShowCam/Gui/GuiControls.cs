@@ -6,6 +6,7 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
+        private bool btnsShowOnPlay;
         internal void InitGuiControls()
         {
             form.btnDevConnect.Click += BtnDevConnect_Click;
