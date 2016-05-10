@@ -17,13 +17,25 @@ namespace GIShowCam.Gui
         /// vlc events
         /// </summary>
         /// <returns></returns>
-        private void AddVlcEvents()
+        private void AddEventsPlayer()
         {
             /*
             vlc.Buffering += Vlc_Buffering;
             vlc.EncounteredError += Vlc_EncounteredError;            
             vlc.PositionChanged += Vlc_PositionChanged;
             vlc.MediaChanged += Vlc_MediaChanged;*/
+
+            m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
+            m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
+            m_player.Events.MediaEnded += new EventHandler(Events_MediaEnded);
+            m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
+        }
+
+        private void AddEventsMedia()
+        {
+            m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
+            m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);
+            m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
         }
 
         #region events

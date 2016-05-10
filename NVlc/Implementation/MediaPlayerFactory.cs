@@ -50,51 +50,26 @@ namespace Implementation
         string m_currentDir;
 
         /// <summary>
-        /// Initializes media library with default arguments
-        /// </summary>
-        /// <param name="findLibvlc"></param>
-        /// <param name="useCustomStringMarshaller"></param>
-        /// <remarks>Default arguments:
-        /// "-I",
-        /// "dumy",  
-		/// "--ignore-config", 
-        /// "--no-osd",
-        /// "--disable-screensaver",
-        /// "--plugin-path=./plugins"
-        /// </remarks>
-        public MediaPlayerFactory(bool findLibvlc = false, bool useCustomStringMarshaller = false)
-        {
-            var args = new string[]
-            {
-                "-I", 
-                "dumy",  
-		        "--ignore-config", 
-                "--no-osd",
-                "--disable-screensaver",
-		        "--plugin-path=./plugins" 
-            };
-
-            Initialize(args, findLibvlc, useCustomStringMarshaller);
-        }
-
-        /// <summary>
         /// Initializes media library with user defined arguments
         /// </summary>
         /// <param name="args">Collection of arguments passed to libVLC library</param>
         /// <param name="findLibvlc">True to find libvlc installation path, False to use libvlc in the executable path</param>
         /// <param name="useCustomStringMarshaller"></param>
-        public MediaPlayerFactory(string[] args, bool findLibvlc = false, bool useCustomStringMarshaller = false)
+        public MediaPlayerFactory(string[] args, string vlcPath, bool useCustomStringMarshaller = false)
         {
-            Initialize(args, findLibvlc, useCustomStringMarshaller);
+            Initialize(args, vlcPath, useCustomStringMarshaller);
         }
 
-        private void Initialize(string[] args, bool findLibvlc, bool useCustomStringMarshaller)
+        private void Initialize(string[] args, string vlcPath, bool useCustomStringMarshaller)
         {
+            /*
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             if (findLibvlc)
             {
-                TrySetVLCPath();
-            }
+                TrySetVLCPath(@"C:\Program Files (x86)\VideoLAN\VLC");
+            }*/
+
+            TrySetVLCPath(vlcPath);
 
             try
             {
@@ -113,10 +88,8 @@ namespace Implementation
                 throw new LibVlcInitException();
             }
 
-            if (findLibvlc)
-            {
-                Directory.SetCurrentDirectory(m_currentDir);
-            }
+
+            Directory.SetCurrentDirectory(m_currentDir);            
 
             TrySetupLogging();
             TryFilterRemovedModules();            
@@ -362,7 +335,7 @@ namespace Implementation
             {
                 LibVlcMethods.libvlc_release(m_hMediaLib);
             }
-            catch (AccessViolationException)
+            catch (Exception)//(AccessViolationException)
             { }
         }
 
@@ -547,6 +520,12 @@ namespace Implementation
             };
         }
 
+        private void TrySetVLCPath(string path)
+        {
+            m_currentDir = path;
+            Directory.SetCurrentDirectory(path);
+        }
+        /*
         private void TrySetVLCPath()
         {
             try
@@ -605,7 +584,7 @@ namespace Implementation
                 }
             }
         }
-
+        */
         /// <summary>
         /// Gets error message for the last LibVLC error in the calling thread
         /// </summary>

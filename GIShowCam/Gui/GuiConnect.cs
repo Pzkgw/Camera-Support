@@ -67,61 +67,85 @@ namespace GIShowCam.Gui
 
                 if (m_factory == null)
                 {
-                    m_factory = new MediaPlayerFactory(true);
+                    //try {
+                    m_factory = new MediaPlayerFactory(new string[]
+                    {
+                        "-I",
+                        "dumy",
+                        "--ignore-config",
+                        "--no-osd",
+                        "--disable-screensaver",
+                        "--plugin-path=./plugins"
+                    }, @"C:\Program Files (x86)\VideoLAN\VLC");
                     m_player = m_factory.CreatePlayer<IDiskPlayer>();
-
-                    m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
-                    m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
-                    m_player.Events.MediaEnded += new EventHandler(Events_MediaEnded);
-                    m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
-
-                    m_player.WindowHandle = form.panelVlc.Handle;
-                    //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
-
+                    openMedia(getPath());
                     UISync.Init(this.form);
+                    m_player.WindowHandle = form.panelVlc.Handle;
+                    //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
 
 
+
+                    //(new System.Threading.Thread(delegate () {
+                    // openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
+                    //})).Start();
+                    //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
                     //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
 
-                    AddVlcEvents();
+                    AddEventsPlayer();
+
+                    //}
+                    //catch (Exception e) { MessageBox.Show(e.Message); }          
+
                 }
-
-                string path = info.host;
-
-                if (path.Count(s => s == '.') > 2)
-                {
-
-                    if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
-                    {
-                        path = path.Insert(7, (info.user + ":" + info.password + "@"));
-                    }
-
-                    //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
-                }
-
-
-
-                openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
-
-                //(new System.Threading.Thread(delegate () 
-                //{ openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0"); })).Start();
 
             }
             form.isOn = true;
+        }
+
+        private string getPath()
+        {
+            string path = info.host;
+
+            if (path.Count(s => s == '.') > 2)
+            {
+
+                if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
+                {
+                    path = path.Insert(7, (info.user + ":" + info.password + "@"));
+                }
+
+                //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
+            }
+            return path;
         }
 
         private void openMedia(string addr)
         {
             m_media = m_factory.CreateMedia<IMedia>(addr);
             //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
-            m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
-            m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);
-            m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
+            AddEventsMedia();
 
             m_player.Open(m_media);
             m_media.Parse(true);
 
             m_player.Play();
+
+            /*      --- OLD APPROACH
+            if (vlc.initEndNeeded)
+            {
+                vlc.VlcLibDirectory = new DirectoryInfo(GetVlcLibLocation());
+                vlc.VlcMediaplayerOptions = GetVlcOptions();
+                vlc.EndInit();
+                vlc.initEndNeeded = false;
+                form.AddVlc(vlc);
+
+            }
+
+            vlc.SetMedia(path);
+            //(new System.Threading.Thread(delegate () { uu(); })).Start();
+
+            vlc.RegisterEvents();*/
+
         }
 
         /*
@@ -144,7 +168,7 @@ namespace GIShowCam.Gui
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
         {
             info.SelectCamera(form.comboAddress.SelectedIndex);
-            
+
             form.txtDevUser.Text = info.user;
             form.txtDevPass.Text = info.password;
             form.comboAddress.Text = info.host;
