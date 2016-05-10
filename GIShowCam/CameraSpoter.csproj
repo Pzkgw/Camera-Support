@@ -69,12 +69,6 @@
     <Compile Include="Info\SessionInfo.cs" />
     <Compile Include="ProgramMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vlc override\GIVlcControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Vlc override\GIVlcControlEvents.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,16 +95,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Core.Interops\Vlc.DotNet.Core.Interops.csproj">
-      <Project>{7506dde6-1d45-4fe0-8239-985c5f6eb605}</Project>
-      <Name>Vlc.DotNet.Core.Interops</Name>
+    <ProjectReference Include="..\NVlc\Declarations\nVLC.Declarations.csproj">
+      <Project>{819c4bab-8fd0-463f-bb5f-119731840390}</Project>
+      <Name>nVLC.Declarations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VlcLibraries\Vlc.DotNet.Core\Vlc.DotNet.Core.csproj">
-      <Project>{0dc24b0b-6862-4615-b62d-81795d2cdd07}</Project>
-      <Name>Vlc.DotNet.Core</Name>
+    <ProjectReference Include="..\NVlc\Implementation\nVLC.Implementation.csproj">
+      <Project>{6ba02cca-2e14-4a64-8ab6-594e600d80c9}</Project>
+      <Name>nVLC.Implementation</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

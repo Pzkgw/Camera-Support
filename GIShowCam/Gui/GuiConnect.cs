@@ -1,11 +1,16 @@
 ﻿
-using GIShowCam.Vlc_override;
+using Declarations;
+using Declarations.Events;
+using Declarations.Media;
+using Declarations.Players;
+using Implementation;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Vlc.DotNet.Core;
+
 
 // -- Connect to camera --
 namespace GIShowCam.Gui
@@ -13,7 +18,9 @@ namespace GIShowCam.Gui
     internal partial class GuiBase
     {
 
-        private GIVlcControl vlc;
+        IMediaPlayerFactory m_factory;
+        IDiskPlayer m_player;
+        IMedia m_media;
 
         private Point _vlcTop;
         private Size _vlcSize;
@@ -28,11 +35,12 @@ namespace GIShowCam.Gui
                 _vlcSize = form.panelVlc.Size;
             }*/
 
+            /*
             if (vlc != null)
             {
                 vlc.UnregisterEvents();
                 //vlc.Stop(allowVlcMediaReinit);
-            }
+            }*/
 
 
             if (allowResize)
@@ -57,21 +65,23 @@ namespace GIShowCam.Gui
             {
                 form.RestartConnection();
 
-                if (vlc == null)
+                if (m_factory == null)
                 {
-                    //opt.ScreenSaverEnabled = false;
+                    m_factory = new MediaPlayerFactory(true);
+                    m_player = m_factory.CreatePlayer<IDiskPlayer>();
 
-                    vlc = new GIVlcControl();
-                    //vlc.Name = "vlc";
-                    vlc.TabStop = false;
-                    vlc.Enabled = false;
-                    vlc.BackColor = Color.Empty;
-                    vlc.ImeMode = ImeMode.NoControl;
-                    vlc.Dock = DockStyle.Fill;
+                    m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
+                    m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
+                    m_player.Events.MediaEnded += new EventHandler(Events_MediaEnded);
+                    m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
 
-                    
+                    m_player.WindowHandle = form.panelVlc.Handle;
+                    //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
+
+                    UISync.Init(this.form);
+
+
                     //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
-                    vlc.initEndNeeded = true;
 
                     AddVlcEvents();
                 }
@@ -89,31 +99,32 @@ namespace GIShowCam.Gui
                     //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
                 }
 
-                if (vlc.initEndNeeded)
-                {
-                    vlc.VlcLibDirectory = new DirectoryInfo(GetVlcLibLocation());
-                    vlc.VlcMediaplayerOptions = GetVlcOptions();
-                    vlc.EndInit();
-                    vlc.initEndNeeded = false;
-                    form.AddVlc(vlc);
-                    
-                }
-                
-                //vlc.VlcMediaplayerOptions = GetVlcOptions();
-                //uu();
-                
-                //(new System.Threading.Thread(delegate () { vlc.SetMedia(path, GetVlcOptions()); })).Start();
-                
-                //vlc.VlcMediaplayerOptions = null;
-                vlc.SetMedia(path);
-                //(new System.Threading.Thread(delegate () { uu(); })).Start();
-                
-                vlc.RegisterEvents();
-                //vlc.VlcMediaplayerOptions = null;
+
+
+                openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
+
+                //(new System.Threading.Thread(delegate () 
+                //{ openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0"); })).Start();
+
             }
             form.isOn = true;
         }
 
+        private void openMedia(string addr)
+        {
+            m_media = m_factory.CreateMedia<IMedia>(addr);
+            //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
+            m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
+            m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);
+            m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
+
+            m_player.Open(m_media);
+            m_media.Parse(true);
+
+            m_player.Play();
+        }
+
+        /*
         /// <summary>
         /// Event chemat dupa ce o noua camera e conectata (MediaChanged)
         /// </summary>
@@ -128,7 +139,7 @@ namespace GIShowCam.Gui
             vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
 
             vlc.Play();
-        }
+        }*/
 
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -146,5 +157,27 @@ namespace GIShowCam.Gui
             VideoInit(false, false, true);
         }
 
+
+
+        private class UISync
+        {
+            private static ISynchronizeInvoke Sync;
+
+            public static void Init(ISynchronizeInvoke sync)
+            {
+                Sync = sync;
+            }
+
+            public static void Execute(Action action)
+            {
+                Sync.BeginInvoke(action, null);
+            }
+        }
+
+
     }
+
+
+
+
 }

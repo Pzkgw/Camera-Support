@@ -1,5 +1,5 @@
 ﻿using System;
-using Vlc.DotNet.Core;
+
 
 namespace GIShowCam.Gui
 {
@@ -51,7 +51,7 @@ namespace GIShowCam.Gui
         }
 
         #region real time Device Info
-
+        /*
         /// <summary>
         /// Event handler for "VlcControl.PositionChanged" event. 
         /// Updates the label containing the playback position. 
@@ -89,7 +89,7 @@ namespace GIShowCam.Gui
                 }
             }
         }
-
+        */
 
         #endregion real time Device Info
 

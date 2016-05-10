@@ -1,4 +1,5 @@
-﻿using GIShowCam.Gui;
+﻿using Declarations.Players;
+using GIShowCam.Gui;
 using GIShowCam.Info;
 using System;
 using System.Threading;
@@ -65,14 +66,14 @@ namespace GIShowCam
             InvokeGuiThread(new textUpdateDelegate(TextUpdate), ctrl, s, false, false);
         }
 
-        private delegate void AddVlcDelegate(Vlc_override.GIVlcControl ctrl);
+        private delegate void AddVlcDelegate(IDiskPlayer ctrl);
 
-        private void AddVlcPrivate(Vlc_override.GIVlcControl ctrl)
+        private void AddVlcPrivate(IDiskPlayer ctrl)
         {
-            ctrl.Parent = this.panelVlc;
+            //ctrl.Parent = this.panelVlc;
         }
 
-        internal void AddVlc(Vlc_override.GIVlcControl ctrl)
+        internal void AddVlc(IDiskPlayer ctrl)
         {
             //InvokeGuiThread(delegate() { ctrl.Parent = this.panelVlc;}, ctrl, s, false, false);
             InvokeGuiThread(new AddVlcDelegate(AddVlcPrivate), ctrl);

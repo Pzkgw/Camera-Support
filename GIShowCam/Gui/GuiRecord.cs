@@ -106,7 +106,7 @@ vlc.Play();
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
             //vlc.Media.
-            vlc.TakeSnapshot(SessionInfo.snapshotDir);// , (uint)vlc.Width, (uint)vlc.Height
+            //vlc.TakeSnapshot(SessionInfo.snapshotDir);// , (uint)vlc.Width, (uint)vlc.Height
         }
 
 

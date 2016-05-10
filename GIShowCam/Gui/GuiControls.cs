@@ -30,6 +30,7 @@ namespace GIShowCam.Gui
 
         private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)
         {
+            /*
             SessionInfo.fullVideo = ((CheckBox)sender).Checked;
             if (vlc != null)
                 if (SessionInfo.fullVideo)
@@ -43,7 +44,7 @@ namespace GIShowCam.Gui
                     SessionInfo.log = true;
                     VideoInit(false, true, false);
                     vlc.Play();
-                }
+                }*/
         }
 
         private void ChkLoop_CheckedChanged(object sender, EventArgs e)
@@ -87,6 +88,7 @@ namespace GIShowCam.Gui
 
         private void BtnPlay_Click(object sender, EventArgs e)
         {
+            /*
             bool playing = false;
             if (sender != null && vlc != null)
             {
@@ -100,7 +102,7 @@ namespace GIShowCam.Gui
                     vlc.Play();
                 }
                 SetBtnsVisibilityOnPlay(!playing);
-            }            
+            }   */         
         }
 
         #region Detalii pt connection textboxes

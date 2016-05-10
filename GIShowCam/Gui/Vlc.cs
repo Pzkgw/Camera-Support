@@ -1,8 +1,8 @@
 ﻿using GIShowCam.Info;
 using System.Linq;
 using System.Windows.Forms;
-using Vlc.DotNet.Core;
 using System;
+using Declarations.Events;
 
 //  -- Vlc Options & Events --
 namespace GIShowCam.Gui
@@ -19,18 +19,66 @@ namespace GIShowCam.Gui
         /// <returns></returns>
         private void AddVlcEvents()
         {
+            /*
             vlc.Buffering += Vlc_Buffering;
             vlc.EncounteredError += Vlc_EncounteredError;            
             vlc.PositionChanged += Vlc_PositionChanged;
-            vlc.MediaChanged += Vlc_MediaChanged;
+            vlc.MediaChanged += Vlc_MediaChanged;*/
         }
+
+        #region events
+
+        void Events_PlayerStopped(object sender, EventArgs e)
+        {
+            UISync.Execute(() => InitControls());
+        }
+
+        void Events_MediaEnded(object sender, EventArgs e)
+        {
+            UISync.Execute(() => InitControls());
+        }
+
+        private void InitControls()
+        {/*
+            trackBar1.Value = 0;
+            lblTime.Text = "00:00:00";
+            lblDuration.Text = "00:00:00";*/
+        }
+
+        void Events_TimeChanged(object sender, MediaPlayerTimeChanged e)
+        {
+            //UISync.Execute(() => lblTime.Text = TimeSpan.FromMilliseconds(e.NewTime).ToString().Substring(0, 8));
+        }
+
+        void Events_PlayerPositionChanged(object sender, MediaPlayerPositionChanged e)
+        {
+            //UISync.Execute(() => trackBar1.Value = (int)(e.NewPosition * 100));
+        }
+
+        void Events_StateChanged(object sender, MediaStateChange e)
+        {
+            //UISync.Execute(() => label1.Text = e.NewState.ToString());
+        }
+
+        void Events_DurationChanged(object sender, MediaDurationChange e)
+        {
+            //UISync.Execute(() => lblDuration.Text = TimeSpan.FromMilliseconds(e.NewDuration).ToString().Substring(0, 8));
+        }
+
+        void Events_ParsedChanged(object sender, MediaParseChange e)
+        {
+            Console.WriteLine(e.Parsed);
+        }
+
+        #endregion events
+
 
         private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             form.Log(e.PropertyName);
-            form.ControlTextUpdate(form.btnPlay, (vlc != null && vlc.IsPlaying) ? "Stop" : "Play");
+            //form.ControlTextUpdate(form.btnPlay, (vlc != null && vlc.IsPlaying) ? "Stop" : "Play");
         }
-
+        /*
 
         private void Vlc_EncounteredError(object sender, VlcMediaPlayerEncounteredErrorEventArgs e)
         {
@@ -47,12 +95,6 @@ namespace GIShowCam.Gui
 
         private void GuiBase_StateChanged(object sender, VlcMediaStateChangedEventArgs e)
         {
-            /*
-            if (vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.NothingSpecial)
-                form.Log("Connection start"); //connection start
-            else
-                form.Log("Connection state: " + vlc.State);*/
-
             switch (vlc.State)
             {
                 case Vlc.DotNet.Core.Interops.Signatures.MediaStates.Opening:
@@ -85,10 +127,10 @@ namespace GIShowCam.Gui
                 default:
                     break;
             }
-        }
+        }*/
 
         private void VlcReinit()
-        {
+        {/*
             form.isOn = false;
             form.AddVlc(null);
             vlc.Dispose();
@@ -96,7 +138,7 @@ namespace GIShowCam.Gui
 
             form.WaitForVlc(1040);
             BtnDevConnect_Click(null, null);
-            
+            */
             //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
             //vlc.Dispose();
             //GC.Collect();
@@ -237,7 +279,7 @@ namespace GIShowCam.Gui
             //if (vlc != null) vlc.Dispose();
 
             //VlcContext.CloseAll();
-            vlc.CleanUp();
+            //vlc.CleanUp();
         }
 
         #endregion CleanUp
