@@ -49,9 +49,9 @@ namespace GIShowCam.Gui
 
         private void AddEventsMedia()
         {
-            m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
-            m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);
-            m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
+            //m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
+            //m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
+            m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);            
         }
 
         #region events
@@ -83,25 +83,21 @@ namespace GIShowCam.Gui
             //UISync.Execute(() => lblTime.Text = TimeSpan.FromMilliseconds(e.NewTime).ToString().Substring(0, 8));
         }
 
-        void Events_PlayerPositionChanged(object sender, MediaPlayerPositionChanged e)
-        {
-            //UISync.Execute(() => trackBar1.Value = (int)(e.NewPosition * 100));
-        }
 
         //void Events_StateChanged(object sender, MediaStateChange e)
         //{
         //UISync.Execute(() => label1.Text = e.NewState.ToString());
         //}
-
+        /*
         void Events_DurationChanged(object sender, MediaDurationChange e)
         {
-            //UISync.Execute(() => lblDuration.Text = TimeSpan.FromMilliseconds(e.NewDuration).ToString().Substring(0, 8));
+            UISync.Execute(() => lblDuration.Text = TimeSpan.FromMilliseconds(e.NewDuration).ToString().Substring(0, 8));
         }
 
         void Events_ParsedChanged(object sender, MediaParseChange e)
         {
             Console.WriteLine(e.Parsed);
-        }
+        }*/
 
         #endregion events
 
@@ -131,7 +127,7 @@ namespace GIShowCam.Gui
                 case Declarations.MediaState.Stopped:
                     if (!info.cam.data.IsStopped)
                     {
-                        //SetBtnsVisibilityOnPlay(false);
+                        SetBtnsVisibilityOnPlay(false);
                     }
                     info.cam.data.IsStopped = true;
                     break;
@@ -170,7 +166,8 @@ namespace GIShowCam.Gui
         private void VlcReinit()
         {
             UISync.on = false;
-            BtnDevConnect_Click(null, null);
+            //BtnDevConnect_Click(null, null);
+            ComboAddress_SelectionChangeCommitted(null, null);
 
             /*
             form.isOn = false;
@@ -188,15 +185,15 @@ namespace GIShowCam.Gui
 
         private void SetBtnsVisibilityOnPlay(bool on)
         {
-            /*
+            
             if (btnsShowOnPlay != on)
             {
                 if (on || (!on && !info.cam.data.IsPlaying))
-                    form.ControlShow(form.btnPlay, on);
-                form.ControlShow(form.btnSnapshot, on);
-                form.ControlShow(form.btnRecord, on);
-            }
-            */
+                UISync.Execute(() => form.btnPlay.Enabled = on);
+                UISync.Execute(() => form.btnSnapshot.Enabled = on);
+                UISync.Execute(() => form.btnRecord.Enabled = on);
+            }           
+
             btnsShowOnPlay = on;
         }
 

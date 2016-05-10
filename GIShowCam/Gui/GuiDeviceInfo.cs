@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Declarations.Events;
+using System;
 
 
 namespace GIShowCam.Gui
@@ -51,45 +52,46 @@ namespace GIShowCam.Gui
         }
 
         #region real time Device Info
-        /*
+        
+        
+            //UISync.Execute(() => trackBar1.Value = (int)(e.NewPosition * 100));
+        
+
         /// <summary>
         /// Event handler for "VlcControl.PositionChanged" event. 
         /// Updates the label containing the playback position. 
         /// </summary>
         /// <param name="sender">Event sending. </param>
         /// <param name="e">Event arguments, containing the current position. </param>
-        private void Vlc_PositionChanged(object sender, VlcMediaPlayerPositionChangedEventArgs e)
+        void Events_PlayerPositionChanged(object sender, MediaPlayerPositionChanged e)
         {
             //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
             //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
-            if (vlc != null)
+            if (m_media != null)
             {
-                VlcMedia media = vlc.GetCurrentMedia();
-                if (media != null)
-                {
-                    form.ControlTextUpdate(form.lblVlcNotify,
-                        "Time: " + vlc.Time +
-                        ", DecodedVideo: " + media.Statistics.DecodedVideo +
-                        ", InputBitrate: " + media.Statistics.InputBitrate +
-                        ", DemuxBitrate: " + media.Statistics.DemuxBitrate +
-                        ", DisplayedPictures: " + media.Statistics.DisplayedPictures +
-                        ", LostPictures: " + media.Statistics.LostPictures +
-                        ", FPS: " + 0);
+                UISync.Execute(() => TextUpdate(form.lblVlcNotify,
+                        "Time: " + m_player.Time +
+                        ", DecodedVideo: " + m_media.Statistics.DecodedVideo +
+                        ", InputBitrate: " + m_media.Statistics.InputBitrate +
+                        ", DemuxBitrate: " + m_media.Statistics.DemuxBitrate +
+                        ", DisplayedPictures: " + m_media.Statistics.DisplayedPictures +
+                        ", LostPictures: " + m_media.Statistics.LostPictures +
+                        ", FPS: " + m_player.FPS, false, false, false));
 
                     //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
 
                     if (!info.cam.data.IsVideoComplete &&
-                        info.cam.data.imgCount < media.Statistics.DisplayedPictures)
+                        info.cam.data.imgCount < m_media.Statistics.DisplayedPictures)
                     {
-                        info.cam.data.imgCount = media.Statistics.DisplayedPictures;
+                        info.cam.data.imgCount = m_media.Statistics.DisplayedPictures;
                         info.cam.data.IsVideoComplete = true;
                         SetBtnsVisibilityOnPlay(true);
                     }
                     //form.Log("Poze = " + media.Statistics.DisplayedPictures);
-                }
+                
             }
         }
-        */
+        
 
         #endregion real time Device Info
 

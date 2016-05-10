@@ -14,7 +14,7 @@ namespace GIShowCam.Info
         internal bool videoLoop = true;
         internal int devID = 6;
 
-        public static string vlcDir = @"C:\Program Files (x86)\VideoLAN\VLC";
+        internal static string vlcDir = @"C:\Program Files (x86)\VideoLAN\VLC";
         // new Device("rtsp://10.10.10.202:554/cam/realmonitor?channel=2&subtype=0&unicast=true&proto=Onvif", "admin", "admin")
 
         private List<Device> devices = new List<Device>() {
@@ -59,7 +59,7 @@ namespace GIShowCam.Info
             cam = new Device(h, u, p);
         }
 
-        public string[] GetDeviceList()
+        internal string[] GetDeviceList()
         {
             int len = devices.Count;
             string[] retVal = new string[len];
@@ -69,7 +69,7 @@ namespace GIShowCam.Info
             return retVal;
         }
 
-        public string host
+        internal string host
         {
             get
             {
@@ -82,7 +82,7 @@ namespace GIShowCam.Info
             }
         }
 
-        public string user
+        internal string user
         {
             get
             {
@@ -95,7 +95,7 @@ namespace GIShowCam.Info
             }
         }
 
-        public string password
+        internal string password
         {
             get
             {
