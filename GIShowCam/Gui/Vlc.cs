@@ -6,12 +6,13 @@ using Implementation;
 using Declarations.Players;
 using Declarations;
 using Declarations.Media;
+using System.Windows.Forms;
 
 //  -- Vlc Options & Events --
 namespace GIShowCam.Gui
 {
     internal partial class GuiBase
-    {       
+    {
 
         IMediaPlayerFactory m_factory;
         IDiskPlayer m_player;
@@ -29,11 +30,11 @@ namespace GIShowCam.Gui
         /// vlc events
         /// </summary>
         /// <returns></returns>
-        private void AddEventsPlayer()
+        internal void AddEventsPlayer()
         {
             /*
             vlc.Buffering += Vlc_Buffering;
-            vlc.EncounteredError += Vlc_EncounteredError;            
+            vlc.EncounteredError += Vlc_EncounteredError;
             vlc.PositionChanged += Vlc_PositionChanged;
             vlc.MediaChanged += Vlc_MediaChanged;*/
 
@@ -42,16 +43,29 @@ namespace GIShowCam.Gui
             m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
             m_player.Events.MediaEnded += new EventHandler(Events_MediaEnded);
             m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
-
+            m_player.Events.PlayerEncounteredError += Events_PlayerEncounteredError;
 
         }
 
-
-        private void AddEventsMedia()
+        private void Events_PlayerEncounteredError(object sender, EventArgs e)
         {
-            //m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
-            //m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
-            m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);            
+            MessageBox.Show(e.ToString());
+        }
+
+        private void RegisterMediaEvents(bool on)
+        {
+            if (on)
+            {
+                //m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
+                //m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
+                m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);
+            }
+            else
+            {
+                //m_media.Events.DurationChanged -= new EventHandler<MediaDurationChange>(Events_DurationChanged);
+                //m_media.Events.ParsedChanged -= new EventHandler<MediaParseChange>(Events_ParsedChanged);
+                m_media.Events.StateChanged -= new EventHandler<MediaStateChange>(Events_StateChanged);
+            }
         }
 
         #region events
@@ -166,6 +180,9 @@ namespace GIShowCam.Gui
         private void VlcReinit()
         {
             UISync.on = false;
+            StopRunningMedia();
+            VideoInit(false, false);
+
             //BtnDevConnect_Click(null, null);
             //ComboAddress_SelectionChangeCommitted(null, null);
 
@@ -185,14 +202,14 @@ namespace GIShowCam.Gui
 
         private void SetBtnsVisibilityOnPlay(bool on)
         {
-            
+
             if (btnsShowOnPlay != on)
             {
                 if (on || (!on && !info.cam.data.IsPlaying))
-                UISync.Execute(() => form.btnPlay.Enabled = on);
+                    UISync.Execute(() => form.btnPlay.Enabled = on);
                 UISync.Execute(() => form.btnSnapshot.Enabled = on);
                 UISync.Execute(() => form.btnRecord.Enabled = on);
-            }           
+            }
 
             btnsShowOnPlay = on;
         }
@@ -330,10 +347,15 @@ namespace GIShowCam.Gui
         {
             UISync.on = false;// avoid event send
 
+            RegisterMediaEvents(false);
+
             m_media.Dispose();
             m_player.Dispose();
             m_factory.Dispose();
 
+            m_media = null;
+            m_player = null;
+            m_factory = null;
         }
 
         #endregion CleanUp

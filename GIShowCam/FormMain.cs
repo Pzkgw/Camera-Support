@@ -35,6 +35,7 @@ namespace GIShowCam
             }
 
             mainB.DeviceTextBoxesUpdate();
+            mainB.AddEventsPlayer();
 
             FormClosing += FormMain_FormClosing;
         }

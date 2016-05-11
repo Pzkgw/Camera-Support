@@ -11,12 +11,12 @@ namespace GIShowCam.Gui
 
         internal GuiBase(FormMain formBase)
         {
-            UISync.Init(formBase);
+            
             info = new SessionInfo();
 
             _logTimeLast = DateTime.MinValue;
             form = formBase;
-
+            UISync.Init(formBase);
             vlcInit();
 
             //form.panelVlc.BringToFront();

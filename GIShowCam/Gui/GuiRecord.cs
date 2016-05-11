@@ -44,7 +44,7 @@ vlc.Play();
 
             if (e != null)
             {
-                /* if (recordIsOn)
+                 if (recordIsOn)
                {
                    //vlc.Media.AddOption("--color=random", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
                    recordIsOn = false;
@@ -54,7 +54,7 @@ vlc.Play();
                    //vlc.Media.AddOption("--color=NIOrandom", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
                    Record("c:\\", "kk.mp4", 800);
                    recordIsOn = true;
-               }*/
+               }
                 if (SessionInfo.showMessageBoxes) MessageBox.Show(" Not implementat ");
             }
 
@@ -65,11 +65,11 @@ vlc.Play();
         string _finalFilename, _tempFilename, _tempPath = "C:\\_tmp";
         //bool _WasError, _IsFinished;
         int secondsToRecord;
-        DateTime timeStarted, timeToComplete;
+        DateTime timeStarted, timeToComplete;*/
 
         //start a recording process
         public void Record(string url, string fileName, int durration)
-        {
+        {/*
             //Persist parameters to instance fields
             _finalFilename = fileName;
             //Destination file name is initially a guid later to be moved and renamed upon completion
@@ -100,13 +100,13 @@ vlc.Play();
             //vlc.Media = media;
             //Start the timer used to stop the recording after X minutes
             //--t1.Enabled = true;
-        }*/
+        */}
 
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
-            //vlc.Media.
-            //vlc.TakeSnapshot(SessionInfo.snapshotDir);// , (uint)vlc.Width, (uint)vlc.Height
+            if (m_player != null && m_media != null)
+                m_player.TakeSnapShot(0, SessionInfo.snapshotDir);
         }
 
 

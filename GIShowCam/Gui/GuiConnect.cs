@@ -32,14 +32,7 @@ namespace GIShowCam.Gui
                 _vlcSize = form.panelVlc.Size;
             }*/
 
-            
-            if (m_media != null)
-            {
-                m_media.Dispose();
-                m_media = null;
-                //vlc.UnregisterEvents();
-                //vlc.Stop(allowVlcMediaReinit);
-            }
+            StopRunningMedia();
 
             // pentru fullscreen on/off, allowResize ::--> async
             if(allowResize)
@@ -75,7 +68,7 @@ namespace GIShowCam.Gui
                 //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
                 //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
 
-                AddEventsPlayer();
+                
 
                 //} catch (Exception e) { MessageBox.Show(e.Message); }          
 
@@ -83,6 +76,19 @@ namespace GIShowCam.Gui
 
             }
             
+        }
+
+        private void StopRunningMedia()
+        {
+            if (m_media != null)
+            {
+                RegisterMediaEvents(false);
+                m_player.Stop();
+                m_media.Dispose();
+                m_media = null;
+                //vlc.UnregisterEvents();
+                //vlc.Stop(allowVlcMediaReinit);
+            }
         }
 
         private string getPath()
@@ -115,7 +121,7 @@ namespace GIShowCam.Gui
             m_player.Open(m_media);
             m_media.Parse(true);
 
-            AddEventsMedia();
+            RegisterMediaEvents(true);
 
             
 
