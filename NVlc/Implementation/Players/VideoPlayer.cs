@@ -168,6 +168,7 @@ namespace Implementation.Players
             get
             {
                 IntPtr pData = LibVlcMethods.libvlc_video_get_aspect_ratio(m_hMediaPlayer);
+                if (pData == IntPtr.Zero) return 0;
                 string str = Marshal.PtrToStringAnsi(pData);
                 return (AspectRatioMode)m_aspectMapper[str];
             }
