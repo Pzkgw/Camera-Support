@@ -104,8 +104,10 @@ namespace Implementation
                 Version libVlcVersion = new Version(versionMatch.Value);
                 ObjectFactory.FilterRemovedModules(libVlcVersion);
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -156,6 +158,7 @@ namespace Implementation
             {
                 string msg = string.Format("Failed to setup logging, reason : {0}", ex.Message);
                 m_logger.Error(msg);
+                throw ex;
             }
         }
 
@@ -335,8 +338,10 @@ namespace Implementation
             {
                 LibVlcMethods.libvlc_release(m_hMediaLib);
             }
-            catch (Exception)//(AccessViolationException)
-            { }
+            catch (Exception ex)//(AccessViolationException)
+            {
+                throw ex;
+            }
         }
 
         #endregion

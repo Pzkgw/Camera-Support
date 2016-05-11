@@ -66,6 +66,7 @@ namespace Implementation.Loggers
             catch (Exception ex)
             {
                 m_logger.Error("Failed to handle log callback, reason : " + ex.Message);
+                throw ex;
             }
         }
 
@@ -75,8 +76,10 @@ namespace Implementation.Loggers
             {
                 LibVlcMethods.libvlc_log_unset(m_instance);
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
                       
             if (disposing)
             {

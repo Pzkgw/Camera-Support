@@ -285,9 +285,10 @@ namespace Implementation.Players
                 if (video != null && m_memRenderEx != null)
                     m_memRenderEx.SAR = new AspectRatio((int)video.Sar_num, (int)video.Sar_den);
             }
-            catch (EntryPointNotFoundException)
+            catch (EntryPointNotFoundException er)
             {
                 Events.PlayerPlaying -= Events_PlayerPlaying;
+                throw er;
             }
         }
 

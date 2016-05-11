@@ -161,18 +161,18 @@ namespace LibVlcWrapper
                             {
                                 this.m_native_data.Add(native_data, new StringArraySizePair(strs, native_data_size));
                             }
-                            catch
+                            catch(Exception ex)
                             {
                                 this.m_native_data_size -= native_data_size;
-                                throw;
+                                throw ex;
                             }
                         }
                         return native_data;
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         Marshal.FreeHGlobal(native_data);
-                        throw;
+                        throw ex;
                     }
                 }
             }

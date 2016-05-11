@@ -264,12 +264,14 @@ namespace Implementation.Media
 
       public void Release()
       {
-         try
-         {
-            LibVlcMethods.libvlc_media_list_release(m_hMediaList);
-         }
-         catch (AccessViolationException)
-         { }
+            try
+            {
+                LibVlcMethods.libvlc_media_list_release(m_hMediaList);
+            }
+            catch (AccessViolationException ex)
+            {
+                throw ex;
+            }
       }
 
       #endregion

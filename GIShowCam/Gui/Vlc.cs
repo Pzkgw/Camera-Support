@@ -167,7 +167,7 @@ namespace GIShowCam.Gui
         {
             UISync.on = false;
             //BtnDevConnect_Click(null, null);
-            ComboAddress_SelectionChangeCommitted(null, null);
+            //ComboAddress_SelectionChangeCommitted(null, null);
 
             /*
             form.isOn = false;

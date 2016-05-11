@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -21,7 +22,7 @@ namespace GIShowCam.Gui
         private Point _vlcTop;
         private Size _vlcSize;
 
-        internal void VideoInit(bool fullView, bool allowResize, bool allowVlcMediaReinit)
+        internal void VideoInit(bool allowResize, bool fullView)
         {
             //form.isOn = false;
             /*
@@ -40,8 +41,8 @@ namespace GIShowCam.Gui
                 //vlc.Stop(allowVlcMediaReinit);
             }
 
-
-            if (allowResize)
+            // pentru fullscreen on/off, allowResize ::--> async
+            if(allowResize)
                 if (fullView)
                 {
                     _vlcTop = form.panelVlc.Location;
@@ -59,8 +60,7 @@ namespace GIShowCam.Gui
                     //form.panelVlc.SendToBack();
                 }
 
-            if (allowVlcMediaReinit)
-            {
+            {//allowVlcMediaReinit
                 RestartConnection();
 
 
@@ -87,6 +87,9 @@ namespace GIShowCam.Gui
 
         private string getPath()
         {
+            info.NewCameraInfo(); // II'nd comboBox change select
+            info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
+
             string path = info.host;
 
             if (path.Count(s => s == '.') > 2)
@@ -114,17 +117,20 @@ namespace GIShowCam.Gui
 
             AddEventsMedia();
 
-            info.SelectCamera(); // II'nd comboBox change select
-            m_player.WindowHandle = form.panelVlc.Handle; // start pentru UISync
+            
+
+            //UISync.Execute(() => StartPlay());
+            StartPlay();
+
 
 
 
             //vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
 
-            m_player.Play();
 
-            UISync.on = true;
-            info.cam.data.PropertyChanged += Data_PropertyChanged; // doar dupa conexiune de handle
+
+
+            
 
             /*      --- OLD APPROACH
             if (vlc.initEndNeeded)
@@ -142,6 +148,14 @@ namespace GIShowCam.Gui
 
             vlc.RegisterEvents();*/
 
+        }
+
+        private void StartPlay()
+        {
+            UISync.on = true;
+            m_player.WindowHandle = form.panelVlc.Handle;
+            
+            m_player.Play();
         }
 
         /*
@@ -163,21 +177,25 @@ namespace GIShowCam.Gui
 
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            info.SelectCamera(form.comboAddress.SelectedIndex);
-
-            form.txtDevUser.Text = info.user;
-            form.txtDevPass.Text = info.password;
-            form.comboAddress.Text = info.host;
-
+            info.UpdateAfterIndexChange(form.comboAddress.SelectedIndex);
+            DeviceTextBoxesUpdate();
             BtnDevConnect_Click(null, null);
         }
 
         private void BtnDevConnect_Click(object sender, EventArgs e)
         {
-            VideoInit(false, false, true);
+            VideoInit(false, false);
         }
 
 
+        internal void DeviceTextBoxesUpdate()
+        {
+            info.NewCameraInfo();
+
+            form.txtDevUser.Text = info.user;
+            form.txtDevPass.Text = info.password;
+            form.comboAddress.Text = info.host;
+        }
 
         private class UISync
         {
@@ -189,8 +207,8 @@ namespace GIShowCam.Gui
                 Sync = sync;
             }
 
-            internal static void Execute(Action action)
-            {
+            internal static void Execute(Action action)//, params object[] args
+            {//<Control, string , bool , bool , bool >
                 if (on) Sync.BeginInvoke(action, null);
             }
         }

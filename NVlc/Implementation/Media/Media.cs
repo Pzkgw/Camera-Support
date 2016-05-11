@@ -276,8 +276,10 @@ namespace Implementation.Media
             {
                 LibVlcMethods.libvlc_media_release(m_hMedia);
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion

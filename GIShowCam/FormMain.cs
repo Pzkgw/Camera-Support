@@ -23,7 +23,7 @@ namespace GIShowCam
             mainB = new GuiBase(this);
             if (SessionInfo.fullVideo)
             {
-                mainB.VideoInit(true, true, true);
+                mainB.VideoInit(false, true);
             }
             else
             {
@@ -31,10 +31,10 @@ namespace GIShowCam
                 mainB.InitGuiDeviceInfo();
                 mainB.InitGuiRecord();
 
-                mainB.VideoInit(false, false, true);
+                mainB.VideoInit(false, false);
             }
 
-            
+            mainB.DeviceTextBoxesUpdate();
 
             FormClosing += FormMain_FormClosing;
         }

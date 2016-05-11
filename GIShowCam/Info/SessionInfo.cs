@@ -4,8 +4,9 @@ namespace GIShowCam.Info
 {
     class SessionInfo
     {
+ 
         internal static bool
-            debug = false, log = true, showMessageBoxes = true,
+            debug = false, showMessageBoxes = true,
             audio = false, fullVideo = false;
 
         internal static string[] vlcOptions;
@@ -31,7 +32,6 @@ namespace GIShowCam.Info
         internal SessionInfo()
         {
 
-
             const string usr = "admin", pass = "admin",
                 firstStr = @"rtsp://10.10.10.202:554/cam/realmonitor?channel=",
                 lastStr = "&subtype=0";//&unicast=true&proto=Onvif
@@ -43,18 +43,21 @@ namespace GIShowCam.Info
             cam = new Device(devices[devID]);// Current Info
         }
 
-        internal void SelectCamera(int idx)
+        internal void UpdateAfterIndexChange(int idx)
         {
             devID = idx;
-            SelectCamera(devices[idx].adresa, devices[idx].user, devices[idx].parola);
+
+            host = devices[devID].adresa;
+            user = devices[devID].user;
+            password = devices[devID].parola;
         }
 
-        internal void SelectCamera()
+        internal void NewCameraInfo()
         {
-            SelectCamera(host, user, password);
+            NewCameraInfo(host, user, password);
         }
             
-        private void SelectCamera(string h, string u, string p)
+        private void NewCameraInfo(string h, string u, string p)
         {
             cam = new Device(h, u, p);
         }

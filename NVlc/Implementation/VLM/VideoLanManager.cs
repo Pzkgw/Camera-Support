@@ -46,8 +46,10 @@ namespace Implementation.VLM
             {
                 LibVlcMethods.libvlc_vlm_release(m_hMediaLib);
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void AddBroadcast(string name, string input, string output, IEnumerable<string> options, bool bEnabled, bool bLoop)

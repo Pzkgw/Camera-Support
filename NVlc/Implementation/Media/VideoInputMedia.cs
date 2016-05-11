@@ -66,6 +66,10 @@ namespace Implementation.Media
 
                 frame.UnlockBits(bmpData);
             }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
             finally
             {
                 Monitor.Exit(m_lock);

@@ -152,7 +152,6 @@ namespace GIShowCam.Info
 
         protected void OnPropertyChanged(string name)
         {
-            if(SessionInfo.log)
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 

@@ -156,8 +156,10 @@ namespace Implementation.Players
             {
                 LibVlcMethods.libvlc_media_player_release(m_hMediaPlayer);
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion
