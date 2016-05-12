@@ -24,6 +24,7 @@ namespace GIShowCam.Gui
 
         internal void VideoInit(bool allowResize, bool fullView)
         {
+            
             //form.isOn = false;
             /*
             if (vlc == null)
@@ -56,11 +57,8 @@ namespace GIShowCam.Gui
             {//allowVlcMediaReinit
                 RestartConnection();
 
-
                 openMedia(getPath());
-
-
-
+                
                 //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
                 //(new System.Threading.Thread(delegate () {
                 // openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
@@ -68,11 +66,7 @@ namespace GIShowCam.Gui
                 //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
                 //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
 
-                
-
                 //} catch (Exception e) { MessageBox.Show(e.Message); }          
-
-
 
             }
             
@@ -111,10 +105,12 @@ namespace GIShowCam.Gui
             return path;
         }
 
-        private void openMedia(string addr)
+        private void openMedia(string addr, params string[] options)
         {
-            m_player.WindowHandle = new IntPtr(); // start pentru UISync
-            m_media = m_factory.CreateMedia<IMedia>(addr);
+            //addr = addr.Remove(addr.Length - 1);
+
+            //m_player.WindowHandle = new IntPtr(); // start pentru UISync
+            m_media = m_factory.CreateMedia<IMedia>(addr, options);
             //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
 
 
@@ -123,20 +119,11 @@ namespace GIShowCam.Gui
 
             RegisterMediaEvents(true);
 
-            
-
             //UISync.Execute(() => StartPlay());
             StartPlay();
 
-
-
-
             //vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
 
-
-
-
-            
 
             /*      --- OLD APPROACH
             if (vlc.initEndNeeded)
@@ -196,7 +183,7 @@ namespace GIShowCam.Gui
 
         internal void DeviceTextBoxesUpdate()
         {
-            info.NewCameraInfo();
+            info.NewCameraInfo();            
 
             form.txtDevUser.Text = info.user;
             form.txtDevPass.Text = info.password;

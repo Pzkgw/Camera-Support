@@ -41,6 +41,7 @@ namespace GIShowCam.Info
             }
 
             cam = new Device(devices[devID]);// Current Info
+            
         }
 
         internal void UpdateAfterIndexChange(int idx)

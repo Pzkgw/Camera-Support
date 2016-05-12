@@ -9,6 +9,18 @@ namespace GIShowCam.Gui
         private bool btnsShowOnPlay;
         internal void InitGuiControls()
         {
+
+
+            foreach (string dev in info.GetDeviceList()) form.comboAddress.Items.Add(dev);
+
+
+            form.comboAddress.SelectedIndex = info.devID;         
+
+
+        }
+
+        internal void AddFormEvents()
+        {
             form.btnDevConnect.Click += BtnDevConnect_Click;
             form.btnPlay.Click += BtnPlay_Click;
 
@@ -20,11 +32,6 @@ namespace GIShowCam.Gui
             form.comboAddress.TextChanged += TxtDevAddress_TextChanged;
             form.txtDevUser.TextChanged += TxtDevUser_TextChanged;
             form.txtDevPass.TextChanged += TxtDevPass_TextChanged;
-
-            foreach (string dev in info.GetDeviceList()) form.comboAddress.Items.Add(dev);
-
-
-            form.comboAddress.SelectedIndex = info.devID;         
 
             form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
         }
