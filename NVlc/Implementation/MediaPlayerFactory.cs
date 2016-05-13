@@ -45,7 +45,7 @@ namespace Implementation
     {
         IntPtr m_hMediaLib = IntPtr.Zero;
         IVideoLanManager m_vlm = null;
-        NLogger m_logger = new NLogger();
+        ILogger m_logger;
         LogSubscriber m_log;
         string m_currentDir;
 
@@ -55,12 +55,12 @@ namespace Implementation
         /// <param name="args">Collection of arguments passed to libVLC library</param>
         /// <param name="findLibvlc">True to find libvlc installation path, False to use libvlc in the executable path</param>
         /// <param name="useCustomStringMarshaller"></param>
-        public MediaPlayerFactory(string[] args, string vlcPath, bool useCustomStringMarshaller = false)
+        public MediaPlayerFactory(string[] args, string vlcPath, ILogger logger,bool useCustomStringMarshaller = false)
         {
-            Initialize(args, vlcPath, useCustomStringMarshaller);
+            Initialize(args, vlcPath, useCustomStringMarshaller, logger);
         }
 
-        private void Initialize(string[] args, string vlcPath, bool useCustomStringMarshaller)
+        private void Initialize(string[] args, string vlcPath, bool useCustomStringMarshaller, ILogger logger)
         {
             /*
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -91,7 +91,7 @@ namespace Implementation
 
             Directory.SetCurrentDirectory(m_currentDir);            
 
-            TrySetupLogging();
+            TrySetupLogging(logger);
             TryFilterRemovedModules();            
         }
 
@@ -134,11 +134,12 @@ namespace Implementation
             }
         }
 
-        private void TrySetupLogging()
+        private void TrySetupLogging(ILogger logger)
         {
+            m_logger = logger;
             try
             {
-                m_log = new LogSubscriber(m_logger, m_hMediaLib);
+                m_log = new LogSubscriber(logger, m_hMediaLib);
             }
             catch (EntryPointNotFoundException ex)
             {
@@ -147,17 +148,17 @@ namespace Implementation
                 if (!string.IsNullOrEmpty(minVersion))
                 {
                     string msg = string.Format("libVLC logging functinality enabled staring libVLC version {0} while you are using version {1}", minVersion, Version);
-                    m_logger.Warning(msg);
+                    logger.Warning(msg);
                 }
                 else
                 {
-                    m_logger.Warning(ex.Message);
+                    logger.Warning(ex.Message);
                 }
             }
             catch (Exception ex)
             {
                 string msg = string.Format("Failed to setup logging, reason : {0}", ex.Message);
-                m_logger.Error(msg);
+                logger.Error(msg);
                 throw ex;
             }
         }

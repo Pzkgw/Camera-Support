@@ -22,7 +22,7 @@ namespace GIShowCam.Gui
 
         private void vlcInit()
         {
-            m_factory = new MediaPlayerFactory(GetVlcOptions(), SessionInfo.vlcDir);
+            m_factory = new MediaPlayerFactory(GetVlcOptions(), SessionInfo.vlcDir, new CLogger(), true);
             m_player = m_factory.CreatePlayer<IDiskPlayer>();
         }
 
