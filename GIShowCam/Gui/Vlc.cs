@@ -7,6 +7,7 @@ using Declarations.Players;
 using Declarations;
 using Declarations.Media;
 using System.Windows.Forms;
+using GIShowCam.Utils;
 
 //  -- Vlc Options & Events --
 namespace GIShowCam.Gui
@@ -20,9 +21,9 @@ namespace GIShowCam.Gui
 
         //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
 
-        private void vlcInit()
+        private void vlcInit(ILogger logger)
         {
-            m_factory = new MediaPlayerFactory(GetVlcOptions(), SessionInfo.vlcDir, new CLogger(), true);
+            m_factory = new MediaPlayerFactory(GetVlcOptions(), SessionInfo.vlcDir, logger, true);
             m_player = m_factory.CreatePlayer<IDiskPlayer>();
         }
 
@@ -43,14 +44,10 @@ namespace GIShowCam.Gui
             m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
             m_player.Events.MediaEnded += new EventHandler(Events_MediaEnded);
             m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
-            m_player.Events.PlayerEncounteredError += Events_PlayerEncounteredError;
+
 
         }
 
-        private void Events_PlayerEncounteredError(object sender, EventArgs e)
-        {
-            MessageBox.Show(e.ToString());
-        }
 
         private void RegisterMediaEvents(bool on)
         {
@@ -156,6 +153,9 @@ namespace GIShowCam.Gui
                 default:
                     break;
             }
+
+            if (m_player != null)
+                SessionInfo.playing = m_player.IsPlaying;
         }
 
 
@@ -345,6 +345,7 @@ namespace GIShowCam.Gui
 
         internal void CleanUp()
         {
+            CLogger.on = false;
             UISync.on = false;// avoid event send
 
             RegisterMediaEvents(false);

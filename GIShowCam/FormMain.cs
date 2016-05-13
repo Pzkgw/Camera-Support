@@ -34,7 +34,7 @@ namespace GIShowCam
                 mainB.VideoInit(false, false);
             }
 
-            mainB.DeviceTextBoxesUpdate();
+            mainB.DeviceTextBoxesUpdate(false);
             mainB.AddFormEvents();
             mainB.AddEventsPlayer();
 

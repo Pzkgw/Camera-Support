@@ -1,4 +1,5 @@
 ﻿using GIShowCam.Info;
+using GIShowCam.Utils;
 using System;
 using System.Windows.Forms;
 
@@ -8,17 +9,20 @@ namespace GIShowCam.Gui
     {
         private SessionInfo info;
         private FormMain form;
+        private CLogger logger;
 
         internal GuiBase(FormMain formBase)
         {
-            
-            info = new SessionInfo();
 
             _logTimeLast = DateTime.MinValue;
             form = formBase;
-            UISync.Init(formBase);
-            vlcInit();
 
+            logger = new CLogger(form.txtLVDebug, form.txtLVErrors, form.txtLVInfo, form.txtLVWarnings);
+            info = new SessionInfo();
+
+            UISync.Init(formBase);
+            vlcInit(logger);
+            
             //form.panelVlc.BringToFront();
             //form.panelVlc.Click += PanelVlc_Click;
 

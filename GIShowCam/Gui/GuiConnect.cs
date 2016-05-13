@@ -4,6 +4,7 @@ using Declarations.Events;
 using Declarations.Media;
 using Declarations.Players;
 using GIShowCam.Info;
+using GIShowCam.Utils;
 using Implementation;
 using System;
 using System.ComponentModel;
@@ -24,7 +25,10 @@ namespace GIShowCam.Gui
 
         internal void VideoInit(bool allowResize, bool fullView)
         {
-            
+            info.NewCameraInfo(); // II'nd comboBox change select
+            info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
+            //
+            SessionInfo.playing = false;
             //form.isOn = false;
             /*
             if (vlc == null)
@@ -87,8 +91,7 @@ namespace GIShowCam.Gui
 
         private string getPath()
         {
-            info.NewCameraInfo(); // II'nd comboBox change select
-            info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
+
 
             string path = info.host;
 
@@ -108,7 +111,7 @@ namespace GIShowCam.Gui
         private void openMedia(string addr, params string[] options)
         {
             //addr = addr.Remove(addr.Length - 1);
-
+            //info.cam.data.IsStarted = true;
             //m_player.WindowHandle = new IntPtr(); // start pentru UISync
             m_media = m_factory.CreateMedia<IMedia>(addr, options);
             //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
@@ -171,7 +174,7 @@ namespace GIShowCam.Gui
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
         {
             info.UpdateAfterIndexChange(form.comboAddress.SelectedIndex);
-            DeviceTextBoxesUpdate();
+            DeviceTextBoxesUpdate(true);
             BtnDevConnect_Click(null, null);
         }
 
@@ -181,30 +184,16 @@ namespace GIShowCam.Gui
         }
 
 
-        internal void DeviceTextBoxesUpdate()
+        internal void DeviceTextBoxesUpdate(bool updateCamInfo)
         {
-            info.NewCameraInfo();            
+            if (updateCamInfo) info.NewCameraInfo();        
 
             form.txtDevUser.Text = info.user;
             form.txtDevPass.Text = info.password;
             form.comboAddress.Text = info.host;
         }
 
-        private class UISync
-        {
-            private static ISynchronizeInvoke Sync;
-            internal static bool on = true;
 
-            internal static void Init(ISynchronizeInvoke sync)
-            {
-                Sync = sync;
-            }
-
-            internal static void Execute(Action action)//, params object[] args
-            {//<Control, string , bool , bool , bool >
-                if (on) Sync.BeginInvoke(action, null);
-            }
-        }
 
 
     }

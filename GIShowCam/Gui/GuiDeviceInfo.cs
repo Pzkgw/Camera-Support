@@ -1,4 +1,5 @@
 ﻿using Declarations.Events;
+using GIShowCam.Utils;
 using System;
 
 
@@ -42,13 +43,13 @@ namespace GIShowCam.Gui
 
         private void FilDevInfo()
         {
-            string devInfo = "";
+            //string devInfo = "";
             //devInfo = vlc.Media.Metadatas.Title + Environment.NewLine;
 
 
 
 
-            form.lblDev.Text = devInfo + strCommon;
+            //form.txtDev.Text = devInfo + strCommon;
         }
 
         #region real time Device Info

@@ -55,7 +55,7 @@ namespace Implementation
         /// <param name="args">Collection of arguments passed to libVLC library</param>
         /// <param name="findLibvlc">True to find libvlc installation path, False to use libvlc in the executable path</param>
         /// <param name="useCustomStringMarshaller"></param>
-        public MediaPlayerFactory(string[] args, string vlcPath, ILogger logger,bool useCustomStringMarshaller = false)
+        public MediaPlayerFactory(string[] args, string vlcPath, ILogger logger, bool useCustomStringMarshaller = false)
         {
             Initialize(args, vlcPath, useCustomStringMarshaller, logger);
         }

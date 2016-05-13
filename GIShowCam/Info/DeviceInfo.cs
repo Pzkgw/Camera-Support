@@ -4,11 +4,10 @@ using System.ComponentModel;
 namespace GIShowCam.Info
 {
 
-    class DeviceInfo
+    class DeviceInfo : INotifyPropertyChanged
     {
         private bool[]
-            act = new bool[9],
-            inter = new bool[2];
+            act = new bool[9];
 
         internal int imgCount;
 
@@ -149,11 +148,11 @@ namespace GIShowCam.Info
 
         #endregion
 
-
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
 
         internal void Start()
         {
@@ -161,9 +160,8 @@ namespace GIShowCam.Info
 
             int i = 0;
             for (; i < act.Length; i++) act[i] = false;
-            for (i = 0; i < inter.Length; i++) inter[i] = false;
 
-            IsStarted = true;
+            
         }
     }
 }
