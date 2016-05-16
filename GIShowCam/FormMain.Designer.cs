@@ -337,12 +337,12 @@
             // 
             this.tabLowDev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabLowDev.Controls.Add(this.tabLowCtrl);
             this.tabLowDev.Controls.Add(this.tabVlcDebug);
             this.tabLowDev.Controls.Add(this.tabVlcError);
             this.tabLowDev.Controls.Add(this.tabVlcInfo);
             this.tabLowDev.Controls.Add(this.tabWlcWarnings);
             this.tabLowDev.Controls.Add(this.tabLogConnection);
+            this.tabLowDev.Controls.Add(this.tabLowCtrl);
             this.tabLowDev.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tabLowDev.Location = new System.Drawing.Point(5, 521);
             this.tabLowDev.Margin = new System.Windows.Forms.Padding(0);

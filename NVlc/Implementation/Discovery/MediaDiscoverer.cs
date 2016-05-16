@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 
 namespace Implementation.Discovery
 {
-    internal class MediaDiscoverer : DisposableBase, IMediaDiscoverer, INativePointer, IEventProvider
+    public class MediaDiscoverer : DisposableBase, IMediaDiscoverer, INativePointer, IEventProvider
     {
         private IntPtr m_hDiscovery = IntPtr.Zero;
         private IMediaDiscoveryEvents m_events;
