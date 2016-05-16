@@ -9,7 +9,7 @@ namespace GIShowCam.Info
             debug = false, showMessageBoxes = true,
             audio = false, fullVideo = false, playing = false;
 
-        internal static string[] vlcOptions;
+        internal static string[] vlcOptions, vlcMediaOptions;
         internal static string snapshotDir = "C:\\";
 
         internal bool videoLoop = true;

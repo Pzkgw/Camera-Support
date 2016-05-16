@@ -240,7 +240,7 @@ namespace GIShowCam.Gui
                 ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
                 ,"--no-playlist-autostart" // playlist auto start (default enabled) 
-                ,"--no-snapshot-preview"
+                //,"--no-snapshot-preview"
                 ,SessionInfo.debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages  
                 ,SessionInfo.debug?"--extraintf=logger":null
                 ,SessionInfo.audio?"--no-sout-audio":null //        ^^^  Enable audio stream output (default enabled)
@@ -286,6 +286,20 @@ namespace GIShowCam.Gui
             //,"--grayscale"
             //,"--aspect-ratio=16:10"
             //,"--croppadd-cropleft 100"
+        }
+
+
+        private string[] GetVlcMediaOptions()
+        {
+            if (SessionInfo.vlcMediaOptions == null)
+            {
+                SessionInfo.vlcMediaOptions = new string[] {
+                "--no-snapshot-preview" // vlcOpt && !vlcMediaOpt
+            }.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+            }
+
+            return SessionInfo.vlcMediaOptions;
         }
 
 

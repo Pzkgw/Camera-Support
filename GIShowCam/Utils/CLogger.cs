@@ -24,6 +24,7 @@ namespace GIShowCam
             this.logView = logView;
         }
 
+
         string GestLogString(string s)
         {
             _dt = DateTime.Now;
@@ -33,7 +34,7 @@ namespace GIShowCam
 
         void debugSaveDoEEt(string s)
         {
-            logView[0].Text += debugSave.ToString() + GestLogString(s);
+            logView[0].AppendText(debugSave.ToString() + GestLogString(s));
             debugSave.Clear();
         }
 
@@ -44,7 +45,7 @@ namespace GIShowCam
                 {
                     if (debugSaveDone)
                     {
-                        UISync.Execute(() => logView[0].Text += GestLogString(debug));
+                        UISync.Execute(() => logView[0].AppendText(GestLogString(debug)));
                     }
                     else
                     {

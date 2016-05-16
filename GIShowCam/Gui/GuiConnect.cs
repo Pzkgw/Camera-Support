@@ -61,7 +61,7 @@ namespace GIShowCam.Gui
             {//allowVlcMediaReinit
                 RestartConnection();
 
-                openMedia(getPath());
+                openMedia(getPath(), GetVlcMediaOptions());
                 
                 //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
                 //(new System.Threading.Thread(delegate () {
@@ -113,6 +113,7 @@ namespace GIShowCam.Gui
             //addr = addr.Remove(addr.Length - 1);
             //info.cam.data.IsStarted = true;
             //m_player.WindowHandle = new IntPtr(); // start pentru UISync
+
             m_media = m_factory.CreateMedia<IMedia>(addr, options);
             //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
 

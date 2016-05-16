@@ -39,8 +39,8 @@
             this.lblDevUser = new System.Windows.Forms.Label();
             this.lblDevPass = new System.Windows.Forms.Label();
             this.groupBoxDev = new System.Windows.Forms.GroupBox();
-            this.lblAdd = new System.Windows.Forms.Label();
             this.comboAddress = new System.Windows.Forms.ComboBox();
+            this.lblAdd = new System.Windows.Forms.Label();
             this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
             this.groupBoxVlcFactors = new System.Windows.Forms.GroupBox();
@@ -63,6 +63,7 @@
             this.txtLVInfo = new System.Windows.Forms.TextBox();
             this.tabWlcWarnings = new System.Windows.Forms.TabPage();
             this.txtLVWarnings = new System.Windows.Forms.TextBox();
+            this.tabLogConnection = new System.Windows.Forms.TabPage();
             this.groupBoxDev.SuspendLayout();
             this.groupBoxVlcFactors.SuspendLayout();
             this.groupBoxBtns.SuspendLayout();
@@ -72,13 +73,14 @@
             this.tabVlcError.SuspendLayout();
             this.tabVlcInfo.SuspendLayout();
             this.tabWlcWarnings.SuspendLayout();
+            this.tabLogConnection.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblVlcNotify
             // 
             this.lblVlcNotify.AutoSize = true;
             this.lblVlcNotify.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblVlcNotify.Location = new System.Drawing.Point(390, 294);
+            this.lblVlcNotify.Location = new System.Drawing.Point(5, 857);
             this.lblVlcNotify.Name = "lblVlcNotify";
             this.lblVlcNotify.Size = new System.Drawing.Size(0, 15);
             this.lblVlcNotify.TabIndex = 0;
@@ -89,6 +91,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVlc.Location = new System.Drawing.Point(327, 4);
+            this.panelVlc.Margin = new System.Windows.Forms.Padding(0);
             this.panelVlc.Name = "panelVlc";
             this.panelVlc.Size = new System.Drawing.Size(902, 511);
             this.panelVlc.TabIndex = 1;
@@ -96,12 +99,15 @@
             // txtDev
             // 
             this.txtDev.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtDev.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtDev.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txtDev.Location = new System.Drawing.Point(5, 4);
+            this.txtDev.Location = new System.Drawing.Point(0, 0);
+            this.txtDev.Margin = new System.Windows.Forms.Padding(0);
             this.txtDev.Multiline = true;
             this.txtDev.Name = "txtDev";
+            this.txtDev.ReadOnly = true;
             this.txtDev.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDev.Size = new System.Drawing.Size(316, 511);
+            this.txtDev.Size = new System.Drawing.Size(1220, 308);
             this.txtDev.TabIndex = 0;
             // 
             // btnPlay
@@ -130,7 +136,7 @@
             // 
             // btnDevConnect
             // 
-            this.btnDevConnect.Location = new System.Drawing.Point(181, 150);
+            this.btnDevConnect.Location = new System.Drawing.Point(178, 113);
             this.btnDevConnect.Name = "btnDevConnect";
             this.btnDevConnect.Size = new System.Drawing.Size(103, 37);
             this.btnDevConnect.TabIndex = 3;
@@ -178,19 +184,11 @@
             this.groupBoxDev.Controls.Add(this.txtDevUser);
             this.groupBoxDev.Controls.Add(this.txtDevPass);
             this.groupBoxDev.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.groupBoxDev.Location = new System.Drawing.Point(3, 6);
+            this.groupBoxDev.Location = new System.Drawing.Point(0, 9);
             this.groupBoxDev.Name = "groupBoxDev";
-            this.groupBoxDev.Size = new System.Drawing.Size(545, 216);
+            this.groupBoxDev.Size = new System.Drawing.Size(545, 181);
             this.groupBoxDev.TabIndex = 4;
             this.groupBoxDev.TabStop = false;
-            // 
-            // lblAdd
-            // 
-            this.lblAdd.AutoSize = true;
-            this.lblAdd.Location = new System.Drawing.Point(23, 294);
-            this.lblAdd.Name = "lblAdd";
-            this.lblAdd.Size = new System.Drawing.Size(0, 15);
-            this.lblAdd.TabIndex = 8;
             // 
             // comboAddress
             // 
@@ -200,10 +198,18 @@
             this.comboAddress.Size = new System.Drawing.Size(445, 23);
             this.comboAddress.TabIndex = 7;
             // 
+            // lblAdd
+            // 
+            this.lblAdd.AutoSize = true;
+            this.lblAdd.Location = new System.Drawing.Point(75, 432);
+            this.lblAdd.Name = "lblAdd";
+            this.lblAdd.Size = new System.Drawing.Size(0, 13);
+            this.lblAdd.TabIndex = 8;
+            // 
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
-            this.btnSnapshot.Location = new System.Drawing.Point(156, 218);
+            this.btnSnapshot.Location = new System.Drawing.Point(121, 149);
             this.btnSnapshot.Name = "btnSnapshot";
             this.btnSnapshot.Size = new System.Drawing.Size(103, 42);
             this.btnSnapshot.TabIndex = 5;
@@ -213,7 +219,7 @@
             // btnRecord
             // 
             this.btnRecord.Enabled = false;
-            this.btnRecord.Location = new System.Drawing.Point(305, 218);
+            this.btnRecord.Location = new System.Drawing.Point(328, 149);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(103, 42);
             this.btnRecord.TabIndex = 6;
@@ -229,15 +235,15 @@
             this.groupBoxVlcFactors.Controls.Add(this.textBoxHeightF);
             this.groupBoxVlcFactors.Controls.Add(this.textBoxWidthF);
             this.groupBoxVlcFactors.Enabled = false;
-            this.groupBoxVlcFactors.Location = new System.Drawing.Point(6, 228);
+            this.groupBoxVlcFactors.Location = new System.Drawing.Point(69, 209);
             this.groupBoxVlcFactors.Name = "groupBoxVlcFactors";
-            this.groupBoxVlcFactors.Size = new System.Drawing.Size(535, 53);
+            this.groupBoxVlcFactors.Size = new System.Drawing.Size(318, 53);
             this.groupBoxVlcFactors.TabIndex = 7;
             this.groupBoxVlcFactors.TabStop = false;
             // 
             // txtZoomF
             // 
-            this.txtZoomF.Location = new System.Drawing.Point(383, 20);
+            this.txtZoomF.Location = new System.Drawing.Point(255, 21);
             this.txtZoomF.Name = "txtZoomF";
             this.txtZoomF.Size = new System.Drawing.Size(50, 22);
             this.txtZoomF.TabIndex = 5;
@@ -247,7 +253,7 @@
             // lblZoomF
             // 
             this.lblZoomF.AutoSize = true;
-            this.lblZoomF.Location = new System.Drawing.Point(346, 24);
+            this.lblZoomF.Location = new System.Drawing.Point(218, 24);
             this.lblZoomF.Name = "lblZoomF";
             this.lblZoomF.Size = new System.Drawing.Size(31, 15);
             this.lblZoomF.TabIndex = 4;
@@ -256,7 +262,7 @@
             // lblHeightF
             // 
             this.lblHeightF.AutoSize = true;
-            this.lblHeightF.Location = new System.Drawing.Point(194, 24);
+            this.lblHeightF.Location = new System.Drawing.Point(111, 23);
             this.lblHeightF.Name = "lblHeightF";
             this.lblHeightF.Size = new System.Drawing.Size(46, 15);
             this.lblHeightF.TabIndex = 3;
@@ -265,7 +271,7 @@
             // lblWidthF
             // 
             this.lblWidthF.AutoSize = true;
-            this.lblWidthF.Location = new System.Drawing.Point(56, 23);
+            this.lblWidthF.Location = new System.Drawing.Point(6, 23);
             this.lblWidthF.Name = "lblWidthF";
             this.lblWidthF.Size = new System.Drawing.Size(43, 15);
             this.lblWidthF.TabIndex = 2;
@@ -273,7 +279,7 @@
             // 
             // textBoxHeightF
             // 
-            this.textBoxHeightF.Location = new System.Drawing.Point(246, 21);
+            this.textBoxHeightF.Location = new System.Drawing.Point(162, 21);
             this.textBoxHeightF.Name = "textBoxHeightF";
             this.textBoxHeightF.Size = new System.Drawing.Size(50, 22);
             this.textBoxHeightF.TabIndex = 1;
@@ -282,7 +288,7 @@
             // 
             // textBoxWidthF
             // 
-            this.textBoxWidthF.Location = new System.Drawing.Point(105, 21);
+            this.textBoxWidthF.Location = new System.Drawing.Point(55, 21);
             this.textBoxWidthF.Name = "textBoxWidthF";
             this.textBoxWidthF.Size = new System.Drawing.Size(50, 22);
             this.textBoxWidthF.TabIndex = 0;
@@ -298,16 +304,16 @@
             this.groupBoxBtns.Controls.Add(this.btnPlay);
             this.groupBoxBtns.Controls.Add(this.btnSnapshot);
             this.groupBoxBtns.Controls.Add(this.btnRecord);
-            this.groupBoxBtns.Location = new System.Drawing.Point(554, 6);
+            this.groupBoxBtns.Location = new System.Drawing.Point(549, 9);
             this.groupBoxBtns.Name = "groupBoxBtns";
-            this.groupBoxBtns.Size = new System.Drawing.Size(660, 275);
+            this.groupBoxBtns.Size = new System.Drawing.Size(660, 251);
             this.groupBoxBtns.TabIndex = 8;
             this.groupBoxBtns.TabStop = false;
             // 
             // chkFullVid
             // 
             this.chkFullVid.AutoSize = true;
-            this.chkFullVid.Location = new System.Drawing.Point(552, 222);
+            this.chkFullVid.Location = new System.Drawing.Point(552, 172);
             this.chkFullVid.Name = "chkFullVid";
             this.chkFullVid.Size = new System.Drawing.Size(84, 19);
             this.chkFullVid.TabIndex = 8;
@@ -320,7 +326,7 @@
             this.chkPlayLoop.Checked = true;
             this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPlayLoop.Enabled = false;
-            this.chkPlayLoop.Location = new System.Drawing.Point(552, 197);
+            this.chkPlayLoop.Location = new System.Drawing.Point(552, 133);
             this.chkPlayLoop.Name = "chkPlayLoop";
             this.chkPlayLoop.Size = new System.Drawing.Size(54, 19);
             this.chkPlayLoop.TabIndex = 7;
@@ -329,30 +335,33 @@
             // 
             // tabLowDev
             // 
+            this.tabLowDev.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabLowDev.Controls.Add(this.tabLowCtrl);
             this.tabLowDev.Controls.Add(this.tabVlcDebug);
             this.tabLowDev.Controls.Add(this.tabVlcError);
             this.tabLowDev.Controls.Add(this.tabVlcInfo);
             this.tabLowDev.Controls.Add(this.tabWlcWarnings);
+            this.tabLowDev.Controls.Add(this.tabLogConnection);
             this.tabLowDev.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tabLowDev.Location = new System.Drawing.Point(5, 521);
+            this.tabLowDev.Margin = new System.Windows.Forms.Padding(0);
             this.tabLowDev.Name = "tabLowDev";
+            this.tabLowDev.Padding = new System.Drawing.Point(0, 0);
             this.tabLowDev.SelectedIndex = 0;
-            this.tabLowDev.Size = new System.Drawing.Size(1228, 355);
+            this.tabLowDev.Size = new System.Drawing.Size(1228, 336);
             this.tabLowDev.TabIndex = 9;
             // 
             // tabLowCtrl
             // 
             this.tabLowCtrl.BackColor = System.Drawing.Color.Transparent;
-            this.tabLowCtrl.Controls.Add(this.lblAdd);
             this.tabLowCtrl.Controls.Add(this.groupBoxDev);
             this.tabLowCtrl.Controls.Add(this.groupBoxVlcFactors);
             this.tabLowCtrl.Controls.Add(this.groupBoxBtns);
-            this.tabLowCtrl.Controls.Add(this.lblVlcNotify);
             this.tabLowCtrl.Location = new System.Drawing.Point(4, 24);
             this.tabLowCtrl.Name = "tabLowCtrl";
             this.tabLowCtrl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLowCtrl.Size = new System.Drawing.Size(1220, 327);
+            this.tabLowCtrl.Size = new System.Drawing.Size(1220, 308);
             this.tabLowCtrl.TabIndex = 0;
             this.tabLowCtrl.Text = " Main Control Point ";
             // 
@@ -362,7 +371,7 @@
             this.tabVlcDebug.Location = new System.Drawing.Point(4, 24);
             this.tabVlcDebug.Name = "tabVlcDebug";
             this.tabVlcDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVlcDebug.Size = new System.Drawing.Size(1220, 327);
+            this.tabVlcDebug.Size = new System.Drawing.Size(1220, 308);
             this.tabVlcDebug.TabIndex = 1;
             this.tabVlcDebug.Text = " Debug ";
             this.tabVlcDebug.UseVisualStyleBackColor = true;
@@ -373,10 +382,12 @@
             this.txtLVDebug.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLVDebug.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txtLVDebug.Location = new System.Drawing.Point(3, 3);
+            this.txtLVDebug.Margin = new System.Windows.Forms.Padding(0);
             this.txtLVDebug.Multiline = true;
             this.txtLVDebug.Name = "txtLVDebug";
+            this.txtLVDebug.ReadOnly = true;
             this.txtLVDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLVDebug.Size = new System.Drawing.Size(1214, 321);
+            this.txtLVDebug.Size = new System.Drawing.Size(1214, 302);
             this.txtLVDebug.TabIndex = 0;
             // 
             // tabVlcError
@@ -384,7 +395,7 @@
             this.tabVlcError.Controls.Add(this.txtLVErrors);
             this.tabVlcError.Location = new System.Drawing.Point(4, 24);
             this.tabVlcError.Name = "tabVlcError";
-            this.tabVlcError.Size = new System.Drawing.Size(1220, 327);
+            this.tabVlcError.Size = new System.Drawing.Size(1220, 308);
             this.tabVlcError.TabIndex = 2;
             this.tabVlcError.Text = "  Errors ";
             this.tabVlcError.UseVisualStyleBackColor = true;
@@ -395,10 +406,12 @@
             this.txtLVErrors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLVErrors.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txtLVErrors.Location = new System.Drawing.Point(0, 0);
+            this.txtLVErrors.Margin = new System.Windows.Forms.Padding(0);
             this.txtLVErrors.Multiline = true;
             this.txtLVErrors.Name = "txtLVErrors";
+            this.txtLVErrors.ReadOnly = true;
             this.txtLVErrors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLVErrors.Size = new System.Drawing.Size(1220, 327);
+            this.txtLVErrors.Size = new System.Drawing.Size(1220, 308);
             this.txtLVErrors.TabIndex = 0;
             // 
             // tabVlcInfo
@@ -406,7 +419,7 @@
             this.tabVlcInfo.Controls.Add(this.txtLVInfo);
             this.tabVlcInfo.Location = new System.Drawing.Point(4, 24);
             this.tabVlcInfo.Name = "tabVlcInfo";
-            this.tabVlcInfo.Size = new System.Drawing.Size(1220, 327);
+            this.tabVlcInfo.Size = new System.Drawing.Size(1220, 308);
             this.tabVlcInfo.TabIndex = 3;
             this.tabVlcInfo.Text = "  Info ";
             this.tabVlcInfo.UseVisualStyleBackColor = true;
@@ -416,10 +429,12 @@
             this.txtLVInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLVInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLVInfo.Location = new System.Drawing.Point(0, 0);
+            this.txtLVInfo.Margin = new System.Windows.Forms.Padding(0);
             this.txtLVInfo.Multiline = true;
             this.txtLVInfo.Name = "txtLVInfo";
+            this.txtLVInfo.ReadOnly = true;
             this.txtLVInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLVInfo.Size = new System.Drawing.Size(1220, 327);
+            this.txtLVInfo.Size = new System.Drawing.Size(1220, 308);
             this.txtLVInfo.TabIndex = 0;
             // 
             // tabWlcWarnings
@@ -427,7 +442,7 @@
             this.tabWlcWarnings.Controls.Add(this.txtLVWarnings);
             this.tabWlcWarnings.Location = new System.Drawing.Point(4, 24);
             this.tabWlcWarnings.Name = "tabWlcWarnings";
-            this.tabWlcWarnings.Size = new System.Drawing.Size(1220, 327);
+            this.tabWlcWarnings.Size = new System.Drawing.Size(1220, 308);
             this.tabWlcWarnings.TabIndex = 4;
             this.tabWlcWarnings.Text = " Warnings ";
             this.tabWlcWarnings.UseVisualStyleBackColor = true;
@@ -437,20 +452,33 @@
             this.txtLVWarnings.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLVWarnings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLVWarnings.Location = new System.Drawing.Point(0, 0);
+            this.txtLVWarnings.Margin = new System.Windows.Forms.Padding(0);
             this.txtLVWarnings.Multiline = true;
             this.txtLVWarnings.Name = "txtLVWarnings";
+            this.txtLVWarnings.ReadOnly = true;
             this.txtLVWarnings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLVWarnings.Size = new System.Drawing.Size(1220, 327);
+            this.txtLVWarnings.Size = new System.Drawing.Size(1220, 308);
             this.txtLVWarnings.TabIndex = 0;
+            // 
+            // tabLogConnection
+            // 
+            this.tabLogConnection.Controls.Add(this.txtDev);
+            this.tabLogConnection.Location = new System.Drawing.Point(4, 24);
+            this.tabLogConnection.Name = "tabLogConnection";
+            this.tabLogConnection.Size = new System.Drawing.Size(1220, 308);
+            this.tabLogConnection.TabIndex = 5;
+            this.tabLogConnection.Text = "Connection log";
+            this.tabLogConnection.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1230, 875);
-            this.Controls.Add(this.txtDev);
+            this.Controls.Add(this.lblAdd);
             this.Controls.Add(this.tabLowDev);
             this.Controls.Add(this.panelVlc);
+            this.Controls.Add(this.lblVlcNotify);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Camera view";
@@ -462,7 +490,6 @@
             this.groupBoxBtns.PerformLayout();
             this.tabLowDev.ResumeLayout(false);
             this.tabLowCtrl.ResumeLayout(false);
-            this.tabLowCtrl.PerformLayout();
             this.tabVlcDebug.ResumeLayout(false);
             this.tabVlcDebug.PerformLayout();
             this.tabVlcError.ResumeLayout(false);
@@ -471,6 +498,8 @@
             this.tabVlcInfo.PerformLayout();
             this.tabWlcWarnings.ResumeLayout(false);
             this.tabWlcWarnings.PerformLayout();
+            this.tabLogConnection.ResumeLayout(false);
+            this.tabLogConnection.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -513,5 +542,6 @@
         internal System.Windows.Forms.TextBox txtLVWarnings;
         internal System.Windows.Forms.TextBox txtLVDebug;
         internal System.Windows.Forms.TabControl tabLowDev;
+        private System.Windows.Forms.TabPage tabLogConnection;
     }
 }
