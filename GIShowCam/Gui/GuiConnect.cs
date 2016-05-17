@@ -192,8 +192,9 @@ namespace GIShowCam.Gui
         }
 
         private void BtnDevConnect_Click(object sender, EventArgs e)
-        {
+        {            
             VideoInit(false, false);
+            form.btnPlay.Text = "Stop";
         }
 
 

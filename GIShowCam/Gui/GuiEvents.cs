@@ -16,7 +16,7 @@ namespace GIShowCam.Gui
                 UISync.Execute(() =>
                 TextUpdate(form.txtDev,
                      Environment.NewLine +
-                     string.Format("{0:00}:{1:00}:{2:00}.{3:000}  --  Conexiune pornita ",
+                     string.Format("{0:00}:{1:00}:{2:00}.{3:000}          ---    Conexiune pornita   ---",
                     _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond)
                     , true, true, false));
             }            

@@ -226,7 +226,7 @@
             this.groupBoxVlcFactors.Controls.Add(this.textBoxHeightF);
             this.groupBoxVlcFactors.Controls.Add(this.textBoxWidthF);
             this.groupBoxVlcFactors.Enabled = false;
-            this.groupBoxVlcFactors.Location = new System.Drawing.Point(69, 209);
+            this.groupBoxVlcFactors.Location = new System.Drawing.Point(95, 224);
             this.groupBoxVlcFactors.Name = "groupBoxVlcFactors";
             this.groupBoxVlcFactors.Size = new System.Drawing.Size(318, 53);
             this.groupBoxVlcFactors.TabIndex = 7;
@@ -304,6 +304,7 @@
             // chkFullVid
             // 
             this.chkFullVid.AutoSize = true;
+            this.chkFullVid.Enabled = false;
             this.chkFullVid.Location = new System.Drawing.Point(552, 172);
             this.chkFullVid.Name = "chkFullVid";
             this.chkFullVid.Size = new System.Drawing.Size(84, 19);

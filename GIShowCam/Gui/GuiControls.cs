@@ -96,6 +96,20 @@ namespace GIShowCam.Gui
 
         private void BtnPlay_Click(object sender, EventArgs e)
         {
+
+            if (m_player.IsPlaying)
+            {
+                form.btnPlay.Text = "Play";
+                m_player.Stop();
+            }
+            else
+            {
+                form.btnPlay.Text = "Stop";
+                m_player.Play();
+            }
+
+            SetBtnsVisibilityOnPlay(m_player.IsPlaying);
+
             /*
             bool playing = false;
             if (sender != null && vlc != null)
@@ -110,7 +124,7 @@ namespace GIShowCam.Gui
                     vlc.Play();
                 }
                 SetBtnsVisibilityOnPlay(!playing);
-            }   */         
+            }   */
         }
 
         #region Detalii pt connection textboxes
