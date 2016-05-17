@@ -67,12 +67,6 @@ namespace GIShowCam.Gui
             //dt.Hour, dt.Minute, dt.Second, dt.Millisecond) + sir + Environment.NewLine);
         }
 
-        internal void Test(string v)
-        {
-            UISync.Execute(() => TextUpdate(form.lblAdd, v, false, false, false));
-        }
-
-
         internal void RestartConnection()
         {
             _logTimeLast = DateTime.MinValue;
