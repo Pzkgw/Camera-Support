@@ -25,6 +25,9 @@ namespace GIShowCam.Gui
 
         internal void VideoInit(bool allowResize, bool fullView)
         {
+
+            ToggleRunningMedia(false);
+
             info.NewCameraInfo(); // II'nd comboBox change select
             info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
             //
@@ -37,10 +40,10 @@ namespace GIShowCam.Gui
                 _vlcSize = form.panelVlc.Size;
             }*/
 
-            StopRunningMedia();
+
 
             // pentru fullscreen on/off, allowResize ::--> async
-            if(allowResize)
+            if (allowResize)
                 if (fullView)
                 {
                     _vlcTop = form.panelVlc.Location;
@@ -62,7 +65,7 @@ namespace GIShowCam.Gui
                 RestartConnection();
 
                 openMedia(getPath(), GetVlcMediaOptions());
-                
+
                 //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
                 //(new System.Threading.Thread(delegate () {
                 // openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
@@ -73,15 +76,24 @@ namespace GIShowCam.Gui
                 //} catch (Exception e) { MessageBox.Show(e.Message); }          
 
             }
-            
+
         }
 
-        private void StopRunningMedia()
+        private void ToggleRunningMedia(bool on)
         {
+            if (on)
+            {
+                RegisterPlayerEvents(true);
+                RegisterMediaEvents(true);
+            }
+            else
             if (m_media != null)
             {
-                RegisterMediaEvents(false);
                 m_player.Stop();
+
+                RegisterPlayerEvents(false);
+                RegisterMediaEvents(false);                
+                
                 m_media.Dispose();
                 m_media = null;
                 //vlc.UnregisterEvents();
@@ -121,7 +133,7 @@ namespace GIShowCam.Gui
             m_player.Open(m_media);
             m_media.Parse(true);
 
-            RegisterMediaEvents(true);
+            ToggleRunningMedia(true);
 
             //UISync.Execute(() => StartPlay());
             StartPlay();
@@ -151,7 +163,7 @@ namespace GIShowCam.Gui
         {
             UISync.on = true;
             m_player.WindowHandle = form.panelVlc.Handle;
-            
+
             m_player.Play();
         }
 
@@ -187,7 +199,7 @@ namespace GIShowCam.Gui
 
         internal void DeviceTextBoxesUpdate(bool updateCamInfo)
         {
-            if (updateCamInfo) info.NewCameraInfo();        
+            if (updateCamInfo) info.NewCameraInfo();
 
             form.txtDevUser.Text = info.user;
             form.txtDevPass.Text = info.password;

@@ -29,7 +29,7 @@ namespace GIShowCam.Info
             set
             {
                 act[0] = value;
-                if (value) OnPropertyChanged("IsStarted");
+                if (value) OnPropertyChanged(" Start ");
             }
             get
             {
@@ -42,7 +42,7 @@ namespace GIShowCam.Info
             set
             {
                 act[1] = value;
-                if (value) OnPropertyChanged("IsOpening");
+                if (value) OnPropertyChanged(" Conexiune deschisa ");
             }
             get
             {
@@ -55,7 +55,7 @@ namespace GIShowCam.Info
             set
             {
                 act[2] = value;
-                if (value) OnPropertyChanged("IsBuffering");
+                if (value) OnPropertyChanged(" Buffering de conexiune ");
 
             }
             get
@@ -69,7 +69,7 @@ namespace GIShowCam.Info
             set
             {
                 act[3] = value;
-                if (value) OnPropertyChanged("IsPlaying");
+                if (value) OnPropertyChanged(" Margareta Nistor: \"Filmul ruleaza\" ");
 
             }
             get
@@ -83,7 +83,7 @@ namespace GIShowCam.Info
             set
             {
                 act[4] = value;
-                if (value) OnPropertyChanged("IsPaused");
+                if (value) OnPropertyChanged(" Pauza de masa ");
 
             }
             get
@@ -97,7 +97,7 @@ namespace GIShowCam.Info
             set
             {
                 act[5] = value;
-                if(value) OnPropertyChanged("IsStopped");
+                if(value) OnPropertyChanged(" Conexiune oprita temporar ");
             }
             get
             {
@@ -110,7 +110,7 @@ namespace GIShowCam.Info
             set
             {
                 act[6] = value;
-                if (value) OnPropertyChanged("IsEnded");
+                if (value) OnPropertyChanged(" Conexiune terminata ");
             }
             get
             {
@@ -125,7 +125,7 @@ namespace GIShowCam.Info
             set
             {
                 act[7] = value;
-                if (value) OnPropertyChanged("IsError");
+                if (value) OnPropertyChanged(" Greseala imensa ");
             }
             get
             {
@@ -138,7 +138,7 @@ namespace GIShowCam.Info
             set
             {
                 act[8] = value;
-                if (value) OnPropertyChanged("IsVideoComplete");
+                if (value) OnPropertyChanged(" Conexiunea trimite imagini ");
             }
             get
             {

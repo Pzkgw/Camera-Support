@@ -1,9 +1,5 @@
 ﻿using GIShowCam.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GIShowCam.Gui
@@ -20,7 +16,7 @@ namespace GIShowCam.Gui
                 UISync.Execute(() =>
                 TextUpdate(form.txtDev,
                      Environment.NewLine +
-                     " Start conexiune la: " + string.Format("{0:00}:{1:00}:{2:00}.{3:000} ",
+                     string.Format("{0:00}:{1:00}:{2:00}.{3:000}  --  Conexiune pornita ",
                     _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond)
                     , true, true, false));
             }            
@@ -28,8 +24,10 @@ namespace GIShowCam.Gui
             _logTimeNow = DateTime.Now;
             UISync.Execute(() =>
             TextUpdate(form.txtDev,
-                " " + s + "  " + ((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString() +
-                " ms " + Environment.NewLine, true, false, true));
+                string.Format("{0:00}:{1:00}:{2:00}.{3:000} {4} a inceput in {5} ms {6}",
+                    _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond,s,
+                    ((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString(), Environment.NewLine)
+                    , true, false, true));
             
         }
 

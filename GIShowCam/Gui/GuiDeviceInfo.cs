@@ -71,7 +71,7 @@ namespace GIShowCam.Gui
             if (m_media != null)
             {
                 UISync.Execute(() => TextUpdate(form.lblVlcNotify,
-                        "Time: " + m_player.Time +
+                        "Timp de functionare: " + m_player.Time/1000 + " secunde" +
                         ", DecodedVideo: " + m_media.Statistics.DecodedVideo +
                         ", InputBitrate: " + m_media.Statistics.InputBitrate +
                         ", DemuxBitrate: " + m_media.Statistics.DemuxBitrate +

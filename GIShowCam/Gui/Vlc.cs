@@ -33,19 +33,22 @@ namespace GIShowCam.Gui
         /// vlc events
         /// </summary>
         /// <returns></returns>
-        internal void AddEventsPlayer()
+        internal void RegisterPlayerEvents(bool on)
         {
-            /*
-            vlc.Buffering += Vlc_Buffering;
-            vlc.EncounteredError += Vlc_EncounteredError;
-            vlc.PositionChanged += Vlc_PositionChanged;
-            vlc.MediaChanged += Vlc_MediaChanged;*/
-
-            m_player.Events.MediaChanged += new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
-            m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
-            m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
-            m_player.Events.MediaEnded += new EventHandler(Events_MediaEnded);
-            m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
+            if (on)
+            {
+                m_player.Events.MediaChanged += new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
+                m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
+                m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
+                m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
+            }
+            else
+            {
+                m_player.Events.MediaChanged -= new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
+                m_player.Events.PlayerPositionChanged -= new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
+                m_player.Events.TimeChanged -= new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
+                m_player.Events.PlayerStopped -= new EventHandler(Events_PlayerStopped);
+            }
 
 
         }
@@ -79,10 +82,7 @@ namespace GIShowCam.Gui
             //UISync.Execute(() => InitControls());
         }
 
-        void Events_MediaEnded(object sender, EventArgs e)
-        {
-            //UISync.Execute(() => InitControls());
-        }
+
         /*
                 private void InitControls()
                 {
@@ -182,21 +182,10 @@ namespace GIShowCam.Gui
         private void VlcReinit()
         {
             UISync.on = false;
-            StopRunningMedia();
-            VideoInit(false, false);
-
-            //BtnDevConnect_Click(null, null);
-            //ComboAddress_SelectionChangeCommitted(null, null);
-
             /*
-            form.isOn = false;
-            form.AddVlc(null);
-            vlc.Dispose();
-            vlc = null;
+            StopRunningMedia();
+            VideoInit(false, false);*/
 
-            form.WaitForVlc(1040);
-            BtnDevConnect_Click(null, null);
-            */
             //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
             //vlc.Dispose();
             //GC.Collect();
@@ -364,14 +353,12 @@ namespace GIShowCam.Gui
             CLogger.on = false;
             UISync.on = false;// avoid event send
 
-            RegisterMediaEvents(false);
+            ToggleRunningMedia(false);
 
-            m_media.Dispose();
             m_player.Dispose();
-            m_factory.Dispose();
-
-            m_media = null;
             m_player = null;
+
+            m_factory.Dispose();            
             m_factory = null;
         }
 
