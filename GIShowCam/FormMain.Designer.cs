@@ -63,6 +63,7 @@
             this.txtLVWarnings = new System.Windows.Forms.TextBox();
             this.tabLogConnection = new System.Windows.Forms.TabPage();
             this.tabLowCtrl = new System.Windows.Forms.TabPage();
+            this.btnRatio = new System.Windows.Forms.Button();
             this.groupBoxDev.SuspendLayout();
             this.groupBoxVlcFactors.SuspendLayout();
             this.groupBoxBtns.SuspendLayout();
@@ -78,7 +79,7 @@
             // lblVlcNotify
             // 
             this.lblVlcNotify.AutoSize = true;
-            this.lblVlcNotify.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblVlcNotify.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblVlcNotify.Location = new System.Drawing.Point(5, 857);
             this.lblVlcNotify.Name = "lblVlcNotify";
             this.lblVlcNotify.Size = new System.Drawing.Size(0, 15);
@@ -407,6 +408,7 @@
             // 
             this.txtLVInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLVInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLVInfo.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txtLVInfo.Location = new System.Drawing.Point(0, 0);
             this.txtLVInfo.Margin = new System.Windows.Forms.Padding(0);
             this.txtLVInfo.Multiline = true;
@@ -430,6 +432,7 @@
             // 
             this.txtLVWarnings.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLVWarnings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLVWarnings.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txtLVWarnings.Location = new System.Drawing.Point(0, 0);
             this.txtLVWarnings.Margin = new System.Windows.Forms.Padding(0);
             this.txtLVWarnings.Multiline = true;
@@ -452,6 +455,7 @@
             // tabLowCtrl
             // 
             this.tabLowCtrl.BackColor = System.Drawing.Color.Transparent;
+            this.tabLowCtrl.Controls.Add(this.btnRatio);
             this.tabLowCtrl.Controls.Add(this.groupBoxDev);
             this.tabLowCtrl.Controls.Add(this.groupBoxVlcFactors);
             this.tabLowCtrl.Controls.Add(this.groupBoxBtns);
@@ -461,6 +465,15 @@
             this.tabLowCtrl.Size = new System.Drawing.Size(1220, 308);
             this.tabLowCtrl.TabIndex = 0;
             this.tabLowCtrl.Text = " Main Control Point ";
+            // 
+            // btnRatio
+            // 
+            this.btnRatio.Location = new System.Drawing.Point(203, 199);
+            this.btnRatio.Name = "btnRatio";
+            this.btnRatio.Size = new System.Drawing.Size(77, 25);
+            this.btnRatio.TabIndex = 9;
+            this.btnRatio.Text = "Ratio";
+            this.btnRatio.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -533,5 +546,6 @@
         internal System.Windows.Forms.TextBox txtLVDebug;
         internal System.Windows.Forms.TabControl tabLowDev;
         private System.Windows.Forms.TabPage tabLogConnection;
+        internal System.Windows.Forms.Button btnRatio;
     }
 }

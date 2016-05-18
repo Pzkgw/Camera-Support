@@ -21,9 +21,12 @@ namespace GIShowCam
             //_dispatchDr = Dispatcher.CurrentDispatcher;
 
             mainB = new GuiBase(this);
+
+            string[] startVlcOptions = GuiBase.GetVlcOptions();
+
             if (SessionInfo.fullVideo)
             {
-                mainB.VideoInit(false, true);
+                mainB.VideoInit(false, true, startVlcOptions);
             }
             else
             {
@@ -31,7 +34,7 @@ namespace GIShowCam
                 mainB.InitGuiDeviceInfo();
                 mainB.InitGuiRecord();
 
-                mainB.VideoInit(false, false);
+                mainB.VideoInit(false, false, startVlcOptions);
             }
 
             mainB.DeviceTextBoxesUpdate(false);

@@ -1,4 +1,5 @@
-﻿using Declarations.Events;
+﻿using Declarations;
+using Declarations.Events;
 using GIShowCam.Utils;
 using System;
 
@@ -70,14 +71,17 @@ namespace GIShowCam.Gui
             //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
             if (m_media != null)
             {
-                UISync.Execute(() => TextUpdate(form.lblVlcNotify,
-                        "Timp de functionare: " + m_player.Time/1000 + " secunde" +
-                        ", DecodedVideo: " + m_media.Statistics.DecodedVideo +
-                        ", InputBitrate: " + m_media.Statistics.InputBitrate +
-                        ", DemuxBitrate: " + m_media.Statistics.DemuxBitrate +
-                        ", DisplayedPictures: " + m_media.Statistics.DisplayedPictures +
-                        ", LostPictures: " + m_media.Statistics.LostPictures
-                        , false, false, false));
+                if (m_player.IsPlaying)
+                {
+                    UISync.Execute(() => TextUpdate(form.lblVlcNotify,
+                            "Timp de functionare: " + m_player.Time / 60000 + " minute si " +
+                            (m_player.Time / 1000) % 60 + " secunde " +
+                            ", DecodedVideo: " + m_media.Statistics.DecodedVideo +
+                            ", InputBitrate: " + m_media.Statistics.InputBitrate +
+                            ", DemuxBitrate: " + m_media.Statistics.DemuxBitrate +
+                            ", DisplayedPictures: " + m_media.Statistics.DisplayedPictures +
+                            ", LostPictures: " + m_media.Statistics.LostPictures
+                            , false, false, false));
 
                     //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
 
@@ -87,8 +91,15 @@ namespace GIShowCam.Gui
                         info.cam.data.imgCount = m_media.Statistics.DisplayedPictures;
                         info.cam.data.IsVideoComplete = true;
                         SetBtnsVisibilityOnPlay(true);
+
+                        if (info.cam.data.viewSettings.ratio == AspectRatioMode.Default)
+                        {
+                            info.cam.data.viewSettings.ratio = m_player.AspectRatio;
+                        }
+
                     }
                     //form.Log("Poze = " + media.Statistics.DisplayedPictures);
+                }
                 
             }
         }

@@ -21,11 +21,11 @@ namespace GIShowCam.Gui
 
         //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
 
-        private void vlcInit(ILogger logger)
+        private void vlcInit(string[] userOptions)
         {
 
-            m_factory = new MediaPlayerFactory(GetVlcOptions(),
-                System.IO.Directory.Exists(SessionInfo.vlcDir32) ? SessionInfo.vlcDir32 : SessionInfo.vlcDir64, logger, true);
+            m_factory = new MediaPlayerFactory(userOptions, SessionInfo.vlcDir
+                , SessionInfo.logger, true);
             m_player = m_factory.CreatePlayer<IDiskPlayer>();
         }
 
@@ -139,11 +139,15 @@ namespace GIShowCam.Gui
                     break;
                 case Declarations.MediaState.Ended:
                     info.cam.data.IsEnded = true;
-                    VlcReinit();
+
+                    UISync.Execute(() => TextUpdate(form.lblVlcNotify,
+                        " Vlc stopped ... ", false, false, false));
+
+                    //VlcReinit();
                     break;
                 case Declarations.MediaState.Error:
                     info.cam.data.IsError = true;
-                    VlcReinit();
+                    //VlcReinit();
                     break;
                 default:
                     break;
@@ -172,9 +176,9 @@ namespace GIShowCam.Gui
 
 */
 
-        private void VlcReinit()
-        {
-            UISync.on = false;
+        //private void VlcReinit()
+        //{
+            //UISync.on = false;
             /*
             StopRunningMedia();
             VideoInit(false, false);*/
@@ -182,7 +186,7 @@ namespace GIShowCam.Gui
             //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
             //vlc.Dispose();
             //GC.Collect();
-        }
+       // }
 
         private void SetBtnsVisibilityOnPlay(bool on)
         {
@@ -198,16 +202,18 @@ namespace GIShowCam.Gui
             btnsShowOnPlay = on;
         }
 
-        private string[] GetVlcOptions()
+        internal static string[] GetVlcOptions()
+        {
+            return new string[] { "--aspect-ratio=1:3" };
+        }
+        /*
+        internal static string[] GetVlcOptions()
         {
             if (SessionInfo.vlcOptions == null)
             {
                 SessionInfo.vlcOptions = new string[] { //--snapshot-format=jpg
-                 "--no-fullscreen" //
-                 ,"--ignore-config"
-                 ,"--no-osd"
-                 ,"--disable-screensaver"
-                 ,"--plugin-path=./plugins"
+                "-I", "dumy", "--ignore-config", "--no-osd",  "--disable-screensaver", "--plugin-path=./plugins"
+                "--no-fullscreen" //
                 //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on startingto play media.
@@ -223,7 +229,7 @@ namespace GIShowCam.Gui
                 ,"--no-advanced" //  Show advanced options (default enabled)
                 ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
-                ,"--no-playlist-autostart" // playlist auto start (default enabled) 
+                ,"--no-playlist-autostart" // playlist auto start (default enabled)
                 //,"--no-snapshot-preview"
                 ,SessionInfo.debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages  
                 ,SessionInfo.debug?"--extraintf=logger":null
@@ -237,16 +243,7 @@ namespace GIShowCam.Gui
 
             return SessionInfo.vlcOptions;
 
-            /*      --- Nvlc Init
-
-            "-I",
-                        "dumy",
-                        "--ignore-config",
-                        "--no-osd",
-                        "--disable-screensaver",
-                        "--plugin-path=./plugins"*/
-
-
+           --- Nvlc Init"-I", "dumy", "--ignore-config", "--no-osd",  "--disable-screensaver", "--plugin-path=./plugins"
 
             //  ---  Alte incercari:
             //,"--grayscale" //  merge doar daca e enabled in configuration
@@ -271,10 +268,11 @@ namespace GIShowCam.Gui
             //,"--aspect-ratio=16:10"
             //,"--croppadd-cropleft 100"
         }
-
+    */
 
         private string[] GetVlcMediaOptions()
         {
+            /*
             if (SessionInfo.vlcMediaOptions == null)
             {
                 SessionInfo.vlcMediaOptions = new string[] {
@@ -283,7 +281,9 @@ namespace GIShowCam.Gui
 
             }
 
-            return SessionInfo.vlcMediaOptions;
+            return SessionInfo.vlcMediaOptions;*/
+
+            return null;
         }
 
 

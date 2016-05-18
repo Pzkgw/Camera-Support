@@ -23,10 +23,27 @@ namespace GIShowCam.Gui
         private Point _vlcTop;
         private Size _vlcSize;
 
-        internal void VideoInit(bool allowResize, bool fullView)
+        internal void VideoInit(bool allowResize, bool fullView, params string[] userOptions)
         {
+            bool startInit = m_factory == null;
+            if (startInit)
+            {
+                vlcInit(userOptions);
+            }
 
             ToggleRunningMedia(false);
+
+            if (userOptions != null && !startInit) // new options --> Vlc factory re-initialize
+            {
+                m_player.Dispose();
+                m_player = null;
+
+                m_factory.Dispose();
+                m_factory = null;
+
+                vlcInit(userOptions);
+            }
+
 
             info.NewCameraInfo(); // II'nd comboBox change select
             info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
@@ -64,7 +81,7 @@ namespace GIShowCam.Gui
             {//allowVlcMediaReinit
                 RestartConnection();
 
-                openMedia(getPath(), GetVlcMediaOptions());
+                openMedia(getPath());
 
                 //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
                 //(new System.Threading.Thread(delegate () {
@@ -92,8 +109,10 @@ namespace GIShowCam.Gui
                 m_player.Stop();
 
                 RegisterPlayerEvents(false);
-                RegisterMediaEvents(false);                
-                
+                RegisterMediaEvents(false);
+
+                //m_factory.VideoLanManager.DeleteMedia("m_media");
+
                 m_media.Dispose();
                 m_media = null;
                 //vlc.UnregisterEvents();
@@ -129,7 +148,7 @@ namespace GIShowCam.Gui
             m_media = m_factory.CreateMedia<IMedia>(addr, options);
             //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
 
-
+            m_media.AddOptions(options);
             m_player.Open(m_media);
             m_media.Parse(true);
 
@@ -192,8 +211,9 @@ namespace GIShowCam.Gui
         }
 
         private void BtnDevConnect_Click(object sender, EventArgs e)
-        {            
-            VideoInit(false, false);
+        {
+            //string[] initMediaOptions = GetVlcMediaOptions();
+            VideoInit(false, false);//, GetVlcMediaOptions()
             form.btnPlay.Text = "Stop";
         }
 

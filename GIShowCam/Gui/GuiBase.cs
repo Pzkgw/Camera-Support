@@ -1,7 +1,6 @@
 ﻿using GIShowCam.Info;
 using GIShowCam.Utils;
 using System;
-using System.Windows.Forms;
 
 namespace GIShowCam.Gui
 {
@@ -9,38 +8,49 @@ namespace GIShowCam.Gui
     {
         private SessionInfo info;
         private FormMain form;
-        private CLogger logger;
+        
 
         internal GuiBase(FormMain formBase)
         {
-
             _logTimeLast = DateTime.MinValue;
             form = formBase;
 
-            logger = new CLogger(form.txtLVDebug, form.txtLVErrors, form.txtLVInfo, form.txtLVWarnings);
+            SessionInfo.logger = new CLogger(form.txtLVDebug, form.txtLVErrors, form.txtLVInfo, form.txtLVWarnings);
             info = new SessionInfo();
 
             UISync.Init(formBase);
-            vlcInit(logger);
             
+
+            DiscoverDevices();
+            
+
             //form.panelVlc.BringToFront();
             //form.panelVlc.Click += PanelVlc_Click;
 
         }
-        /*
-        private void PanelVlc_Click(object sender, EventArgs e)
+
+        private void DiscoverDevices()
         {
-            if (form.chkFullVid.Checked)
-            {
-                form.chkFullVid.Checked = false;
-            }
-            else
-            {
-                if (SessionInfo.showMessageBoxes) MessageBox.Show("  Bravo !  ");
-            }
+            Discovery discovery;
+
+            discovery = new Discovery(m_factory);
+
+            discovery.CleanUp();
+        }
+        /*
+private void PanelVlc_Click(object sender, EventArgs e)
+{
+   if (form.chkFullVid.Checked)
+   {
+       form.chkFullVid.Checked = false;
+   }
+   else
+   {
+       if (SessionInfo.showMessageBoxes) MessageBox.Show("  Bravo !  ");
+   }
 
 
-        }*/
+}*/
 
 
 

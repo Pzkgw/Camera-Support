@@ -44,11 +44,11 @@ namespace GIShowCam.Gui
                         ipTxt = form.comboAddress.Text.Substring(ips + 1, ipf - ips - 1) + sidTxt;
                         sidTxt = form.comboAddress.Text.Substring(ipf + 1, form.comboAddress.Text.Length - ipf - 1) + sidTxt;
 
-                        ipTxt = "            " + ipTxt + Environment.NewLine;
-                        sidTxt = "            " + sidTxt + Environment.NewLine;
+                        ipTxt = "              IP: " + ipTxt + Environment.NewLine;
+                        sidTxt = "                       " + sidTxt;
                     }
 
-                    s = s + Environment.NewLine + ipTxt + sidTxt;
+                    s = s + Environment.NewLine + sidTxt + ipTxt;
                 }
 
                 if (ctrl is TextBoxBase) (ctrl as TextBoxBase).AppendText(s);

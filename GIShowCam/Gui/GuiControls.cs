@@ -34,6 +34,21 @@ namespace GIShowCam.Gui
             form.txtDevPass.TextChanged += TxtDevPass_TextChanged;
 
             form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
+
+            form.btnRatio.Click += BtnRatio_Click;
+        }
+
+        private void BtnRatio_Click(object sender, EventArgs e)
+        {
+            
+            /*
+            m_player.Stop();
+            m_player.AspectRatio = Declarations.AspectRatioMode.Mode1;
+            m_player.AspectRatio = info.cam.data.viewSettings.ratio;
+            m_player.Play();*/
+
+            //VideoInit(false, false, new string[] { "--aspect-ratio=2.21:1" });
+            //m_media.AddOptionFlag("--aspect-ratio=2.21:1", 0);
         }
 
         private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)
@@ -100,6 +115,7 @@ namespace GIShowCam.Gui
             if (m_player.IsPlaying)
             {
                 form.btnPlay.Text = "Play";
+                TextUpdate(form.lblVlcNotify, " pauza de ... ", false, false, false);
                 m_player.Stop();
             }
             else

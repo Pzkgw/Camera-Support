@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Declarations;
+using System;
 using System.ComponentModel;
 
 namespace GIShowCam.Info
 {
+    internal struct ViewSettings
+    {
+        internal AspectRatioMode ratio;
+    }
 
     class DeviceInfo : INotifyPropertyChanged
     {
@@ -10,7 +15,10 @@ namespace GIShowCam.Info
             act = new bool[10];
 
         internal int imgCount;
-        
+
+
+        internal ViewSettings viewSettings;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -175,7 +183,7 @@ namespace GIShowCam.Info
             int i = 0;
             for (; i < act.Length; i++) act[i] = false;
 
-            
+            viewSettings.ratio = AspectRatioMode.Default;
         }
     }
 }

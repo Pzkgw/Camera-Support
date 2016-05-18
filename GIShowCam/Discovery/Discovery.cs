@@ -1,22 +1,30 @@
-﻿using Declarations.Discovery;
+﻿using Declarations;
+using Declarations.Discovery;
+using Declarations.Media;
 using Implementation.Discovery;
 using System;
 
-namespace GIShowCam.Discovery
+namespace GIShowCam.Gui
 {
     
     class Discovery
     {
-
-        IMediaDiscoverer seeker;
-
         /// <summary>
         /// Cauta camere prin retea
         /// </summary>
         /// <returns></returns>
-        internal Discovery()
+        internal Discovery(IMediaPlayerFactory factory)
         {
-            seeker = new MediaDiscoverer(new IntPtr(), "Seeker");
+            //IMediaDiscoverer seeker;
+            //seeker = factory.CreateMediaDiscoverer("Seeker"); //new MediaDiscoverer(new IntPtr(), "Seeker");
+            //IMediaList ml = seeker.MediaList;
+        }
+
+
+
+        internal void CleanUp()
+        {
+
         }
 
     }
