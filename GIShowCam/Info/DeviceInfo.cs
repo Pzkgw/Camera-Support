@@ -7,9 +7,10 @@ namespace GIShowCam.Info
     class DeviceInfo : INotifyPropertyChanged
     {
         private bool[]
-            act = new bool[9];
+            act = new bool[10];
 
         internal int imgCount;
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -143,6 +144,19 @@ namespace GIShowCam.Info
             get
             {
                 return act[8];
+            }
+        }
+
+        internal bool MediaChanged
+        {
+            set
+            {
+                act[9] = value;
+                if (value) OnPropertyChanged(" Schimbare de camera ");
+            }
+            get
+            {
+                return act[9];
             }
         }
 

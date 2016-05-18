@@ -39,14 +39,12 @@ namespace GIShowCam.Gui
             {
                 m_player.Events.MediaChanged += new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
                 m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
-                m_player.Events.TimeChanged += new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
                 m_player.Events.PlayerStopped += new EventHandler(Events_PlayerStopped);
             }
             else
             {
                 m_player.Events.MediaChanged -= new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
                 m_player.Events.PlayerPositionChanged -= new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
-                m_player.Events.TimeChanged -= new EventHandler<MediaPlayerTimeChanged>(Events_TimeChanged);
                 m_player.Events.PlayerStopped -= new EventHandler(Events_PlayerStopped);
             }
 
@@ -74,7 +72,7 @@ namespace GIShowCam.Gui
 
         void Events_MediaChanged(object sender, MediaPlayerMediaChanged e)
         {
-
+            info.cam.data.MediaChanged = true;
         }
 
         void Events_PlayerStopped(object sender, EventArgs e)
@@ -90,11 +88,6 @@ namespace GIShowCam.Gui
                     lblTime.Text = "00:00:00";
                     lblDuration.Text = "00:00:00";
                 }*/
-
-        void Events_TimeChanged(object sender, MediaPlayerTimeChanged e)
-        {
-            //UISync.Execute(() => lblTime.Text = TimeSpan.FromMilliseconds(e.NewTime).ToString().Substring(0, 8));
-        }
 
 
         //void Events_StateChanged(object sender, MediaStateChange e)

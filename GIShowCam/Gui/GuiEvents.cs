@@ -44,8 +44,8 @@ namespace GIShowCam.Gui
                         ipTxt = form.comboAddress.Text.Substring(ips + 1, ipf - ips - 1) + sidTxt;
                         sidTxt = form.comboAddress.Text.Substring(ipf + 1, form.comboAddress.Text.Length - ipf - 1) + sidTxt;
 
-                        ipTxt = " Adresa: " + ipTxt + Environment.NewLine;
-                        sidTxt = " Camera: " + sidTxt + Environment.NewLine;
+                        ipTxt = "            " + ipTxt + Environment.NewLine;
+                        sidTxt = "            " + sidTxt + Environment.NewLine;
                     }
 
                     s = s + Environment.NewLine + ipTxt + sidTxt;
