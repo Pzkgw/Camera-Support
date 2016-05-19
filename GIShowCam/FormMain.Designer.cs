@@ -64,6 +64,8 @@
             this.tabLogConnection = new System.Windows.Forms.TabPage();
             this.tabLowCtrl = new System.Windows.Forms.TabPage();
             this.btnRatio = new System.Windows.Forms.Button();
+            this.lblEvent = new System.Windows.Forms.Label();
+            this.lblTxtRatio = new System.Windows.Forms.Label();
             this.groupBoxDev.SuspendLayout();
             this.groupBoxVlcFactors.SuspendLayout();
             this.groupBoxBtns.SuspendLayout();
@@ -201,7 +203,7 @@
             // btnSnapshot
             // 
             this.btnSnapshot.Enabled = false;
-            this.btnSnapshot.Location = new System.Drawing.Point(121, 149);
+            this.btnSnapshot.Location = new System.Drawing.Point(551, 19);
             this.btnSnapshot.Name = "btnSnapshot";
             this.btnSnapshot.Size = new System.Drawing.Size(103, 42);
             this.btnSnapshot.TabIndex = 5;
@@ -211,7 +213,7 @@
             // btnRecord
             // 
             this.btnRecord.Enabled = false;
-            this.btnRecord.Location = new System.Drawing.Point(328, 149);
+            this.btnRecord.Location = new System.Drawing.Point(551, 69);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(103, 42);
             this.btnRecord.TabIndex = 6;
@@ -306,7 +308,7 @@
             // 
             this.chkFullVid.AutoSize = true;
             this.chkFullVid.Enabled = false;
-            this.chkFullVid.Location = new System.Drawing.Point(552, 172);
+            this.chkFullVid.Location = new System.Drawing.Point(552, 198);
             this.chkFullVid.Name = "chkFullVid";
             this.chkFullVid.Size = new System.Drawing.Size(84, 19);
             this.chkFullVid.TabIndex = 8;
@@ -319,7 +321,7 @@
             this.chkPlayLoop.Checked = true;
             this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPlayLoop.Enabled = false;
-            this.chkPlayLoop.Location = new System.Drawing.Point(552, 133);
+            this.chkPlayLoop.Location = new System.Drawing.Point(552, 162);
             this.chkPlayLoop.Name = "chkPlayLoop";
             this.chkPlayLoop.Size = new System.Drawing.Size(54, 19);
             this.chkPlayLoop.TabIndex = 7;
@@ -455,6 +457,7 @@
             // tabLowCtrl
             // 
             this.tabLowCtrl.BackColor = System.Drawing.Color.Transparent;
+            this.tabLowCtrl.Controls.Add(this.lblTxtRatio);
             this.tabLowCtrl.Controls.Add(this.btnRatio);
             this.tabLowCtrl.Controls.Add(this.groupBoxDev);
             this.tabLowCtrl.Controls.Add(this.groupBoxVlcFactors);
@@ -468,18 +471,36 @@
             // 
             // btnRatio
             // 
-            this.btnRatio.Location = new System.Drawing.Point(203, 199);
+            this.btnRatio.Location = new System.Drawing.Point(184, 201);
             this.btnRatio.Name = "btnRatio";
             this.btnRatio.Size = new System.Drawing.Size(77, 25);
             this.btnRatio.TabIndex = 9;
-            this.btnRatio.Text = "Ratio";
             this.btnRatio.UseVisualStyleBackColor = true;
+            // 
+            // lblEvent
+            // 
+            this.lblEvent.AutoSize = true;
+            this.lblEvent.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblEvent.Location = new System.Drawing.Point(850, 857);
+            this.lblEvent.Name = "lblEvent";
+            this.lblEvent.Size = new System.Drawing.Size(0, 15);
+            this.lblEvent.TabIndex = 10;
+            // 
+            // lblTxtRatio
+            // 
+            this.lblTxtRatio.AutoSize = true;
+            this.lblTxtRatio.Location = new System.Drawing.Point(48, 206);
+            this.lblTxtRatio.Name = "lblTxtRatio";
+            this.lblTxtRatio.Size = new System.Drawing.Size(130, 15);
+            this.lblTxtRatio.TabIndex = 10;
+            this.lblTxtRatio.Text = "Change aspect ratio to:";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1230, 875);
+            this.Controls.Add(this.lblEvent);
             this.Controls.Add(this.tabLowDev);
             this.Controls.Add(this.panelVlc);
             this.Controls.Add(this.lblVlcNotify);
@@ -504,6 +525,7 @@
             this.tabLogConnection.ResumeLayout(false);
             this.tabLogConnection.PerformLayout();
             this.tabLowCtrl.ResumeLayout(false);
+            this.tabLowCtrl.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -547,5 +569,7 @@
         internal System.Windows.Forms.TabControl tabLowDev;
         private System.Windows.Forms.TabPage tabLogConnection;
         internal System.Windows.Forms.Button btnRatio;
+        internal System.Windows.Forms.Label lblEvent;
+        private System.Windows.Forms.Label lblTxtRatio;
     }
 }

@@ -23,16 +23,17 @@ namespace GIShowCam.Gui
         private Point _vlcTop;
         private Size _vlcSize;
 
-        internal void VideoInit(bool allowResize, bool fullView, params string[] userOptions)
+        internal void VideoInit(bool allowResize, bool fullView)
         {
             bool startInit = m_factory == null;
             if (startInit)
             {
-                vlcInit(userOptions);
+                vlcInit(GetVlcOptions());
             }
 
             ToggleRunningMedia(false);
 
+            /*
             if (userOptions != null && !startInit) // new options --> Vlc factory re-initialize
             {
                 m_player.Dispose();
@@ -42,7 +43,7 @@ namespace GIShowCam.Gui
                 m_factory = null;
 
                 vlcInit(userOptions);
-            }
+            }*/
 
 
             info.NewCameraInfo(); // II'nd comboBox change select
@@ -78,7 +79,7 @@ namespace GIShowCam.Gui
                     //form.panelVlc.SendToBack();
                 }
 
-            {//allowVlcMediaReinit
+
                 RestartConnection();
 
                 openMedia(getPath());
@@ -90,9 +91,7 @@ namespace GIShowCam.Gui
                 //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
                 //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
 
-                //} catch (Exception e) { MessageBox.Show(e.Message); }          
-
-            }
+                //} catch (Exception e) { MessageBox.Show(e.Message); }
 
         }
 
@@ -145,12 +144,18 @@ namespace GIShowCam.Gui
             //info.cam.data.IsStarted = true;
             //m_player.WindowHandle = new IntPtr(); // start pentru UISync
 
-            m_media = m_factory.CreateMedia<IMedia>(addr, options);
+            //addr += " --aspect-ratio=4:3";
+            ///addr += " --aspect-ratio=4:3 --sout-transcode-width=360 --sout-transcode-height=240";
+
+            m_media = m_factory.CreateMedia<IMedia>(addr);
             //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
 
-            m_media.AddOptions(options);
+            //m_media.AddOptions(new string[] { "--aspect-ratio=4:3" });
+            //m_media.AddOptions(new string[] { "--aspect-ratio=4:3", "--sout-transcode-width=360", "--sout-transcode-height=240" });
             m_player.Open(m_media);
             m_media.Parse(true);
+
+
 
             ToggleRunningMedia(true);
 

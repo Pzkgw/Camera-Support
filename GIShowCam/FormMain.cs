@@ -22,11 +22,9 @@ namespace GIShowCam
 
             mainB = new GuiBase(this);
 
-            string[] startVlcOptions = GuiBase.GetVlcOptions();
-
             if (SessionInfo.fullVideo)
             {
-                mainB.VideoInit(false, true, startVlcOptions);
+                mainB.VideoInit(false, true);
             }
             else
             {
@@ -34,7 +32,7 @@ namespace GIShowCam
                 mainB.InitGuiDeviceInfo();
                 mainB.InitGuiRecord();
 
-                mainB.VideoInit(false, false, startVlcOptions);
+                mainB.VideoInit(false, false);
             }
 
             mainB.DeviceTextBoxesUpdate(false);

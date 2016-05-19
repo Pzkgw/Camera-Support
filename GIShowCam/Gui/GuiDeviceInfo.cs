@@ -92,18 +92,27 @@ namespace GIShowCam.Gui
                         info.cam.data.IsVideoComplete = true;
                         SetBtnsVisibilityOnPlay(true);
 
-                        if (info.cam.data.viewSettings.ratio == AspectRatioMode.Default)
-                        {
-                            info.cam.data.viewSettings.ratio = m_player.AspectRatio;
-                        }
-
                     }
                     //form.Log("Poze = " + media.Statistics.DisplayedPictures);
+                    UISync.Execute(()=>UpdateEventsLabel());
+
                 }
                 
             }
         }
-        
+
+        private void UpdateEventsLabel()
+        {
+            if(lblEventsShowCount > 0)
+            {
+                --lblEventsShowCount;
+                if(lblEventsShowCount == 0)
+                {
+                    form.lblEvent.Text = null;
+                }
+            }
+        }
+
 
         #endregion real time Device Info
 

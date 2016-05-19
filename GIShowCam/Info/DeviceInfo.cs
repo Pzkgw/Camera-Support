@@ -6,7 +6,7 @@ namespace GIShowCam.Info
 {
     internal struct ViewSettings
     {
-        internal AspectRatioMode ratio;
+        internal AspectRatioMode aspectRatioDefault, aspectRatioMode;
     }
 
     class DeviceInfo : INotifyPropertyChanged
@@ -24,8 +24,13 @@ namespace GIShowCam.Info
 
         internal DeviceInfo()
         {
-            Start();
+            imgCount = 0;
+            viewSettings.aspectRatioMode = AspectRatioMode.Mode2;
+
+            int i = 0;
+            for (; i < act.Length; i++) act[i] = false;            
         }
+
 
         #region Stari Video
 
@@ -176,14 +181,6 @@ namespace GIShowCam.Info
         }
 
 
-        internal void Start()
-        {
-            imgCount = 0;
 
-            int i = 0;
-            for (; i < act.Length; i++) act[i] = false;
-
-            viewSettings.ratio = AspectRatioMode.Default;
-        }
     }
 }

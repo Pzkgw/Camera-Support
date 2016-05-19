@@ -1,4 +1,5 @@
-﻿using GIShowCam.Info;
+﻿using Declarations;
+using GIShowCam.Info;
 using System;
 using System.Windows.Forms;
 
@@ -7,6 +8,7 @@ namespace GIShowCam.Gui
     internal partial class GuiBase
     {
         private bool btnsShowOnPlay;
+        private int lblEventsShowCount = 64;
         internal void InitGuiControls()
         {
 
@@ -14,8 +16,7 @@ namespace GIShowCam.Gui
             foreach (string dev in info.GetDeviceList()) form.comboAddress.Items.Add(dev);
 
 
-            form.comboAddress.SelectedIndex = info.devID;         
-
+            form.comboAddress.SelectedIndex = info.devID;
 
         }
 
@@ -35,20 +36,27 @@ namespace GIShowCam.Gui
 
             form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
 
+            form.btnRatio.Text = info.cam.data.viewSettings.aspectRatioMode.ToString();
             form.btnRatio.Click += BtnRatio_Click;
         }
 
         private void BtnRatio_Click(object sender, EventArgs e)
         {
-            
-            /*
-            m_player.Stop();
-            m_player.AspectRatio = Declarations.AspectRatioMode.Mode1;
-            m_player.AspectRatio = info.cam.data.viewSettings.ratio;
-            m_player.Play();*/
+            ViewSettings setari = info.cam.data.viewSettings;
 
-            //VideoInit(false, false, new string[] { "--aspect-ratio=2.21:1" });
-            //m_media.AddOptionFlag("--aspect-ratio=2.21:1", 0);
+            bool aspectDefault = m_player.AspectRatio == setari.aspectRatioDefault;
+
+            m_player.AspectRatio = (aspectDefault) ?           // AspectRatio e Default
+                setari.aspectRatioMode :                       // Mode 2
+                setari.aspectRatioDefault;                     // Default
+
+            //  Notificari optionale
+            form.btnRatio.Text = (aspectDefault) ? setari.aspectRatioDefault.ToString() : setari.aspectRatioMode.ToString();
+
+            lblEventsShowCount = 16;
+            form.lblEvent.Text = "Event: aspect ratio change from " + ((aspectDefault) ?
+                (setari.aspectRatioDefault.ToString() + " to " + setari.aspectRatioMode.ToString()) :
+                (setari.aspectRatioMode.ToString() + " to " + setari.aspectRatioDefault.ToString()));
         }
 
         private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)

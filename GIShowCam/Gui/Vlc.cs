@@ -23,10 +23,11 @@ namespace GIShowCam.Gui
 
         private void vlcInit(string[] userOptions)
         {
-
+            //new string[] { "--aspect-ratio=4:3", "--sout-transcode-width=360", "--sout-transcode-height=240" }
             m_factory = new MediaPlayerFactory(userOptions, SessionInfo.vlcDir
                 , SessionInfo.logger, true);
             m_player = m_factory.CreatePlayer<IDiskPlayer>();
+            //m_player.AspectRatio = AspectRatioMode.Mode2;
         }
 
         /// <summary>
@@ -201,22 +202,22 @@ namespace GIShowCam.Gui
 
             btnsShowOnPlay = on;
         }
-
+        /*
         internal static string[] GetVlcOptions()
         {
-            return new string[] { "--aspect-ratio=1:3" };
-        }
-        /*
+            return new string[] { "--aspect-ratio=4:3" };
+        }*/
+        
         internal static string[] GetVlcOptions()
         {
             if (SessionInfo.vlcOptions == null)
             {
                 SessionInfo.vlcOptions = new string[] { //--snapshot-format=jpg
-                "-I", "dumy", "--ignore-config", "--no-osd",  "--disable-screensaver", "--plugin-path=./plugins"
-                "--no-fullscreen" //
+                "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
+                ,"--no-fullscreen" //
                 //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
-                ,"--no-video-title"  //hide played media filename on startingto play media.
+                ,"--no-video-title"  //hide played media filename on starting to play media.
                 //,"--rtsp-tcp"
                 ,"--no-drop-late-frames" //drops frames that are late (arrive to the video output after their intended display date)
                 ,"--no-video-deco"  // Window decorations (default enabled)
@@ -243,7 +244,7 @@ namespace GIShowCam.Gui
 
             return SessionInfo.vlcOptions;
 
-           --- Nvlc Init"-I", "dumy", "--ignore-config", "--no-osd",  "--disable-screensaver", "--plugin-path=./plugins"
+            //--- Nvlc Init"-I", "dumy", "--ignore-config", "--no-osd",  "--disable-screensaver", "--plugin-path=./plugins"
 
             //  ---  Alte incercari:
             //,"--grayscale" //  merge doar daca e enabled in configuration
@@ -268,7 +269,7 @@ namespace GIShowCam.Gui
             //,"--aspect-ratio=16:10"
             //,"--croppadd-cropleft 100"
         }
-    */
+    
 
         private string[] GetVlcMediaOptions()
         {
