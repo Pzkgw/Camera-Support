@@ -43,23 +43,35 @@ namespace GIShowCam.Gui
 
         private void BtnRatio_Click(object sender, EventArgs e)
         {
-            ViewSettings setari = info.cam.data.viewSettings;
+            ToggleAspectRatio();
+        }
 
-            bool aspectDefault = m_player.AspectRatio == setari.aspectRatioDefault;
+        private void ToggleAspectRatio()
+        {
+            if (m_player != null)
+            {
+                ViewSettings setari = info.cam.data.viewSettings;
 
-            m_player.AspectRatio = (aspectDefault) ?           // AspectRatio e Default
-                setari.aspectRatioMode :                       // Mode 2
-                setari.aspectRatioDefault;                     // Default
+                bool aspectDefault = m_player.AspectRatio == setari.aspectRatioDefault;
 
-            //  Notificari optionale
-            form.btnRatio.Text = (aspectDefault) ? setari.aspectRatioDefault.ToString() : setari.aspectRatioMode.ToString();
+                m_player.AspectRatio = (aspectDefault) ?           // AspectRatio e Default
+                    setari.aspectRatioMode :                       // Mode 2
+                    setari.aspectRatioDefault;                     // Default
 
-            lblEventsShowCount = 16;
-            form.lblEvent.Text = "Event: aspect ratio change from " + ((aspectDefault) ?
-                (VlcUtils.AspectRatioToString(setari.aspectRatioDefault) + " to " +
-                VlcUtils.AspectRatioToString(setari.aspectRatioMode)) :
-                (VlcUtils.AspectRatioToString(setari.aspectRatioMode) + " to " +
-                VlcUtils.AspectRatioToString(setari.aspectRatioDefault)));
+                //  Notificari optionale
+                form.btnRatio.Text = (aspectDefault) ? setari.aspectRatioDefault.ToString() : setari.aspectRatioMode.ToString();
+
+                lblEventsShowCount = 10;
+                form.lblEvent.Text = "Event: aspect ratio change from " + ((aspectDefault) ?
+                    (VlcUtils.AspectRatioToString(setari.aspectRatioDefault) + " to " +
+                    VlcUtils.AspectRatioToString(setari.aspectRatioMode)) :
+                    (VlcUtils.AspectRatioToString(setari.aspectRatioMode) + " to " +
+                    VlcUtils.AspectRatioToString(setari.aspectRatioDefault)));
+            }
+            else
+            {
+                form.lblEvent.Text = "No video, cannot change aspect ratio";
+            }
         }
 
         private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)
@@ -116,42 +128,29 @@ namespace GIShowCam.Gui
             {
                 vlc.Play(subItems[0]);
             }
-        }*/        
+        }*/
 
 
 
         private void BtnPlay_Click(object sender, EventArgs e)
         {
+            form.lblEvent.Text = null;
 
-            if (m_player.IsPlaying)
+            if (m_player != null && m_player.IsPlaying)
             {
                 form.btnPlay.Text = "Play";
                 TextUpdate(form.lblVlcNotify, " pauza de ... ", false, false, false);
-                m_player.Stop();
+                //m_player.Stop();
+                ToggleRunningMedia(false);
             }
             else
             {
                 form.btnPlay.Text = "Stop";
-                m_player.Play();
+                //m_player.Play();
+                ToggleRunningMedia(true);
             }
 
-            SetBtnsVisibilityOnPlay(m_player.IsPlaying);
-
-            /*
-            bool playing = false;
-            if (sender != null && vlc != null)
-            {
-                playing = vlc.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing;
-                if (playing)
-                {                    
-                    vlc.Stop(false);
-                }
-                else
-                {
-                    vlc.Play();
-                }
-                SetBtnsVisibilityOnPlay(!playing);
-            }   */
+            SetBtnsVisibilityOnPlay((m_player == null) ? false : m_player.IsPlaying);
         }
 
         #region Detalii pt connection textboxes

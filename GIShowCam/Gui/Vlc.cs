@@ -108,34 +108,37 @@ namespace GIShowCam.Gui
         {
             switch (e.NewState)
             {
-                case Declarations.MediaState.Opening:
+                case MediaState.Opening:
                     info.cam.data.IsOpening = true;
                     break;
-                case Declarations.MediaState.Buffering:
+                case MediaState.Buffering:
                     info.cam.data.IsBuffering = true;
                     break;
-                case Declarations.MediaState.Playing:
+                case MediaState.Playing:
                     info.cam.data.IsPlaying = true;
                     break;
-                case Declarations.MediaState.Paused:
+                case MediaState.Paused:
                     info.cam.data.IsPaused = true;
                     break;
-                case Declarations.MediaState.Stopped:
+                case MediaState.Stopped:
                     if (!info.cam.data.IsStopped)
                     {
                         SetBtnsVisibilityOnPlay(false);
                     }
                     info.cam.data.IsStopped = true;
                     break;
-                case Declarations.MediaState.Ended:
+                case MediaState.Ended:
                     info.cam.data.IsEnded = true;
 
                     UISync.Execute(() => TextUpdate(form.lblVlcNotify,
                         " Vlc stopped ... ", false, false, false));
 
+                    UISync.Execute(() => ToggleRunningMedia(false));
+                    UISync.Execute(() => ToggleRunningMedia(true));
+
                     //VlcReinit();
                     break;
-                case Declarations.MediaState.Error:
+                case MediaState.Error:
                     info.cam.data.IsError = true;
                     //VlcReinit();
                     break;
