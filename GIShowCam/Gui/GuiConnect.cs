@@ -28,27 +28,12 @@ namespace GIShowCam.Gui
             bool startInit = m_factory == null;
             if (startInit)
             {
-                vlcInit(GetVlcOptions());
+                m_factory = new MediaPlayerFactory(GetVlcOptions(),
+                    SessionInfo.vlcDir, SessionInfo.logger, true);
             }
 
             ToggleRunningMedia(false);
 
-            /*
-            if (userOptions != null && !startInit) // new options --> Vlc factory re-initialize
-            {
-                m_player.Dispose();
-                m_player = null;
-
-                m_factory.Dispose();
-                m_factory = null;
-
-                vlcInit(userOptions);
-            }*/
-
-
-            info.NewCameraInfo(); // II'nd comboBox change select
-            info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
-            //
             SessionInfo.playing = false;
             //form.isOn = false;
             /*
@@ -80,18 +65,27 @@ namespace GIShowCam.Gui
                 }
 
 
-                RestartConnection();
+            _logTimeLast = DateTime.MinValue; // pt mesajul de start connection
 
-                openMedia(getPath());
+            ToggleRunningMedia(true);
 
-                //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
-                //(new System.Threading.Thread(delegate () {
-                // openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
-                //})).Start();
-                //trackBar2.Value = m_player.Volume > 0 ? m_player.Volume : 0;
-                //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
+            info.cam.data.viewSettings.aspectRatioDefault = Declarations.AspectRatioMode.Default;
+            form.btnRatio.Text = info.cam.data.viewSettings.aspectRatioMode.ToString();
 
-                //} catch (Exception e) { MessageBox.Show(e.Message); }
+            /*
+            info.cam.data.viewSettings.aspectRatioDefault = Declarations.AspectRatioMode.Default;
+            m_player.AspectRatio = Declarations.AspectRatioMode.Default;
+            form.btnRatio.Text = info.cam.data.viewSettings.aspectRatioMode.ToString();*/
+
+
+            //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
+            //(new System.Threading.Thread(delegate () {
+            // openMedia("rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0");
+            //})).Start();
+
+            //(new System.Threading.Thread(delegate () { vlc.Parent = form.panelVlc; })).Start();
+
+            //} catch (Exception e) { MessageBox.Show(e.Message); }
 
         }
 
@@ -99,30 +93,47 @@ namespace GIShowCam.Gui
         {
             if (on)
             {
+                m_media = m_factory.CreateMedia<IMedia>(getPath());
+                m_player = m_factory.CreatePlayer<IDiskPlayer>();
+
+                m_player.Open(m_media);
+                m_media.Parse(false);
+
+                info.NewCameraInfo(); // II'nd comboBox change select
+                info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
+
                 RegisterPlayerEvents(true);
                 RegisterMediaEvents(true);
+
+                UISync.on = true;
+                //UISync.Execute(()=> m_player.WindowHandle = form.panelVlc.Handle);
+                m_player.WindowHandle = form.panelVlc.Handle;
+
+                m_player.Play();
             }
+
             else
+
             if (m_media != null)
             {
                 m_player.Stop();
+                UISync.on = false;// avoid event send
 
                 RegisterPlayerEvents(false);
                 RegisterMediaEvents(false);
 
-                //m_factory.VideoLanManager.DeleteMedia("m_media");
-
                 m_media.Dispose();
                 m_media = null;
-                //vlc.UnregisterEvents();
-                //vlc.Stop(allowVlcMediaReinit);
+
+                m_player.Dispose();
+                m_player = null;
+
+                //m_factory.VideoLanManager.DeleteMedia("m_media");
             }
         }
 
         private string getPath()
         {
-
-
             string path = info.host;
 
             if (path.Count(s => s == '.') > 2)
@@ -136,59 +147,6 @@ namespace GIShowCam.Gui
                 //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
             }
             return path;
-        }
-
-        private void openMedia(string addr, params string[] options)
-        {
-            //addr = addr.Remove(addr.Length - 1);
-            //info.cam.data.IsStarted = true;
-            //m_player.WindowHandle = new IntPtr(); // start pentru UISync
-
-            //addr += " --aspect-ratio=4:3";
-            ///addr += " --aspect-ratio=4:3 --sout-transcode-width=360 --sout-transcode-height=240";
-
-            m_media = m_factory.CreateMedia<IMedia>(addr);
-            //"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview");// textBox1.Text);
-
-            //m_media.AddOptions(new string[] { "--aspect-ratio=4:3" });
-            //m_media.AddOptions(new string[] { "--aspect-ratio=4:3", "--sout-transcode-width=360", "--sout-transcode-height=240" });
-            m_player.Open(m_media);
-            m_media.Parse(true);
-
-
-
-            ToggleRunningMedia(true);
-
-            //UISync.Execute(() => StartPlay());
-            StartPlay();
-
-            //vlc.GetCurrentMedia().StateChanged += GuiBase_StateChanged;
-
-
-            /*      --- OLD APPROACH
-            if (vlc.initEndNeeded)
-            {
-                vlc.VlcLibDirectory = new DirectoryInfo(GetVlcLibLocation());
-                vlc.VlcMediaplayerOptions = GetVlcOptions();
-                vlc.EndInit();
-                vlc.initEndNeeded = false;
-                form.AddVlc(vlc);
-
-            }
-
-            vlc.SetMedia(path);
-            //(new System.Threading.Thread(delegate () { uu(); })).Start();
-
-            vlc.RegisterEvents();*/
-
-        }
-
-        private void StartPlay()
-        {
-            UISync.on = true;
-            m_player.WindowHandle = form.panelVlc.Handle;
-
-            m_player.Play();
         }
 
         /*

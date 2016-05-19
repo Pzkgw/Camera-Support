@@ -26,6 +26,7 @@ namespace GIShowCam.Info
         {
             imgCount = 0;
             viewSettings.aspectRatioMode = AspectRatioMode.Mode2;
+            viewSettings.aspectRatioDefault = AspectRatioMode.Default;
 
             int i = 0;
             for (; i < act.Length; i++) act[i] = false;            

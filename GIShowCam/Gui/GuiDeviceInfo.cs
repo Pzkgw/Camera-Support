@@ -54,10 +54,10 @@ namespace GIShowCam.Gui
         }
 
         #region real time Device Info
-        
-        
-            //UISync.Execute(() => trackBar1.Value = (int)(e.NewPosition * 100));
-        
+
+
+        //UISync.Execute(() => trackBar1.Value = (int)(e.NewPosition * 100));
+
 
         /// <summary>
         /// Event handler for "VlcControl.PositionChanged" event. 
@@ -69,44 +69,43 @@ namespace GIShowCam.Gui
         {
             //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
             //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
-            if (m_media != null)
+            if (m_media != null && m_player != null && m_player.IsPlaying)
             {
-                if (m_player.IsPlaying)
+
+                UISync.Execute(() => TextUpdate(form.lblVlcNotify,
+                        "Timp de functionare: " + m_player.Time / 60000 + " minute si " +
+                        (m_player.Time / 1000) % 60 + " secunde " +
+                        ", DecodedVideo: " + m_media.Statistics.DecodedVideo +
+                        ", InputBitrate: " + m_media.Statistics.InputBitrate +
+                        ", DemuxBitrate: " + m_media.Statistics.DemuxBitrate +
+                        ", DisplayedPictures: " + m_media.Statistics.DisplayedPictures +
+                        ", LostPictures: " + m_media.Statistics.LostPictures
+                        , false, false, false));
+
+                //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
+
+                if (!info.cam.data.IsVideoComplete &&
+                    info.cam.data.imgCount < m_media.Statistics.DisplayedPictures)
                 {
-                    UISync.Execute(() => TextUpdate(form.lblVlcNotify,
-                            "Timp de functionare: " + m_player.Time / 60000 + " minute si " +
-                            (m_player.Time / 1000) % 60 + " secunde " +
-                            ", DecodedVideo: " + m_media.Statistics.DecodedVideo +
-                            ", InputBitrate: " + m_media.Statistics.InputBitrate +
-                            ", DemuxBitrate: " + m_media.Statistics.DemuxBitrate +
-                            ", DisplayedPictures: " + m_media.Statistics.DisplayedPictures +
-                            ", LostPictures: " + m_media.Statistics.LostPictures
-                            , false, false, false));
-
-                    //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
-
-                    if (!info.cam.data.IsVideoComplete &&
-                        info.cam.data.imgCount < m_media.Statistics.DisplayedPictures)
-                    {
-                        info.cam.data.imgCount = m_media.Statistics.DisplayedPictures;
-                        info.cam.data.IsVideoComplete = true;
-                        SetBtnsVisibilityOnPlay(true);
-
-                    }
-                    //form.Log("Poze = " + media.Statistics.DisplayedPictures);
-                    UISync.Execute(()=>UpdateEventsLabel());
+                    info.cam.data.imgCount = m_media.Statistics.DisplayedPictures;
+                    info.cam.data.IsVideoComplete = true;
+                    SetBtnsVisibilityOnPlay(true);
 
                 }
-                
+                //form.Log("Poze = " + media.Statistics.DisplayedPictures);
+                UISync.Execute(() => UpdateEventsLabel());
+
+
+
             }
         }
 
         private void UpdateEventsLabel()
         {
-            if(lblEventsShowCount > 0)
+            if (lblEventsShowCount > 0)
             {
                 --lblEventsShowCount;
-                if(lblEventsShowCount == 0)
+                if (lblEventsShowCount == 0)
                 {
                     form.lblEvent.Text = null;
                 }

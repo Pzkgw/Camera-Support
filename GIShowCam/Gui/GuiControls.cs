@@ -1,5 +1,6 @@
 ﻿using Declarations;
 using GIShowCam.Info;
+using GIShowCam.Utils;
 using System;
 using System.Windows.Forms;
 
@@ -55,8 +56,10 @@ namespace GIShowCam.Gui
 
             lblEventsShowCount = 16;
             form.lblEvent.Text = "Event: aspect ratio change from " + ((aspectDefault) ?
-                (setari.aspectRatioDefault.ToString() + " to " + setari.aspectRatioMode.ToString()) :
-                (setari.aspectRatioMode.ToString() + " to " + setari.aspectRatioDefault.ToString()));
+                (VlcUtils.AspectRatioToString(setari.aspectRatioDefault) + " to " +
+                VlcUtils.AspectRatioToString(setari.aspectRatioMode)) :
+                (VlcUtils.AspectRatioToString(setari.aspectRatioMode) + " to " +
+                VlcUtils.AspectRatioToString(setari.aspectRatioDefault)));
         }
 
         private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)

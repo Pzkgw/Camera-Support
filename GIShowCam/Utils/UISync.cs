@@ -19,12 +19,7 @@ namespace GIShowCam.Utils
 
         internal static void Execute(Action action)//, params object[] args
         {
-            try
-            {
-                if (on) Sync.BeginInvoke(action, null);
-            }
-            catch { }
-
+            if (on) Sync.BeginInvoke(action, null);
         }
     }
 }

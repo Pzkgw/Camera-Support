@@ -65,16 +65,6 @@ namespace GIShowCam.Gui
             //dt.Hour, dt.Minute, dt.Second, dt.Millisecond) + sir + Environment.NewLine);
         }
 
-        internal void RestartConnection()
-        {
-            _logTimeLast = DateTime.MinValue;
-
-
-            info.cam.data.viewSettings.aspectRatioDefault = Declarations.AspectRatioMode.Default;
-            m_player.AspectRatio = Declarations.AspectRatioMode.Default;
-            form.lblEvent.Text = info.cam.data.viewSettings.aspectRatioMode.ToString();
-        }
-
 
     }
 }

@@ -63,9 +63,9 @@
             this.txtLVWarnings = new System.Windows.Forms.TextBox();
             this.tabLogConnection = new System.Windows.Forms.TabPage();
             this.tabLowCtrl = new System.Windows.Forms.TabPage();
+            this.lblTxtRatio = new System.Windows.Forms.Label();
             this.btnRatio = new System.Windows.Forms.Button();
             this.lblEvent = new System.Windows.Forms.Label();
-            this.lblTxtRatio = new System.Windows.Forms.Label();
             this.groupBoxDev.SuspendLayout();
             this.groupBoxVlcFactors.SuspendLayout();
             this.groupBoxBtns.SuspendLayout();
@@ -229,7 +229,7 @@
             this.groupBoxVlcFactors.Controls.Add(this.textBoxHeightF);
             this.groupBoxVlcFactors.Controls.Add(this.textBoxWidthF);
             this.groupBoxVlcFactors.Enabled = false;
-            this.groupBoxVlcFactors.Location = new System.Drawing.Point(95, 224);
+            this.groupBoxVlcFactors.Location = new System.Drawing.Point(69, 232);
             this.groupBoxVlcFactors.Name = "groupBoxVlcFactors";
             this.groupBoxVlcFactors.Size = new System.Drawing.Size(318, 53);
             this.groupBoxVlcFactors.TabIndex = 7;
@@ -300,7 +300,7 @@
             this.groupBoxBtns.Controls.Add(this.btnRecord);
             this.groupBoxBtns.Location = new System.Drawing.Point(549, 9);
             this.groupBoxBtns.Name = "groupBoxBtns";
-            this.groupBoxBtns.Size = new System.Drawing.Size(660, 251);
+            this.groupBoxBtns.Size = new System.Drawing.Size(660, 181);
             this.groupBoxBtns.TabIndex = 8;
             this.groupBoxBtns.TabStop = false;
             // 
@@ -308,7 +308,7 @@
             // 
             this.chkFullVid.AutoSize = true;
             this.chkFullVid.Enabled = false;
-            this.chkFullVid.Location = new System.Drawing.Point(552, 198);
+            this.chkFullVid.Location = new System.Drawing.Point(18, 69);
             this.chkFullVid.Name = "chkFullVid";
             this.chkFullVid.Size = new System.Drawing.Size(84, 19);
             this.chkFullVid.TabIndex = 8;
@@ -321,7 +321,7 @@
             this.chkPlayLoop.Checked = true;
             this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPlayLoop.Enabled = false;
-            this.chkPlayLoop.Location = new System.Drawing.Point(552, 162);
+            this.chkPlayLoop.Location = new System.Drawing.Point(18, 32);
             this.chkPlayLoop.Name = "chkPlayLoop";
             this.chkPlayLoop.Size = new System.Drawing.Size(54, 19);
             this.chkPlayLoop.TabIndex = 7;
@@ -469,9 +469,18 @@
             this.tabLowCtrl.TabIndex = 0;
             this.tabLowCtrl.Text = " Main Control Point ";
             // 
+            // lblTxtRatio
+            // 
+            this.lblTxtRatio.AutoSize = true;
+            this.lblTxtRatio.Location = new System.Drawing.Point(961, 265);
+            this.lblTxtRatio.Name = "lblTxtRatio";
+            this.lblTxtRatio.Size = new System.Drawing.Size(130, 15);
+            this.lblTxtRatio.TabIndex = 10;
+            this.lblTxtRatio.Text = "Change aspect ratio to:";
+            // 
             // btnRatio
             // 
-            this.btnRatio.Location = new System.Drawing.Point(184, 201);
+            this.btnRatio.Location = new System.Drawing.Point(1100, 260);
             this.btnRatio.Name = "btnRatio";
             this.btnRatio.Size = new System.Drawing.Size(77, 25);
             this.btnRatio.TabIndex = 9;
@@ -481,19 +490,10 @@
             // 
             this.lblEvent.AutoSize = true;
             this.lblEvent.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblEvent.Location = new System.Drawing.Point(850, 857);
+            this.lblEvent.Location = new System.Drawing.Point(940, 857);
             this.lblEvent.Name = "lblEvent";
             this.lblEvent.Size = new System.Drawing.Size(0, 15);
             this.lblEvent.TabIndex = 10;
-            // 
-            // lblTxtRatio
-            // 
-            this.lblTxtRatio.AutoSize = true;
-            this.lblTxtRatio.Location = new System.Drawing.Point(48, 206);
-            this.lblTxtRatio.Name = "lblTxtRatio";
-            this.lblTxtRatio.Size = new System.Drawing.Size(130, 15);
-            this.lblTxtRatio.TabIndex = 10;
-            this.lblTxtRatio.Text = "Change aspect ratio to:";
             // 
             // FormMain
             // 

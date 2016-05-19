@@ -179,7 +179,7 @@ namespace Implementation
         {
             T media = ObjectFactory.Build<T>(m_hMediaLib);
             media.Input = input;
-            media.AddOptions(options);
+            //media.AddOptions(options); // just optiuni-vlc, nu si media --> null params
 
             return media;
         }

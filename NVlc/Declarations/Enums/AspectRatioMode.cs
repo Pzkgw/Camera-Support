@@ -59,6 +59,6 @@ namespace Declarations
       /// 5:4
       /// </summary>
       [Description("5:4")]
-      Mode8,
+      Mode8
    }
 }

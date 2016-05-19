@@ -19,17 +19,6 @@ namespace GIShowCam.Gui
         IDiskPlayer m_player;
         IMedia m_media;
 
-        //private Vlc.DotNet.Core.Interops.Signatures.MediaStates oldState;
-
-        private void vlcInit(string[] userOptions)
-        {
-            //new string[] { "--aspect-ratio=4:3", "--sout-transcode-width=360", "--sout-transcode-height=240" }
-            m_factory = new MediaPlayerFactory(userOptions, SessionInfo.vlcDir
-                , SessionInfo.logger, true);
-            m_player = m_factory.CreatePlayer<IDiskPlayer>();
-            //m_player.AspectRatio = AspectRatioMode.Mode2;
-        }
-
         /// <summary>
         /// vlc events
         /// </summary>
@@ -215,7 +204,7 @@ namespace GIShowCam.Gui
                 SessionInfo.vlcOptions = new string[] { //--snapshot-format=jpg
                 "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
                 ,"--no-fullscreen" //
-                //,"--one-instance"  //  Allow only one running instance (default disabled)
+                ,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on starting to play media.
                 //,"--rtsp-tcp"
@@ -271,8 +260,8 @@ namespace GIShowCam.Gui
         }
     
 
-        private string[] GetVlcMediaOptions()
-        {
+        //private string[] GetVlcMediaOptions()
+        //{
             /*
             if (SessionInfo.vlcMediaOptions == null)
             {
@@ -284,8 +273,8 @@ namespace GIShowCam.Gui
 
             return SessionInfo.vlcMediaOptions;*/
 
-            return null;
-        }
+           // return null;
+        //}
 
 
         private string GetVlcLibLocation()
@@ -312,45 +301,13 @@ namespace GIShowCam.Gui
             return "c:\\Program Files (x86)\\VideoLAN\\VLC";//aP;
         }
 
-
-        /*
-        private static void SetDirectory()
-        {
-            // Set libvlc.dll and libvlccore.dll directory path
-            VlcContext.LibVlcDllsPath = CommonStrings.LIBVLC_DLLS_PATH_DEFAULT_VALUE_AMD64;
-
-            // Set the vlc plugins directory path
-            VlcContext.LibVlcPluginsPath = CommonStrings.PLUGINS_PATH_DEFAULT_VALUE_AMD64;
-
-            // Ignore the VLC configuration file
-            opt.IgnoreConfig = true;
-        }
-
-
-        private static void EnableLogConsole()
-        {
-            // Enable file based logging
-            opt.LogOptions.LogInFile = true;
-
-            // Shows the VLC log console (in addition to the applications window)
-            opt.LogOptions.ShowLoggerConsole = true;
-
-            // Set the log level for the VLC instance
-            opt.LogOptions.Verbosity = VlcLogVerbosities.Debug;
-        }*/
-
-
         #region CleanUp
 
         internal void CleanUp()
         {
             CLogger.on = false;
-            UISync.on = false;// avoid event send
 
             ToggleRunningMedia(false);
-
-            m_player.Dispose();
-            m_player = null;
 
             m_factory.Dispose();            
             m_factory = null;

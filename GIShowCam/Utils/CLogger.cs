@@ -66,17 +66,20 @@ namespace GIShowCam
 
         void ILogger.Error(string error)
         {
-            UISync.Execute(() => logView[1].Text += GestLogString(error));
+            if (on)
+                UISync.Execute(() => logView[1].Text += GestLogString(error));
         }
 
         void ILogger.Info(string info)
         {
-            UISync.Execute(() => logView[2].Text += GestLogString(info));
+            if (on)
+                UISync.Execute(() => logView[2].Text += GestLogString(info));
         }
 
         void ILogger.Warning(string warn)
         {
-            UISync.Execute(() => logView[3].Text += GestLogString(warn));
+            if (on)
+                UISync.Execute(() => logView[3].Text += GestLogString(warn));
         }
 
     }
