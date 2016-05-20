@@ -63,11 +63,11 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\GuiBase.cs" />
-    <Compile Include="Gui\GuiConnect.cs" />
-    <Compile Include="Gui\GuiControls.cs" />
-    <Compile Include="Gui\GuiDeviceInfo.cs" />
-    <Compile Include="Gui\GuiEvents.cs" />
-    <Compile Include="Gui\GuiRecord.cs" />
+    <Compile Include="Gui\Connect.cs" />
+    <Compile Include="Gui\Controls.cs" />
+    <Compile Include="Gui\DeviceInfo.cs" />
+    <Compile Include="Gui\Events.cs" />
+    <Compile Include="Gui\Record.cs" />
     <Compile Include="Gui\Vlc.cs" />
     <Compile Include="Info\Device.cs" />
     <Compile Include="Info\DeviceInfo.cs" />

@@ -110,7 +110,6 @@ namespace GIShowCam.Gui
         }
 
 
-
         /*
         void VlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
@@ -153,6 +152,20 @@ namespace GIShowCam.Gui
             SetBtnsVisibilityOnPlay((m_player == null) ? false : m_player.IsPlaying);
         }
 
+        private void SetBtnsVisibilityOnPlay(bool on)
+        {
+
+            if (btnsShowOnPlay != on)
+            {
+                if (on || (!on && !info.cam.data.IsPlaying))
+                    UISync.Execute(() => form.btnPlay.Enabled = on);
+                UISync.Execute(() => form.btnSnapshot.Enabled = on);
+                UISync.Execute(() => form.btnRecord.Enabled = on);
+            }
+
+            btnsShowOnPlay = on;
+        }
+
         #region Detalii pt connection textboxes
 
         private void TxtDevPass_TextChanged(object sender, EventArgs e)
@@ -168,6 +181,15 @@ namespace GIShowCam.Gui
         private void TxtDevAddress_TextChanged(object sender, EventArgs e)
         {
             info.host = form.comboAddress.Text;
+        }
+
+        internal void DeviceTextBoxesUpdate(bool updateCamInfo)
+        {
+            if (updateCamInfo) info.NewCameraInfo();
+
+            form.txtDevUser.Text = info.user;
+            form.txtDevPass.Text = info.password;
+            form.comboAddress.Text = info.host;
         }
 
         #endregion Detalii pt connection textboxes

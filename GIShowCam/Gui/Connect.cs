@@ -1,17 +1,11 @@
-﻿
-using Declarations;
-using Declarations.Events;
-using Declarations.Media;
+﻿using Declarations.Media;
 using Declarations.Players;
 using GIShowCam.Info;
 using GIShowCam.Utils;
 using Implementation;
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
 
@@ -23,10 +17,53 @@ namespace GIShowCam.Gui
         private Point _vlcTop;
         private Size _vlcSize;
 
+
+        private void ToggleRunningMedia(bool on)
+        {
+            if (on)
+            {
+                m_media = m_factory.CreateMedia<IMedia>(getPath());
+                m_player = m_factory.CreatePlayer<IDiskPlayer>();
+
+                m_player.Open(m_media);
+                m_media.Parse(false);
+
+                info.NewCameraInfo();
+                info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
+
+                RegisterPlayerEvents(true);
+                RegisterMediaEvents(true);
+
+                m_player.WindowHandle = form.panelVlc.Handle;
+
+                UISync.on = true;
+
+                m_player.Play();
+            }
+
+            else
+
+            if (m_media != null)
+            {
+                m_player.Stop();
+                UISync.on = false;// fara notify event send
+
+                RegisterPlayerEvents(false);
+                RegisterMediaEvents(false);
+
+                m_media.Dispose();
+                m_media = null;
+
+                m_player.Dispose();
+                m_player = null;
+
+                //m_factory.VideoLanManager.DeleteMedia("m_media");
+            }
+        }
+
         internal void VideoInit(bool allowResize, bool fullView)
         {
-            bool startInit = m_factory == null;
-            if (startInit)
+            if (m_factory == null)
             {
                 m_factory = new MediaPlayerFactory(GetVlcOptions(),
                     SessionInfo.vlcDir, SessionInfo.logger, true);
@@ -89,47 +126,23 @@ namespace GIShowCam.Gui
 
         }
 
-        private void ToggleRunningMedia(bool on)
+        /// <summary>
+        /// Dupa media-stop sesizat de media\events\MediaStateChange(event extern),
+        /// urmeaza un pointer spre functia VlcReinit()
+        /// </summary>
+        /// <returns></returns>
+        private void VlcReinit()
         {
-            if (on)
-            {
-                m_media = m_factory.CreateMedia<IMedia>(getPath());
-                m_player = m_factory.CreatePlayer<IDiskPlayer>();
+            ToggleRunningMedia(false);
+            ToggleRunningMedia(true);
 
-                m_player.Open(m_media);
-                m_media.Parse(false);
+            GC.Collect();
 
-                info.NewCameraInfo(); // II'nd comboBox change select
-                info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
+            if (info.cam.data.IsError)
+                VlcReinit();
 
-                RegisterPlayerEvents(true);
-                RegisterMediaEvents(true);
+            //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
 
-                UISync.on = true;
-                //UISync.Execute(()=> m_player.WindowHandle = form.panelVlc.Handle);
-                m_player.WindowHandle = form.panelVlc.Handle;
-
-                m_player.Play();
-            }
-
-            else
-
-            if (m_media != null)
-            {
-                m_player.Stop();
-                UISync.on = false;// avoid event send
-
-                RegisterPlayerEvents(false);
-                RegisterMediaEvents(false);
-
-                m_media.Dispose();
-                m_media = null;
-
-                m_player.Dispose();
-                m_player = null;
-
-                //m_factory.VideoLanManager.DeleteMedia("m_media");
-            }
         }
 
         private string getPath()
@@ -181,21 +194,7 @@ namespace GIShowCam.Gui
         }
 
 
-        internal void DeviceTextBoxesUpdate(bool updateCamInfo)
-        {
-            if (updateCamInfo) info.NewCameraInfo();
-
-            form.txtDevUser.Text = info.user;
-            form.txtDevPass.Text = info.password;
-            form.comboAddress.Text = info.host;
-        }
-
-
-
-
     }
-
-
 
 
 }
