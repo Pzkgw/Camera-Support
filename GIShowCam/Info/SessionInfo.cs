@@ -12,6 +12,8 @@ namespace GIShowCam.Info
         internal static string[] vlcOptions;//, vlcMediaOptions
         internal static string snapshotDir = "C:\\";
 
+        internal static int reinitCount = 0;
+
         internal bool videoLoop = true;
         internal int devID = 4;
 

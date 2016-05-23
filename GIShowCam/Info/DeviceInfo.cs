@@ -84,7 +84,7 @@ namespace GIShowCam.Info
             set
             {
                 act[3] = value;
-                if (value) OnPropertyChanged("Playing: Margareta spune ca \"Filmul ruleaza\" ");
+                if (value) OnPropertyChanged("Playing: \"Filmul ruleaza\" ");
 
             }
             get

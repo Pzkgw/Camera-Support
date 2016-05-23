@@ -3,6 +3,7 @@ using Declarations.Events;
 using GIShowCam.Info;
 using GIShowCam.Utils;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace GIShowCam.Gui
@@ -16,17 +17,17 @@ namespace GIShowCam.Gui
         /// Add\remove events for the media player
         /// </summary>
         /// <returns></returns>
-        internal void RegisterPlayerEvents(bool on)
+        private void RegisterPlayerEvents(bool on)
         {
             if (on)
             {
-                m_player.Events.MediaChanged += new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
-                m_player.Events.PlayerPositionChanged += new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
+                m_player.Events.MediaChanged += Events_MediaChanged;
+                m_player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
             }
             else
             {
-                m_player.Events.MediaChanged -= new EventHandler<MediaPlayerMediaChanged>(Events_MediaChanged);
-                m_player.Events.PlayerPositionChanged -= new EventHandler<MediaPlayerPositionChanged>(Events_PlayerPositionChanged);
+                m_player.Events.MediaChanged -= Events_MediaChanged;
+                m_player.Events.PlayerPositionChanged -= Events_PlayerPositionChanged;
             }
         }
 
@@ -40,13 +41,13 @@ namespace GIShowCam.Gui
             {
                 //m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
                 //m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
-                m_media.Events.StateChanged += new EventHandler<MediaStateChange>(Events_StateChanged);
+                m_media.Events.StateChanged += Events_StateChanged;
             }
             else
             {
                 //m_media.Events.DurationChanged -= new EventHandler<MediaDurationChange>(Events_DurationChanged);
                 //m_media.Events.ParsedChanged -= new EventHandler<MediaParseChange>(Events_ParsedChanged);
-                m_media.Events.StateChanged -= new EventHandler<MediaStateChange>(Events_StateChanged);
+                m_media.Events.StateChanged -= Events_StateChanged;
             }
         }
 
@@ -74,21 +75,12 @@ namespace GIShowCam.Gui
                     info.cam.data.IsStopped = true;
                     break;
                 case MediaState.Ended:
-                    info.cam.data.IsEnded = true;
-
-                    UISync.Execute(() => TextUpdate(form.lblVlcNotify,
-                        " Vlc stopped ... ", false, false, false));
-
-                    UISync.Execute(() => VlcReinit());
-
+                    UISync.Execute(() => StartVlcReinit(true));
                     break;
                 case MediaState.Error:
-                    info.cam.data.IsError = true;
-
-                    UISync.Execute(() => VlcReinit());
-
+                    UISync.Execute(() => StartVlcReinit(false));
                     break;
-                default:
+                case MediaState.NothingSpecial:
                     break;
             }
 
@@ -96,7 +88,52 @@ namespace GIShowCam.Gui
                 SessionInfo.playing = m_player.IsPlaying;
         }
 
+        /// <summary>
+        /// Dupa media-stop sesizat de media\events\MediaStateChange(event extern),
+        /// urmeaza un pointer spre functia VlcReinit()
+        /// </summary>
+        /// <returns></returns>
+        private void StartVlcReinit(bool byEnd)
+        {
+            if (SessionInfo.reinitCount != 0) return; // nici un alt thread
 
+            if (byEnd)
+            {
+                info.cam.data.IsEnded = true;
+
+                UISync.Execute(() => TextUpdate(form.lblVlcNotify,
+                    " Vlc stopped and re-initialization started ... ", false, false, false));
+            }
+            else
+            {
+                info.cam.data.IsError = true;
+            }
+
+            VlcReinit();
+        }
+
+        private void VlcReinit()
+        {
+            while (true)
+            {
+                ToggleRunningMedia(false);
+                Thread.Sleep(4);
+                GC.Collect();
+                Thread.Sleep(4);
+                ToggleRunningMedia(true);
+
+                if (info.cam.data.IsError)
+                {
+                    ++SessionInfo.reinitCount;
+                    if (SessionInfo.reinitCount < 4) continue;
+                }
+
+                //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
+
+                SessionInfo.reinitCount = 0;
+                break;
+            }
+        }
 
         void Events_MediaChanged(object sender, MediaPlayerMediaChanged e)
         {
@@ -156,7 +193,7 @@ namespace GIShowCam.Gui
                     s = s + Environment.NewLine + sidTxt + ipTxt;
                 }
 
-                if (ctrl is TextBoxBase) (ctrl as TextBoxBase).AppendText(s);
+                if (ctrl is TextBoxBase) ((TextBoxBase) ctrl).AppendText(s);
                 else
                     ctrl.Text += s;
             }

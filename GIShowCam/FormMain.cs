@@ -37,10 +37,20 @@ namespace GIShowCam
 
             mainB.DeviceTextBoxesUpdate(false);
             mainB.AddFormEvents();
-            mainB.RegisterPlayerEvents(true);
 
-
+            panelVlc.SendToBack();
             FormClosing += FormMain_FormClosing;
+            
+
+            MouseDown += FormMain_MouseDown;
+        }
+
+        private void FormMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(panelVlc.Bounds.Contains(e.Location))
+            {
+                MessageBox.Show("Click in Vlc panel !");
+            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)

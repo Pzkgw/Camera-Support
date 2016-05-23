@@ -20,6 +20,8 @@ namespace GIShowCam.Gui
 
         private void ToggleRunningMedia(bool on)
         {
+            SessionInfo.playing = false;
+
             if (on)
             {
                 m_media = m_factory.CreateMedia<IMedia>(getPath());
@@ -63,6 +65,8 @@ namespace GIShowCam.Gui
 
         internal void VideoInit(bool allowResize, bool fullView)
         {
+            SessionInfo.playing = false;
+
             if (m_factory == null)
             {
                 m_factory = new MediaPlayerFactory(GetVlcOptions(),
@@ -71,7 +75,7 @@ namespace GIShowCam.Gui
 
             ToggleRunningMedia(false);
 
-            SessionInfo.playing = false;
+            
             //form.isOn = false;
             /*
             if (vlc == null)
@@ -126,24 +130,7 @@ namespace GIShowCam.Gui
 
         }
 
-        /// <summary>
-        /// Dupa media-stop sesizat de media\events\MediaStateChange(event extern),
-        /// urmeaza un pointer spre functia VlcReinit()
-        /// </summary>
-        /// <returns></returns>
-        private void VlcReinit()
-        {
-            ToggleRunningMedia(false);
-            ToggleRunningMedia(true);
 
-            GC.Collect();
-
-            if (info.cam.data.IsError)
-                VlcReinit();
-
-            //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
-
-        }
 
         private string getPath()
         {
