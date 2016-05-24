@@ -1,7 +1,5 @@
 ﻿using GIShowCam.Info;
 using System.Linq;
-using System;
-using Declarations.Events;
 using Declarations.Players;
 using Declarations;
 using Declarations.Media;
@@ -12,10 +10,9 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-
-        IMediaPlayerFactory m_factory;
-        IDiskPlayer m_player;
-        IMedia m_media;
+        private IMediaPlayerFactory _mFactory;
+        private IDiskPlayer _mPlayer;
+        private IMedia _mMedia;
 
         /*
         internal static string[] GetVlcOptions()
@@ -25,9 +22,9 @@ namespace GIShowCam.Gui
 
         internal static string[] GetVlcOptions()
         {
-            if (SessionInfo.vlcOptions == null)
+            if (SessionInfo.VlcOptions == null)
             {
-                SessionInfo.vlcOptions = new string[] { //--snapshot-format=jpg
+                SessionInfo.VlcOptions = new[] { //--snapshot-format=jpg
                 "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
                 ,"--no-fullscreen" //
                 ,"--one-instance"  //  Allow only one running instance (default disabled)
@@ -46,18 +43,19 @@ namespace GIShowCam.Gui
                 ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
                 ,"--no-playlist-autostart" // playlist auto start (default enabled)
-                //,"--no-snapshot-preview"
-                ,SessionInfo.debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages  
-                ,SessionInfo.debug?"--extraintf=logger":null
-                ,SessionInfo.audio?"--no-sout-audio":null //        ^^^  Enable audio stream output (default enabled)
-                ,SessionInfo.audio?"--aout=none":null //  main NO audio output ( optional mai e si "--no-audio" )
+                //,"--no-stats" //  NOT, folosita pt SendImagesCount  Collect statistics (default enabled)
+                ,"--no-snapshot-preview"
+                ,SessionInfo.Debug?"--verbose=2":"--quiet" // quiet- deactivates all console messages  
+                ,SessionInfo.Debug?"--extraintf=logger":null
+                ,SessionInfo.Audio?"--no-sout-audio":null //        ^^^  Enable audio stream output (default enabled)
+                ,SessionInfo.Audio?"--aout=none":null //  main NO audio output ( optional mai e si "--no-audio" )
                 //,"--no-audio" //             ^^^ ERR error la init cateodata when enabled
             }.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
             }
 
 
-            return SessionInfo.vlcOptions;
+            return SessionInfo.VlcOptions;
 
             //--- Nvlc Init"-I", "dumy", "--ignore-config", "--no-osd",  "--disable-screensaver", "--plugin-path=./plugins"
 
@@ -77,8 +75,7 @@ namespace GIShowCam.Gui
 
             //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
             //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
-            //,"--no-stats" //  NOT, folosita pt SendImagesCount  Collect statistics (default enabled)
-
+            
             //,"--vout-filter=crop"
             //,"--grayscale"
             //,"--aspect-ratio=16:10"
@@ -103,40 +100,40 @@ namespace GIShowCam.Gui
         //}
 
 
-        private string GetVlcLibLocation()
-        {
-            /*
-            string aP;
-            if (Environment.Is64BitOperatingSystem)
-                aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN\\VLC");
-            else
-                aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN\\VLC");
-                */
-            /*else if (!File.Exists(Path.Combine(aP, "libvlc.dll"))
-                           {
-                           Using fbdDialog As New FolderBrowserDialog()
-                           fbdDialog.Description = "Select VLC Path"
-                           fbdDialog.SelectedPath = Path.Combine(aP, "VideoLAN\VLC")
+        /*      private string GetVlcLibLocation()
+              {
 
-                           If fbdDialog.ShowDialog() = DialogResult.OK Then
-                           e.VlcLibDirectory = New DirectoryInfo(fbdDialog.SelectedPath)
-                       }
+                  string aP;
+                  if (Environment.Is64BitOperatingSystem)
+                      aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN\\VLC");
+                  else
+                      aP = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN\\VLC");
+                      */
+        /*else if (!File.Exists(Path.Combine(aP, "libvlc.dll"))
+                       {
+                       Using fbdDialog As New FolderBrowserDialog()
+                       fbdDialog.Description = "Select VLC Path"
+                       fbdDialog.SelectedPath = Path.Combine(aP, "VideoLAN\VLC")
 
-            e.VlcLibDirectory = new DirectoryInfo(aP);*/
+                       If fbdDialog.ShowDialog() = DialogResult.OK Then
+                       e.VlcLibDirectory = New DirectoryInfo(fbdDialog.SelectedPath)
+                   }
 
-            return "c:\\Program Files (x86)\\VideoLAN\\VLC";//aP;
-        }
+        e.VlcLibDirectory = new DirectoryInfo(aP);
+
+        return "c:\\Program Files (x86)\\VideoLAN\\VLC";//aP;
+    }*/
 
         #region CleanUp
 
         internal void CleanUp()
         {
-            CLogger.on = false;
+            CLogger.On = false;
 
             ToggleRunningMedia(false);
 
-            m_factory.Dispose();
-            m_factory = null;
+            _mFactory.Dispose();
+            _mFactory = null;
         }
 
         #endregion CleanUp

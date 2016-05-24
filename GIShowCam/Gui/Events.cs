@@ -3,7 +3,7 @@ using Declarations.Events;
 using GIShowCam.Info;
 using GIShowCam.Utils;
 using System;
-using System.Threading;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace GIShowCam.Gui
@@ -21,14 +21,27 @@ namespace GIShowCam.Gui
         {
             if (on)
             {
-                m_player.Events.MediaChanged += Events_MediaChanged;
-                m_player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
+                _mPlayer.Events.MediaChanged += Events_MediaChanged;
+                _mPlayer.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
+                _mPlayer.Events.PlayerSnapshotTaken += Events_PlayerSnapshotTaken;
             }
             else
             {
-                m_player.Events.MediaChanged -= Events_MediaChanged;
-                m_player.Events.PlayerPositionChanged -= Events_PlayerPositionChanged;
+                _mPlayer.Events.MediaChanged -= Events_MediaChanged;
+                _mPlayer.Events.PlayerPositionChanged -= Events_PlayerPositionChanged;
+                _mPlayer.Events.PlayerSnapshotTaken -= Events_PlayerSnapshotTaken;
             }
+        }
+
+        private void Events_PlayerSnapshotTaken(object sender, MediaPlayerSnapshotTaken e)
+        {
+            UiSync.Execute(() => LogEvent(@"Snapshot salvat in " + SessionInfo.SnapshotDir + e.FileName));
+        }
+
+        private void LogEvent(string s)
+        {
+            _form.lblEvent.Text = s;
+            _lblEventsShowCount = 8;
         }
 
         /// <summary>
@@ -41,13 +54,13 @@ namespace GIShowCam.Gui
             {
                 //m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
                 //m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
-                m_media.Events.StateChanged += Events_StateChanged;
+                _mMedia.Events.StateChanged += Events_StateChanged;
             }
             else
             {
                 //m_media.Events.DurationChanged -= new EventHandler<MediaDurationChange>(Events_DurationChanged);
                 //m_media.Events.ParsedChanged -= new EventHandler<MediaParseChange>(Events_ParsedChanged);
-                m_media.Events.StateChanged -= Events_StateChanged;
+                _mMedia.Events.StateChanged -= Events_StateChanged;
             }
         }
 
@@ -56,88 +69,41 @@ namespace GIShowCam.Gui
             switch (e.NewState)
             {
                 case MediaState.Opening:
-                    info.cam.data.IsOpening = true;
+                    _info.Cam.Data.IsOpening = true;
                     break;
                 case MediaState.Buffering:
-                    info.cam.data.IsBuffering = true;
+                    _info.Cam.Data.IsBuffering = true;
                     break;
                 case MediaState.Playing:
-                    info.cam.data.IsPlaying = true;
+                    _info.Cam.Data.IsPlaying = true;
                     break;
                 case MediaState.Paused:
-                    info.cam.data.IsPaused = true;
+                    _info.Cam.Data.IsPaused = true;
                     break;
                 case MediaState.Stopped:
-                    if (!info.cam.data.IsStopped)
+                    if (!_info.Cam.Data.IsStopped)
                     {
-                        SetBtnsVisibilityOnPlay(false);
+                        UiSync.Execute(() => SetBtnsVisibilityOnPlay(false));
                     }
-                    info.cam.data.IsStopped = true;
+                    _info.Cam.Data.IsStopped = true;
                     break;
                 case MediaState.Ended:
-                    UISync.Execute(() => StartVlcReinit(true));
+                    UiSync.Execute(() => StartVlcReinit(true));
                     break;
                 case MediaState.Error:
-                    UISync.Execute(() => StartVlcReinit(false));
+                    UiSync.Execute(() => StartVlcReinit(false));
                     break;
                 case MediaState.NothingSpecial:
                     break;
             }
 
-            if (m_player != null)
-                SessionInfo.playing = m_player.IsPlaying;
+            if (_mPlayer != null)
+                SessionInfo.Playing = _mPlayer.IsPlaying;
         }
 
-        /// <summary>
-        /// Dupa media-stop sesizat de media\events\MediaStateChange(event extern),
-        /// urmeaza un pointer spre functia VlcReinit()
-        /// </summary>
-        /// <returns></returns>
-        private void StartVlcReinit(bool byEnd)
+        private void Events_MediaChanged(object sender, MediaPlayerMediaChanged e)
         {
-            if (SessionInfo.reinitCount != 0) return; // nici un alt thread
-
-            if (byEnd)
-            {
-                info.cam.data.IsEnded = true;
-
-                UISync.Execute(() => TextUpdate(form.lblVlcNotify,
-                    " Vlc stopped and re-initialization started ... ", false, false, false));
-            }
-            else
-            {
-                info.cam.data.IsError = true;
-            }
-
-            VlcReinit();
-        }
-
-        private void VlcReinit()
-        {
-            while (true)
-            {
-                ToggleRunningMedia(false);
-                Thread.Sleep(4);
-                GC.Collect();
-                Thread.Sleep(4);
-                ToggleRunningMedia(true);
-
-                if (info.cam.data.IsError)
-                {
-                    ++SessionInfo.reinitCount;
-                    if (SessionInfo.reinitCount < 4) continue;
-                }
-
-                //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
-
-                SessionInfo.reinitCount = 0;
-                break;
-            }
-        }
-
-        void Events_MediaChanged(object sender, MediaPlayerMediaChanged e)
-        {
-            info.cam.data.MediaChanged = true;
+            _info.Cam.Data.MediaChanged = true;
         }
 
         private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -155,21 +121,18 @@ namespace GIShowCam.Gui
             {
                 _logTimeLast = DateTime.Now;
 
-                UISync.Execute(() =>
-                TextUpdate(form.txtDev,
+                UiSync.Execute(() =>
+                TextUpdate(_form.txtDev,
                      Environment.NewLine +
-                     string.Format("{0:00}:{1:00}:{2:00}.{3:000}          ---    Conexiune pornita   ---",
-                    _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond)
+                     $"{_logTimeLast.Hour:00}:{_logTimeLast.Minute:00}:{_logTimeLast.Second:00}.{_logTimeLast.Millisecond:000}          ---    Conexiune pornita   ---"
                     , true, true, false));
             }
 
             _logTimeNow = DateTime.Now;
-            UISync.Execute(() =>
-            TextUpdate(form.txtDev,
-                string.Format("{0:00}:{1:00}:{2:00}.{3:000} {4} a inceput in {5} ms {6}",
-                    _logTimeLast.Hour, _logTimeLast.Minute, _logTimeLast.Second, _logTimeLast.Millisecond, s,
-                    ((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString(), Environment.NewLine)
-                    , true, false, true));
+            UiSync.Execute(() =>
+            TextUpdate(_form.txtDev,
+                $"{_logTimeLast.Hour:00}:{_logTimeLast.Minute:00}:{_logTimeLast.Second:00}.{_logTimeLast.Millisecond:000} {s} a inceput in {((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString()} ms {Environment.NewLine}"
+                , true, false, true));
 
         }
 
@@ -180,11 +143,11 @@ namespace GIShowCam.Gui
                 if (logAppend)
                 {
                     string ipTxt = "", sidTxt = "";
-                    if (form.comboAddress.Text.Length > 3)
+                    if (_form.comboAddress.Text.Length > 3)
                     {
-                        int ips = form.comboAddress.Text.IndexOf('/', 6), ipf = form.comboAddress.Text.IndexOf('/', 7);
-                        ipTxt = form.comboAddress.Text.Substring(ips + 1, ipf - ips - 1) + sidTxt;
-                        sidTxt = form.comboAddress.Text.Substring(ipf + 1, form.comboAddress.Text.Length - ipf - 1) + sidTxt;
+                        int ips = _form.comboAddress.Text.IndexOf('/', 6), ipf = _form.comboAddress.Text.IndexOf('/', 7);
+                        ipTxt = _form.comboAddress.Text.Substring(ips + 1, ipf - ips - 1) + sidTxt;
+                        sidTxt = _form.comboAddress.Text.Substring(ipf + 1, _form.comboAddress.Text.Length - ipf - 1) + sidTxt;
 
                         ipTxt = "              IP: " + ipTxt + Environment.NewLine;
                         sidTxt = "                       " + sidTxt;
@@ -193,7 +156,8 @@ namespace GIShowCam.Gui
                     s = s + Environment.NewLine + sidTxt + ipTxt;
                 }
 
-                if (ctrl is TextBoxBase) ((TextBoxBase) ctrl).AppendText(s);
+                var @base = ctrl as TextBoxBase;
+                if (@base != null) @base.AppendText(s);
                 else
                     ctrl.Text += s;
             }

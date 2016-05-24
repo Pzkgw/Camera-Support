@@ -6,19 +6,19 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-        private SessionInfo info;
-        private FormMain form;
+        private readonly SessionInfo _info;
+        private readonly FormMain _form;
         
 
         internal GuiBase(FormMain formBase)
         {
             _logTimeLast = DateTime.MinValue;
-            form = formBase;
+            _form = formBase;
 
-            SessionInfo.logger = new CLogger(form.txtLVDebug, form.txtLVErrors, form.txtLVInfo, form.txtLVWarnings);
-            info = new SessionInfo();
+            SessionInfo.Logger = new CLogger(_form.txtLVDebug, _form.txtLVErrors, _form.txtLVInfo, _form.txtLVWarnings);
+            _info = new SessionInfo();
 
-            UISync.Init(formBase);
+            UiSync.Init(formBase);
             
 
             DiscoverDevices();
@@ -33,7 +33,7 @@ namespace GIShowCam.Gui
         {
             Discovery discovery;
 
-            discovery = new Discovery(m_factory);
+            discovery = new Discovery(_mFactory);
 
             discovery.CleanUp();
         }

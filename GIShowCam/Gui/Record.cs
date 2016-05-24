@@ -27,7 +27,7 @@ vlc.Media = media;
 vlc.Play();
 
 */
-        private bool recordIsOn;
+        private bool _recordIsOn;
 
         internal void InitGuiRecord()
         {
@@ -35,8 +35,8 @@ vlc.Play();
             BtnRecord_Click(null, null);
 
 
-            form.btnSnapshot.Click += BtnSnapshot_Click;
-            form.btnRecord.Click += BtnRecord_Click;
+            _form.btnSnapshot.Click += BtnSnapshot_Click;
+            _form.btnRecord.Click += BtnRecord_Click;
         }
 
         private void BtnRecord_Click(object sender, EventArgs e)
@@ -44,21 +44,21 @@ vlc.Play();
 
             if (e != null)
             {
-                 if (recordIsOn)
+                 if (_recordIsOn)
                {
                    //vlc.Media.AddOption("--color=random", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
-                   recordIsOn = false;
+                   _recordIsOn = false;
                }
                else
                {
                    //vlc.Media.AddOption("--color=NIOrandom", Vlc.DotNet.Core.Interops.Signatures.LibVlc.Media.Option.Trusted);
                    Record("c:\\", "kk.mp4", 800);
-                   recordIsOn = true;
+                   _recordIsOn = true;
                }
-                if (SessionInfo.showMessageBoxes) MessageBox.Show(" Not implementat ");
+                if (SessionInfo.ShowMessageBoxes) MessageBox.Show(@" Not implementat ");
             }
 
-            form.btnRecord.Text = (recordIsOn ? "Stop" : "Start") + Environment.NewLine + "Recording";
+            _form.btnRecord.Text = (_recordIsOn ? "Stop" : "Start") + Environment.NewLine + @"Recording";
         }
 
         /*
@@ -105,10 +105,9 @@ vlc.Play();
 
         private void BtnSnapshot_Click(object sender, EventArgs e)
         {
-            if (m_player != null && m_media != null)
-                m_player.TakeSnapShot(0, SessionInfo.snapshotDir);
+            if (_mPlayer == null || _mMedia == null) return;
+
+            _mPlayer.TakeSnapShot(SessionInfo.SnapshotStreamNr, SessionInfo.SnapshotDir);
         }
-
-
     }
 }

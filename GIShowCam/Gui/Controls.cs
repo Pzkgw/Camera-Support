@@ -1,44 +1,42 @@
-﻿using Declarations;
-using GIShowCam.Info;
+﻿using GIShowCam.Info;
 using GIShowCam.Utils;
 using System;
-using System.Windows.Forms;
 
 namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-        private bool btnsShowOnPlay;
-        private int lblEventsShowCount = 64;
+        private bool _btnsShowOnPlay;
+        private int _lblEventsShowCount = 64;
         internal void InitGuiControls()
         {
 
 
-            foreach (string dev in info.GetDeviceList()) form.comboAddress.Items.Add(dev);
+            foreach (var dev in _info.GetDeviceList()) _form.comboAddress.Items.Add(dev);
 
 
-            form.comboAddress.SelectedIndex = info.devID;
+            _form.comboAddress.SelectedIndex = _info.DevId;
 
         }
 
         internal void AddFormEvents()
         {
-            form.btnDevConnect.Click += BtnDevConnect_Click;
-            form.btnPlay.Click += BtnPlay_Click;
+            _form.btnDevConnect.Click += BtnDevConnect_Click;
+            _form.btnPlay.Click += BtnPlay_Click;
 
 
-            form.chkPlayLoop.CheckedChanged += ChkLoop_CheckedChanged;
-            form.chkFullVid.CheckedChanged += ChkFullVideo_CheckedChanged;
+            _form.chkPlayLoop.CheckedChanged += ChkLoop_CheckedChanged;
+            _form.chkFullVid.CheckedChanged += ChkFullVideo_CheckedChanged;
 
             //TextBox changed events:
-            form.comboAddress.TextChanged += TxtDevAddress_TextChanged;
-            form.txtDevUser.TextChanged += TxtDevUser_TextChanged;
-            form.txtDevPass.TextChanged += TxtDevPass_TextChanged;
+            _form.comboAddress.TextChanged += TxtDevAddress_TextChanged;
+            _form.txtDevUser.TextChanged += TxtDevUser_TextChanged;
+            _form.txtDevPass.TextChanged += TxtDevPass_TextChanged;
 
-            form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
+            _form.comboAddress.SelectionChangeCommitted += ComboAddress_SelectionChangeCommitted;
 
-            form.btnRatio.Text = info.cam.data.viewSettings.aspectRatioMode.ToString();
-            form.btnRatio.Click += BtnRatio_Click;
+            _form.btnRatio.Text = _info.Cam.Data.ViewSettings.AspectRatioMode.ToString();
+            _form.btnRatio.Click += BtnRatio_Click;
         }
 
         private void BtnRatio_Click(object sender, EventArgs e)
@@ -48,33 +46,33 @@ namespace GIShowCam.Gui
 
         private void ToggleAspectRatio()
         {
-            if (m_player != null)
+            if (_mPlayer != null)
             {
-                ViewSettings setari = info.cam.data.viewSettings;
+                ViewSettings setari = _info.Cam.Data.ViewSettings;
 
-                bool aspectDefault = m_player.AspectRatio == setari.aspectRatioDefault;
+                bool aspectDefault = _mPlayer.AspectRatio == setari.AspectRatioDefault;
 
-                m_player.AspectRatio = (aspectDefault) ?           // AspectRatio e Default
-                    setari.aspectRatioMode :                       // Mode 2
-                    setari.aspectRatioDefault;                     // Default
+                _mPlayer.AspectRatio = (aspectDefault) ?           // AspectRatio e Default
+                    setari.AspectRatioMode :                       // Mode 2
+                    setari.AspectRatioDefault;                     // Default
 
                 //  Notificari optionale
-                form.btnRatio.Text = (aspectDefault) ? setari.aspectRatioDefault.ToString() : setari.aspectRatioMode.ToString();
+                _form.btnRatio.Text = (aspectDefault) ? setari.AspectRatioDefault.ToString() : setari.AspectRatioMode.ToString();
 
-                lblEventsShowCount = 10;
-                form.lblEvent.Text = "Event: aspect ratio change from " + ((aspectDefault) ?
-                    (VlcUtils.AspectRatioToString(setari.aspectRatioDefault) + " to " +
-                    VlcUtils.AspectRatioToString(setari.aspectRatioMode)) :
-                    (VlcUtils.AspectRatioToString(setari.aspectRatioMode) + " to " +
-                    VlcUtils.AspectRatioToString(setari.aspectRatioDefault)));
+                _lblEventsShowCount = 10;
+                _form.lblEvent.Text = @"Event: aspect ratio change from " + ((aspectDefault) ?
+                    (VlcUtils.AspectRatioToString(setari.AspectRatioDefault) + " to " +
+                    VlcUtils.AspectRatioToString(setari.AspectRatioMode)) :
+                    (VlcUtils.AspectRatioToString(setari.AspectRatioMode) + " to " +
+                    VlcUtils.AspectRatioToString(setari.AspectRatioDefault)));
             }
             else
             {
-                form.lblEvent.Text = "No video, cannot change aspect ratio";
+                _form.lblEvent.Text = @"No video, cannot change aspect ratio";
             }
         }
 
-        private void ChkFullVideo_CheckedChanged(object sender, EventArgs e)
+        private static void ChkFullVideo_CheckedChanged(object sender, EventArgs e)
         {
             /*
             SessionInfo.fullVideo = ((CheckBox)sender).Checked;
@@ -93,7 +91,7 @@ namespace GIShowCam.Gui
                 }*/
         }
 
-        private void ChkLoop_CheckedChanged(object sender, EventArgs e)
+        private static void ChkLoop_CheckedChanged(object sender, EventArgs e)
         {
             /*
             info.videoLoop = ((CheckBox)sender).Checked;
@@ -133,63 +131,63 @@ namespace GIShowCam.Gui
 
         private void BtnPlay_Click(object sender, EventArgs e)
         {
-            form.lblEvent.Text = null;
+            _form.lblEvent.Text = null;
 
-            if (m_player != null && m_player.IsPlaying)
+            if (_mPlayer != null && _mPlayer.IsPlaying)
             {
-                form.btnPlay.Text = "Play";
-                TextUpdate(form.lblVlcNotify, " pauza de ... ", false, false, false);
+                _form.btnPlay.Text = @"Play";
+                TextUpdate(_form.lblVlcNotify, " pauza de ... ", false, false, false);
                 //m_player.Stop();
                 ToggleRunningMedia(false);
             }
             else
             {
-                form.btnPlay.Text = "Stop";
+                _form.btnPlay.Text = @"Stop";
                 //m_player.Play();
                 ToggleRunningMedia(true);
             }
 
-            SetBtnsVisibilityOnPlay((m_player == null) ? false : m_player.IsPlaying);
+            SetBtnsVisibilityOnPlay(_mPlayer?.IsPlaying ?? false);
         }
 
         private void SetBtnsVisibilityOnPlay(bool on)
         {
 
-            if (btnsShowOnPlay != on)
+            if (_btnsShowOnPlay != on)
             {
-                if (on || (!on && !info.cam.data.IsPlaying))
-                    UISync.Execute(() => form.btnPlay.Enabled = on);
-                UISync.Execute(() => form.btnSnapshot.Enabled = on);
-                UISync.Execute(() => form.btnRecord.Enabled = on);
+                if (on || (!_info.Cam.Data.IsPlaying))
+                    _form.btnPlay.Enabled = on;
+                _form.btnSnapshot.Enabled = on;
+                _form.btnRecord.Enabled = on;
             }
 
-            btnsShowOnPlay = on;
+            _btnsShowOnPlay = on;
         }
 
         #region Detalii pt connection textboxes
 
         private void TxtDevPass_TextChanged(object sender, EventArgs e)
         {
-            info.password = form.txtDevPass.Text;
+            _info.Password = _form.txtDevPass.Text;
         }
 
         private void TxtDevUser_TextChanged(object sender, EventArgs e)
         {
-            info.user = form.txtDevUser.Text;
+            _info.User = _form.txtDevUser.Text;
         }
 
         private void TxtDevAddress_TextChanged(object sender, EventArgs e)
         {
-            info.host = form.comboAddress.Text;
+            _info.Host = _form.comboAddress.Text;
         }
 
         internal void DeviceTextBoxesUpdate(bool updateCamInfo)
         {
-            if (updateCamInfo) info.NewCameraInfo();
+            if (updateCamInfo) _info.NewCameraInfo();
 
-            form.txtDevUser.Text = info.user;
-            form.txtDevPass.Text = info.password;
-            form.comboAddress.Text = info.host;
+            _form.txtDevUser.Text = _info.User;
+            _form.txtDevPass.Text = _info.Password;
+            _form.comboAddress.Text = _info.Host;
         }
 
         #endregion Detalii pt connection textboxes

@@ -1,85 +1,88 @@
-﻿using Declarations;
-using GIShowCam.Info;
-using GIShowCam.Utils;
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Text;
 using System.Windows.Forms;
+using Declarations;
+using GIShowCam.Info;
 
-namespace GIShowCam
+namespace GIShowCam.Utils
 {
-    class CLogger : ILogger
+    internal class CLogger : ILogger
     {
-        TextBoxBase[] logView;
-        DateTime _dt;
+        private readonly TextBoxBase[] _logView;
+        private DateTime _dt;
 
-        StringBuilder debugSave = new StringBuilder();
-        bool debugSaveDone = false;
-        byte debugSaveStart = 0;
+        private StringBuilder _debugSave = new StringBuilder();
+        private bool _debugSaveDone;
+        private byte _debugSaveStart;
 
-        internal static bool on = true;
+        internal static bool On = true;
 
         internal CLogger(params TextBoxBase[] logView)
         {
-            this.logView = logView;
+            _logView = logView;
+
+            _debugSaveDone = false;
+            _debugSaveStart = 0;
         }
 
 
-        string GestLogString(string s)
+        private string GestLogString(string s)
         {
             _dt = DateTime.Now;
             return string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    " + s + Environment.NewLine,
                         _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond);
         }
 
-        void debugSaveDoEEt(string s)
+        private void DebugSaveDoEEt(string s)
         {
-            logView[0].AppendText(debugSave.ToString() + GestLogString(s));
-            debugSave.Clear();
+            _logView[0].AppendText(_debugSave + GestLogString(s));
+            _debugSave = null;
         }
 
         void ILogger.Debug(string debug)
         {
-            if (on)
-                if (SessionInfo.playing)
+            if (!On) return;
+
+            if (SessionInfo.Playing)
+            {
+                if (_debugSaveDone)
                 {
-                    if (debugSaveDone)
-                    {
-                        UISync.Execute(() => logView[0].AppendText(GestLogString(debug)));
-                    }
-                    else
-                    {
-                        debugSaveDone = true;
-                        UISync.Execute(() => debugSaveDoEEt(debug));
-                    }
+                    UiSync.Execute(() => _logView[0].AppendText(GestLogString(debug)));
                 }
                 else
                 {
-                    if (debugSaveStart > 2)
-                    {
-                        (new System.Threading.Thread(delegate () { debugSave.Append(GestLogString(debug)); })).Start();
-                    }
-
-                    ++debugSaveStart;
+                    _debugSaveDone = true;
+                    UiSync.Execute(() => DebugSaveDoEEt(debug));
                 }
+            }
+            else
+            {
+                if (_debugSaveDone) return;
+                if (_debugSaveStart > 2)
+                {
+                    (new System.Threading.Thread(() => _debugSave.Append(GestLogString(debug)))).Start();
+                }
+
+                ++_debugSaveStart;
+            }
         }
 
         void ILogger.Error(string error)
         {
-            if (on)
-                UISync.Execute(() => logView[1].Text += GestLogString(error));
+            if (On)
+                UiSync.Execute(() => _logView[1].Text += GestLogString(error));
         }
 
         void ILogger.Info(string info)
         {
-            if (on)
-                UISync.Execute(() => logView[2].Text += GestLogString(info));
+            if (On)
+                UiSync.Execute(() => _logView[2].Text += GestLogString(info));
         }
 
         void ILogger.Warning(string warn)
         {
-            if (on)
-                UISync.Execute(() => logView[3].Text += GestLogString(warn));
+            if (On)
+                UiSync.Execute(() => _logView[3].Text += GestLogString(warn));
         }
 
     }

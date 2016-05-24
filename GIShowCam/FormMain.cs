@@ -22,7 +22,7 @@ namespace GIShowCam
 
             mainB = new GuiBase(this);
 
-            if (SessionInfo.fullVideo)
+            if (SessionInfo.FullVideo)
             {
                 mainB.VideoInit(false, true);
             }

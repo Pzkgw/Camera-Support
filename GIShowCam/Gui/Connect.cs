@@ -6,6 +6,7 @@ using Implementation;
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -16,48 +17,44 @@ namespace GIShowCam.Gui
     {
         private Point _vlcTop;
         private Size _vlcSize;
-
-
+        // todo: -- > mouseDown; record
         private void ToggleRunningMedia(bool on)
         {
-            SessionInfo.playing = false;
+            SessionInfo.Playing = false;
 
             if (on)
             {
-                m_media = m_factory.CreateMedia<IMedia>(getPath());
-                m_player = m_factory.CreatePlayer<IDiskPlayer>();
+                _mMedia = _mFactory.CreateMedia<IMedia>(GetPath());
+                _mPlayer = _mFactory.CreatePlayer<IDiskPlayer>();
 
-                m_player.Open(m_media);
-                m_media.Parse(false);
+                _mPlayer.Open(_mMedia);
+                //_mMedia.Parse(false);
 
-                info.NewCameraInfo();
-                info.cam.data.PropertyChanged += Data_PropertyChanged; // => doar dupa conexiune de handle
+                _info.NewCameraInfo();
+                _info.Cam.Data.PropertyChanged += Data_PropertyChanged;
 
                 RegisterPlayerEvents(true);
                 RegisterMediaEvents(true);
 
-                m_player.WindowHandle = form.panelVlc.Handle;
+                _mPlayer.WindowHandle = _form.panelVlc.Handle;
 
-                UISync.on = true;
+                UiSync.On = true;
 
-                m_player.Play();
+                _mPlayer.Play();
             }
-
-            else
-
-            if (m_media != null)
+            else if (_mMedia != null)
             {
-                m_player.Stop();
-                UISync.on = false;// fara notify event send
+                _mPlayer.Stop();
+                UiSync.On = false; // minus notify event send
 
                 RegisterPlayerEvents(false);
                 RegisterMediaEvents(false);
 
-                m_media.Dispose();
-                m_media = null;
+                _mMedia.Dispose();
+                _mMedia = null;
 
-                m_player.Dispose();
-                m_player = null;
+                _mPlayer.Dispose();
+                _mPlayer = null;
 
                 //m_factory.VideoLanManager.DeleteMedia("m_media");
             }
@@ -65,17 +62,17 @@ namespace GIShowCam.Gui
 
         internal void VideoInit(bool allowResize, bool fullView)
         {
-            SessionInfo.playing = false;
+            SessionInfo.Playing = false;
 
-            if (m_factory == null)
+            if (_mFactory == null)
             {
-                m_factory = new MediaPlayerFactory(GetVlcOptions(),
-                    SessionInfo.vlcDir, SessionInfo.logger, true);
+                _mFactory = new MediaPlayerFactory(GetVlcOptions(),
+                    SessionInfo.VlcDir, SessionInfo.Logger, true);
             }
 
             ToggleRunningMedia(false);
 
-            
+
             //form.isOn = false;
             /*
             if (vlc == null)
@@ -90,18 +87,18 @@ namespace GIShowCam.Gui
             if (allowResize)
                 if (fullView)
                 {
-                    _vlcTop = form.panelVlc.Location;
-                    _vlcSize = form.panelVlc.Size;
-                    form.panelVlc.Location = new Point(0, 0);
-                    form.panelVlc.Size = new Size(form.Width, form.Height);
-                    form.panelVlc.Dock = DockStyle.Fill;
-                    form.panelVlc.BringToFront();
+                    _vlcTop = _form.panelVlc.Location;
+                    _vlcSize = _form.panelVlc.Size;
+                    _form.panelVlc.Location = new Point(0, 0);
+                    _form.panelVlc.Size = new Size(_form.Width, _form.Height);
+                    _form.panelVlc.Dock = DockStyle.Fill;
+                    _form.panelVlc.BringToFront();
                 }
                 else
                 {
-                    form.panelVlc.Location = _vlcTop;
-                    form.panelVlc.Size = _vlcSize;
-                    form.panelVlc.Dock = DockStyle.None;
+                    _form.panelVlc.Location = _vlcTop;
+                    _form.panelVlc.Size = _vlcSize;
+                    _form.panelVlc.Dock = DockStyle.None;
                     //form.panelVlc.SendToBack();
                 }
 
@@ -110,14 +107,8 @@ namespace GIShowCam.Gui
 
             ToggleRunningMedia(true);
 
-            info.cam.data.viewSettings.aspectRatioDefault = Declarations.AspectRatioMode.Default;
-            form.btnRatio.Text = info.cam.data.viewSettings.aspectRatioMode.ToString();
-
-            /*
-            info.cam.data.viewSettings.aspectRatioDefault = Declarations.AspectRatioMode.Default;
-            m_player.AspectRatio = Declarations.AspectRatioMode.Default;
-            form.btnRatio.Text = info.cam.data.viewSettings.aspectRatioMode.ToString();*/
-
+            _info.Cam.Data.ViewSettings.AspectRatioDefault = Declarations.AspectRatioMode.Default;
+            _form.btnRatio.Text = _info.Cam.Data.ViewSettings.AspectRatioMode.ToString();
 
             //UISync.Execute(() => m_player.WindowHandle = form.panelVlc.Handle);
             //(new System.Threading.Thread(delegate () {
@@ -130,22 +121,70 @@ namespace GIShowCam.Gui
 
         }
 
-
-
-        private string getPath()
+        /// <summary>
+        /// Dupa media-stop sesizat de media\events\MediaStateChange(event extern),
+        /// urmeaza un pointer spre functia VlcReinit()
+        /// </summary>
+        /// <returns></returns>
+        private void StartVlcReinit(bool byEnd)
         {
-            string path = info.host;
+            LogEvent(@"Eroare la conexiune, repornire initializata");
+            if (SessionInfo.ReinitCount != 0) return; // niciun alt thread
 
-            if (path.Count(s => s == '.') > 2)
+            if (byEnd)
             {
+                _info.Cam.Data.IsEnded = true;
 
-                if (!string.IsNullOrEmpty(info.user) && !string.IsNullOrEmpty(info.password) && ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
+                TextUpdate(_form.lblVlcNotify,
+                    " Vlc stopped and re-initialization started ... ", false, false, false);
+            }
+            else
+            {
+                _info.Cam.Data.IsError = true;
+            }
+
+            VlcReinit();
+        }
+
+        private void VlcReinit()
+        {
+            while (true)
+            {
+                ToggleRunningMedia(false);
+                Thread.Sleep(4);
+                GC.Collect();
+                Thread.Sleep(4);
+                ToggleRunningMedia(true);
+
+                if (_info.Cam.Data.IsError)
                 {
-                    path = path.Insert(7, (info.user + ":" + info.password + "@"));
+                    ++SessionInfo.ReinitCount;
+                    if (SessionInfo.ReinitCount < 4) continue;
                 }
 
-                //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
+                //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
+
+                SessionInfo.ReinitCount = 0;
+                break;
             }
+        }
+
+
+
+        private string GetPath()
+        {
+            var path = _info.Host;
+
+            if (path.Count(s => s == '.') <= 2) return path;
+
+            if (!string.IsNullOrEmpty(_info.User) &&
+                !string.IsNullOrEmpty(_info.Password) &&
+                ((path[5] == '/') || (path[6] == '/')))// http:// sau rtsp://
+            {
+                path = path.Insert(7, (_info.User + ':' + _info.Password + '@'));
+            }
+
+            //vlc http://admin:1qaz@WSX@192.168.0.92/streaming/channels/2/httppreview --aspect-ratio=16:9
             return path;
         }
 
@@ -168,7 +207,7 @@ namespace GIShowCam.Gui
 
         private void ComboAddress_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            info.UpdateAfterIndexChange(form.comboAddress.SelectedIndex);
+            _info.UpdateAfterIndexChange(_form.comboAddress.SelectedIndex);
             DeviceTextBoxesUpdate(true);
             BtnDevConnect_Click(null, null);
         }
@@ -177,9 +216,8 @@ namespace GIShowCam.Gui
         {
             //string[] initMediaOptions = GetVlcMediaOptions();
             VideoInit(false, false);//, GetVlcMediaOptions()
-            form.btnPlay.Text = "Stop";
+            _form.btnPlay.Text = @"Stop";
         }
-
 
     }
 

@@ -1,9 +1,10 @@
-﻿using Declarations;
+﻿
+using Declarations;
 
 
 namespace GIShowCam.Utils
 {
-    static class VlcUtils
+    internal static class VlcUtils
     {
 
         internal static string AspectRatioToString(AspectRatioMode aratio)
@@ -26,10 +27,11 @@ namespace GIShowCam.Utils
                     return "2.39:1";
                 case AspectRatioMode.Mode8:
                     return "5:4";
-                default:
+                case AspectRatioMode.Default:
                     return "Default";
+                default:
+                    return null;
             }
         }
-
     }
 }

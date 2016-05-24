@@ -6,8 +6,7 @@ using System;
 
 namespace GIShowCam.Gui
 {
-    
-    class Discovery
+    internal class Discovery
     {
         /// <summary>
         /// Cauta camere prin retea

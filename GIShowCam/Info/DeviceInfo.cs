@@ -1,35 +1,32 @@
 ﻿using Declarations;
-using System;
 using System.ComponentModel;
 
 namespace GIShowCam.Info
 {
     internal struct ViewSettings
     {
-        internal AspectRatioMode aspectRatioDefault, aspectRatioMode;
+        internal AspectRatioMode AspectRatioDefault, AspectRatioMode;
     }
 
-    class DeviceInfo : INotifyPropertyChanged
+    internal class DeviceInfo : INotifyPropertyChanged
     {
-        private bool[]
-            act = new bool[10];
+        private readonly bool[] _act = new bool[10];
 
-        internal int imgCount;
+        internal int ImgCount;
 
-
-        internal ViewSettings viewSettings;
+        internal ViewSettings ViewSettings;
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         internal DeviceInfo()
         {
-            imgCount = 0;
-            viewSettings.aspectRatioMode = AspectRatioMode.Mode2;
-            viewSettings.aspectRatioDefault = AspectRatioMode.Default;
+            ImgCount = 0;
+            ViewSettings.AspectRatioMode = AspectRatioMode.Mode2;
+            ViewSettings.AspectRatioDefault = AspectRatioMode.Default;
 
             int i = 0;
-            for (; i < act.Length; i++) act[i] = false;            
+            for (; i < _act.Length; i++) _act[i] = false;
         }
 
 
@@ -43,12 +40,12 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[0] = value;
+                _act[0] = value;
                 if (value) OnPropertyChanged(" Unused ");
             }
             get
             {
-                return act[0];
+                return _act[0];
             }
         }
 
@@ -56,12 +53,12 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[1] = value;
-                if (value) OnPropertyChanged("Open: Conexiune deschisa ");
+                _act[1] = value;
+                if (value) OnPropertyChanged("Open: Porn-ire conexiune ");
             }
             get
             {
-                return act[1];
+                return _act[1];
             }
         }
 
@@ -69,13 +66,13 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[2] = value;
+                _act[2] = value;
                 if (value) OnPropertyChanged("Buffering ... ");
 
             }
             get
             {
-                return act[2];
+                return _act[2];
             }
         }
 
@@ -83,13 +80,13 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[3] = value;
+                _act[3] = value;
                 if (value) OnPropertyChanged("Playing: \"Filmul ruleaza\" ");
 
             }
             get
             {
-                return act[3];
+                return _act[3];
             }
         }
 
@@ -97,13 +94,13 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[4] = value;
+                _act[4] = value;
                 if (value) OnPropertyChanged("Pause: Pauza de masa ");
 
             }
             get
             {
-                return act[4];
+                return _act[4];
             }
         }
 
@@ -111,12 +108,12 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[5] = value;
-                if(value) OnPropertyChanged("Stop: Conexiune oprita temporar ");
+                _act[5] = value;
+                if (value) OnPropertyChanged("Stop: Conexiune oprita temporar ");
             }
             get
             {
-                return act[5];
+                return _act[5];
             }
         }
 
@@ -124,12 +121,12 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[6] = value;
+                _act[6] = value;
                 if (value) OnPropertyChanged("End: Conexiune terminata ");
             }
             get
             {
-                return act[6];
+                return _act[6];
             }
         }
 
@@ -139,12 +136,12 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[7] = value;
+                _act[7] = value;
                 if (value) OnPropertyChanged("Error: Greseala imensa ");
             }
             get
             {
-                return act[7];
+                return _act[7];
             }
         }
 
@@ -152,12 +149,12 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[8] = value;
+                _act[8] = value;
                 if (value) OnPropertyChanged("VideoComplete: Conexiunea trimite imagini ");
             }
             get
             {
-                return act[8];
+                return _act[8];
             }
         }
 
@@ -165,12 +162,12 @@ namespace GIShowCam.Info
         {
             set
             {
-                act[9] = value;
+                _act[9] = value;
                 if (value) OnPropertyChanged("MediaChange: Schimbare de camera ");
             }
             get
             {
-                return act[9];
+                return _act[9];
             }
         }
 

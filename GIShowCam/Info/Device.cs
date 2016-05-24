@@ -5,32 +5,32 @@ namespace GIShowCam.Info
 {
     public struct Device : IDisposable
     {
-        public string adresa;
-        public string user;
-        public string parola;
+        public string Adresa;
+        public string User;
+        public string Parola;
 
-        internal DeviceInfo data;
+        internal DeviceInfo Data;
 
         public Device(string adresa, string user, string parola) : this()
         {
-            this.adresa = adresa;
-            this.user = user;
-            this.parola = parola;
+            Adresa = adresa;
+            User = user;
+            Parola = parola;
 
-            data = new DeviceInfo();
+            Data = new DeviceInfo();
         }
         
         public Device(string adresa) : this(adresa, null, null)
         {
         }
 
-        public Device(Device device) : this(device.adresa, device.user, device.parola)
+        public Device(Device device) : this(device.Adresa, device.User, device.Parola)
         {
         }
 
         void IDisposable.Dispose()
         {
-            data = null;
+            Data = null;
         }
     }
 }
