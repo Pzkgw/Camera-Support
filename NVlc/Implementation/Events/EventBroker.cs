@@ -130,7 +130,7 @@ namespace Implementation.Events
                 case libvlc_event_e.libvlc_MediaPlayerSnapshotTaken:
                     if (m_playerSnapshotTaken != null)
                     {
-                        m_playerSnapshotTaken(m_eventProvider, new MediaPlayerSnapshotTaken(Marshal.PtrToStringAuto(libvlc_event.MediaDescriptor.media_player_snapshot_taken.psz_filename)));
+                        m_playerSnapshotTaken(m_eventProvider, new MediaPlayerSnapshotTaken(Marshal.PtrToStringAnsi(libvlc_event.MediaDescriptor.media_player_snapshot_taken.psz_filename)));
                     }
                     break;
 

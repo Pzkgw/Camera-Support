@@ -490,7 +490,7 @@
             // 
             this.lblEvent.AutoSize = true;
             this.lblEvent.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblEvent.Location = new System.Drawing.Point(940, 857);
+            this.lblEvent.Location = new System.Drawing.Point(888, 857);
             this.lblEvent.Name = "lblEvent";
             this.lblEvent.Size = new System.Drawing.Size(0, 15);
             this.lblEvent.TabIndex = 10;

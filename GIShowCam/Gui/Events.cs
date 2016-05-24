@@ -35,7 +35,7 @@ namespace GIShowCam.Gui
 
         private void Events_PlayerSnapshotTaken(object sender, MediaPlayerSnapshotTaken e)
         {
-            UiSync.Execute(() => LogEvent(@"Snapshot salvat in " + SessionInfo.SnapshotDir + e.FileName));
+            UiSync.Execute(() => LogEvent(@"Snapshot salvat: " + e.FileName));
         }
 
         private void LogEvent(string s)

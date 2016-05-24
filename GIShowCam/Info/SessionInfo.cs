@@ -12,13 +12,14 @@ namespace GIShowCam.Info
 
         internal static string[] VlcOptions;//, vlcMediaOptions
 
+        internal int DevId = 4;
+
         internal static string SnapshotDir = "C:\\";
         internal static readonly uint SnapshotStreamNr = 0;
 
         internal static int ReinitCount = 0;
 
         internal bool VideoLoop = true;
-        internal int DevId = 1;
 
         internal static readonly string VlcDir32 = @"C:\Program Files (x86)\VideoLAN\VLC",
             VlcDir64 = @"C:\Program Files\VideoLAN\VLC", 
