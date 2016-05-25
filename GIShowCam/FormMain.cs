@@ -24,7 +24,11 @@ namespace GIShowCam
 
             if (SessionInfo.FullVideo)
             {
-                mainB.VideoInit(false, true);
+                mainB.VideoInit(true);
+
+                // sterg tot in afara de primul control
+                // ,panelVlc
+                for (int i = 1; i < Controls.Count; Controls[i++].Dispose()) ;
             }
             else
             {
@@ -32,25 +36,15 @@ namespace GIShowCam
                 mainB.InitGuiDeviceInfo();
                 mainB.InitGuiRecord();
 
-                mainB.VideoInit(false, false);
+                mainB.VideoInit(false);
+
+                mainB.DeviceTextBoxesUpdate(false);
+                mainB.AddFormEvents();
+
+
             }
 
-            mainB.DeviceTextBoxesUpdate(false);
-            mainB.AddFormEvents();
-
-            panelVlc.SendToBack();
             FormClosing += FormMain_FormClosing;
-            
-
-            MouseDown += FormMain_MouseDown;
-        }
-
-        private void FormMain_MouseDown(object sender, MouseEventArgs e)
-        {
-            if(panelVlc.Bounds.Contains(e.Location))
-            {
-                MessageBox.Show("Click in Vlc panel !");
-            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)

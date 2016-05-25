@@ -42,16 +42,8 @@
             this.comboAddress = new System.Windows.Forms.ComboBox();
             this.btnSnapshot = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
-            this.groupBoxVlcFactors = new System.Windows.Forms.GroupBox();
-            this.txtZoomF = new System.Windows.Forms.TextBox();
-            this.lblZoomF = new System.Windows.Forms.Label();
-            this.lblHeightF = new System.Windows.Forms.Label();
-            this.lblWidthF = new System.Windows.Forms.Label();
-            this.textBoxHeightF = new System.Windows.Forms.TextBox();
-            this.textBoxWidthF = new System.Windows.Forms.TextBox();
             this.groupBoxBtns = new System.Windows.Forms.GroupBox();
             this.chkFullVid = new System.Windows.Forms.CheckBox();
-            this.chkPlayLoop = new System.Windows.Forms.CheckBox();
             this.tabLowDev = new System.Windows.Forms.TabControl();
             this.tabVlcDebug = new System.Windows.Forms.TabPage();
             this.txtLVDebug = new System.Windows.Forms.TextBox();
@@ -67,7 +59,6 @@
             this.btnRatio = new System.Windows.Forms.Button();
             this.lblEvent = new System.Windows.Forms.Label();
             this.groupBoxDev.SuspendLayout();
-            this.groupBoxVlcFactors.SuspendLayout();
             this.groupBoxBtns.SuspendLayout();
             this.tabLowDev.SuspendLayout();
             this.tabVlcDebug.SuspendLayout();
@@ -92,6 +83,7 @@
             this.panelVlc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelVlc.BackColor = System.Drawing.Color.Transparent;
             this.panelVlc.Location = new System.Drawing.Point(327, 4);
             this.panelVlc.Margin = new System.Windows.Forms.Padding(0);
             this.panelVlc.Name = "panelVlc";
@@ -115,7 +107,7 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(224, 35);
+            this.btnPlay.Location = new System.Drawing.Point(227, 22);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(103, 37);
             this.btnPlay.TabIndex = 3;
@@ -219,82 +211,10 @@
             this.btnRecord.TabIndex = 6;
             this.btnRecord.UseVisualStyleBackColor = true;
             // 
-            // groupBoxVlcFactors
-            // 
-            this.groupBoxVlcFactors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxVlcFactors.Controls.Add(this.txtZoomF);
-            this.groupBoxVlcFactors.Controls.Add(this.lblZoomF);
-            this.groupBoxVlcFactors.Controls.Add(this.lblHeightF);
-            this.groupBoxVlcFactors.Controls.Add(this.lblWidthF);
-            this.groupBoxVlcFactors.Controls.Add(this.textBoxHeightF);
-            this.groupBoxVlcFactors.Controls.Add(this.textBoxWidthF);
-            this.groupBoxVlcFactors.Enabled = false;
-            this.groupBoxVlcFactors.Location = new System.Drawing.Point(69, 232);
-            this.groupBoxVlcFactors.Name = "groupBoxVlcFactors";
-            this.groupBoxVlcFactors.Size = new System.Drawing.Size(318, 53);
-            this.groupBoxVlcFactors.TabIndex = 7;
-            this.groupBoxVlcFactors.TabStop = false;
-            // 
-            // txtZoomF
-            // 
-            this.txtZoomF.Location = new System.Drawing.Point(255, 21);
-            this.txtZoomF.Name = "txtZoomF";
-            this.txtZoomF.Size = new System.Drawing.Size(50, 22);
-            this.txtZoomF.TabIndex = 5;
-            this.txtZoomF.Text = "100";
-            this.txtZoomF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblZoomF
-            // 
-            this.lblZoomF.AutoSize = true;
-            this.lblZoomF.Location = new System.Drawing.Point(218, 24);
-            this.lblZoomF.Name = "lblZoomF";
-            this.lblZoomF.Size = new System.Drawing.Size(31, 15);
-            this.lblZoomF.TabIndex = 4;
-            this.lblZoomF.Text = "Fov:";
-            // 
-            // lblHeightF
-            // 
-            this.lblHeightF.AutoSize = true;
-            this.lblHeightF.Location = new System.Drawing.Point(111, 23);
-            this.lblHeightF.Name = "lblHeightF";
-            this.lblHeightF.Size = new System.Drawing.Size(46, 15);
-            this.lblHeightF.TabIndex = 3;
-            this.lblHeightF.Text = "Height:";
-            // 
-            // lblWidthF
-            // 
-            this.lblWidthF.AutoSize = true;
-            this.lblWidthF.Location = new System.Drawing.Point(6, 23);
-            this.lblWidthF.Name = "lblWidthF";
-            this.lblWidthF.Size = new System.Drawing.Size(43, 15);
-            this.lblWidthF.TabIndex = 2;
-            this.lblWidthF.Text = "Width:";
-            // 
-            // textBoxHeightF
-            // 
-            this.textBoxHeightF.Location = new System.Drawing.Point(162, 21);
-            this.textBoxHeightF.Name = "textBoxHeightF";
-            this.textBoxHeightF.Size = new System.Drawing.Size(50, 22);
-            this.textBoxHeightF.TabIndex = 1;
-            this.textBoxHeightF.Text = "1";
-            this.textBoxHeightF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBoxWidthF
-            // 
-            this.textBoxWidthF.Location = new System.Drawing.Point(55, 21);
-            this.textBoxWidthF.Name = "textBoxWidthF";
-            this.textBoxWidthF.Size = new System.Drawing.Size(50, 22);
-            this.textBoxWidthF.TabIndex = 0;
-            this.textBoxWidthF.Text = "1";
-            this.textBoxWidthF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // groupBoxBtns
             // 
-            this.groupBoxBtns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxBtns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxBtns.Controls.Add(this.chkFullVid);
-            this.groupBoxBtns.Controls.Add(this.chkPlayLoop);
             this.groupBoxBtns.Controls.Add(this.btnPlay);
             this.groupBoxBtns.Controls.Add(this.btnSnapshot);
             this.groupBoxBtns.Controls.Add(this.btnRecord);
@@ -308,25 +228,12 @@
             // 
             this.chkFullVid.AutoSize = true;
             this.chkFullVid.Enabled = false;
-            this.chkFullVid.Location = new System.Drawing.Point(18, 69);
+            this.chkFullVid.Location = new System.Drawing.Point(20, 32);
             this.chkFullVid.Name = "chkFullVid";
             this.chkFullVid.Size = new System.Drawing.Size(84, 19);
             this.chkFullVid.TabIndex = 8;
             this.chkFullVid.Text = "Full screen";
             this.chkFullVid.UseVisualStyleBackColor = true;
-            // 
-            // chkPlayLoop
-            // 
-            this.chkPlayLoop.AutoSize = true;
-            this.chkPlayLoop.Checked = true;
-            this.chkPlayLoop.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPlayLoop.Enabled = false;
-            this.chkPlayLoop.Location = new System.Drawing.Point(18, 32);
-            this.chkPlayLoop.Name = "chkPlayLoop";
-            this.chkPlayLoop.Size = new System.Drawing.Size(54, 19);
-            this.chkPlayLoop.TabIndex = 7;
-            this.chkPlayLoop.Text = "Loop";
-            this.chkPlayLoop.UseVisualStyleBackColor = true;
             // 
             // tabLowDev
             // 
@@ -460,7 +367,6 @@
             this.tabLowCtrl.Controls.Add(this.lblTxtRatio);
             this.tabLowCtrl.Controls.Add(this.btnRatio);
             this.tabLowCtrl.Controls.Add(this.groupBoxDev);
-            this.tabLowCtrl.Controls.Add(this.groupBoxVlcFactors);
             this.tabLowCtrl.Controls.Add(this.groupBoxBtns);
             this.tabLowCtrl.Location = new System.Drawing.Point(4, 24);
             this.tabLowCtrl.Name = "tabLowCtrl";
@@ -471,6 +377,7 @@
             // 
             // lblTxtRatio
             // 
+            this.lblTxtRatio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTxtRatio.AutoSize = true;
             this.lblTxtRatio.Location = new System.Drawing.Point(961, 265);
             this.lblTxtRatio.Name = "lblTxtRatio";
@@ -480,6 +387,7 @@
             // 
             // btnRatio
             // 
+            this.btnRatio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRatio.Location = new System.Drawing.Point(1100, 260);
             this.btnRatio.Name = "btnRatio";
             this.btnRatio.Size = new System.Drawing.Size(77, 25);
@@ -509,8 +417,6 @@
             this.Text = "Camera view";
             this.groupBoxDev.ResumeLayout(false);
             this.groupBoxDev.PerformLayout();
-            this.groupBoxVlcFactors.ResumeLayout(false);
-            this.groupBoxVlcFactors.PerformLayout();
             this.groupBoxBtns.ResumeLayout(false);
             this.groupBoxBtns.PerformLayout();
             this.tabLowDev.ResumeLayout(false);
@@ -545,17 +451,9 @@
         private System.Windows.Forms.GroupBox groupBoxDev;
         internal System.Windows.Forms.Button btnSnapshot;
         internal System.Windows.Forms.Button btnRecord;
-        private System.Windows.Forms.GroupBox groupBoxVlcFactors;
-        private System.Windows.Forms.Label lblHeightF;
-        private System.Windows.Forms.Label lblWidthF;
-        private System.Windows.Forms.TextBox textBoxHeightF;
-        private System.Windows.Forms.TextBox textBoxWidthF;
-        private System.Windows.Forms.TextBox txtZoomF;
-        private System.Windows.Forms.Label lblZoomF;
         internal System.Windows.Forms.TextBox txtDev;
         internal System.Windows.Forms.ComboBox comboAddress;
         private System.Windows.Forms.GroupBox groupBoxBtns;
-        internal System.Windows.Forms.CheckBox chkPlayLoop;
         internal System.Windows.Forms.CheckBox chkFullVid;
         private System.Windows.Forms.TabPage tabLowCtrl;
         private System.Windows.Forms.TabPage tabVlcDebug;

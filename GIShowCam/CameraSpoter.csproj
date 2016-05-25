@@ -74,6 +74,7 @@
     <Compile Include="Info\SessionInfo.cs" />
     <Compile Include="ProgramMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\FullScreenApi.cs" />
     <Compile Include="Utils\UISync.cs" />
     <Compile Include="Utils\VlcUtils.cs" />
     <EmbeddedResource Include="FormMain.resx">
@@ -102,13 +103,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NVlc\Declarations\nVLC.Declarations.csproj">
+    <ProjectReference Include="..\NVlc\Declarations\Declarations.csproj">
       <Project>{819c4bab-8fd0-463f-bb5f-119731840390}</Project>
-      <Name>nVLC.Declarations</Name>
+      <Name>Declarations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NVlc\Implementation\nVLC.Implementation.csproj">
+    <ProjectReference Include="..\NVlc\Implementation\Implementation.csproj">
       <Project>{6ba02cca-2e14-4a64-8ab6-594e600d80c9}</Project>
-      <Name>nVLC.Implementation</Name>
+      <Name>Implementation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -30,11 +30,15 @@ namespace GIShowCam.Gui
                 _mPlayer.Open(_mMedia);
                 //_mMedia.Parse(false);
 
-                _info.NewCameraInfo();
-                _info.Cam.Data.PropertyChanged += Data_PropertyChanged;
+                if (!SessionInfo.FullVideo)
+                {
+                    _info.NewCameraInfo();
+                    _info.Cam.Data.PropertyChanged += Data_PropertyChanged;
 
-                RegisterPlayerEvents(true);
-                RegisterMediaEvents(true);
+
+                    RegisterPlayerEvents(true);
+                    RegisterMediaEvents(true);
+                }
 
                 _mPlayer.WindowHandle = _form.panelVlc.Handle;
 
@@ -47,8 +51,11 @@ namespace GIShowCam.Gui
                 _mPlayer.Stop();
                 UiSync.On = false; // minus notify event send
 
-                RegisterPlayerEvents(false);
-                RegisterMediaEvents(false);
+                if (!SessionInfo.FullVideo)
+                {
+                    RegisterPlayerEvents(false);
+                    RegisterMediaEvents(false);
+                }
 
                 _mMedia.Dispose();
                 _mMedia = null;
@@ -60,7 +67,7 @@ namespace GIShowCam.Gui
             }
         }
 
-        internal void VideoInit(bool allowResize, bool fullView)
+        internal void VideoInit(bool allowResize)
         {
             SessionInfo.Playing = false;
 
@@ -72,7 +79,6 @@ namespace GIShowCam.Gui
 
             ToggleRunningMedia(false);
 
-
             //form.isOn = false;
             /*
             if (vlc == null)
@@ -81,18 +87,26 @@ namespace GIShowCam.Gui
                 _vlcSize = form.panelVlc.Size;
             }*/
 
-
-
             // pentru fullscreen on/off, allowResize ::--> async
             if (allowResize)
-                if (fullView)
+            {
+                if (SessionInfo.FullScreen)
+                {
+                    _form.panelVlc.Dock = DockStyle.Fill;
+                    _form.WindowState = FormWindowState.Maximized;
+                    _form.FormBorderStyle = FormBorderStyle.None;
+                    _form.TopMost = true;
+                    //FullScreenApi.SetWinFullScreen(_form.Handle);
+                }
+                else
+                    if (SessionInfo.FullVideo)
                 {
                     _vlcTop = _form.panelVlc.Location;
                     _vlcSize = _form.panelVlc.Size;
                     _form.panelVlc.Location = new Point(0, 0);
                     _form.panelVlc.Size = new Size(_form.Width, _form.Height);
                     _form.panelVlc.Dock = DockStyle.Fill;
-                    _form.panelVlc.BringToFront();
+                    //_form.panelVlc.BringToFront();
                 }
                 else
                 {
@@ -101,6 +115,7 @@ namespace GIShowCam.Gui
                     _form.panelVlc.Dock = DockStyle.None;
                     //form.panelVlc.SendToBack();
                 }
+            }
 
 
             _logTimeLast = DateTime.MinValue; // pt mesajul de start connection
@@ -215,7 +230,7 @@ namespace GIShowCam.Gui
         private void BtnDevConnect_Click(object sender, EventArgs e)
         {
             //string[] initMediaOptions = GetVlcMediaOptions();
-            VideoInit(false, false);//, GetVlcMediaOptions()
+            VideoInit(false);//, GetVlcMediaOptions()
             _form.btnPlay.Text = @"Stop";
         }
 

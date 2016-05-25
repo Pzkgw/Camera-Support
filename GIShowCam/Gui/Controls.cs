@@ -24,8 +24,6 @@ namespace GIShowCam.Gui
             _form.btnDevConnect.Click += BtnDevConnect_Click;
             _form.btnPlay.Click += BtnPlay_Click;
 
-
-            _form.chkPlayLoop.CheckedChanged += ChkLoop_CheckedChanged;
             _form.chkFullVid.CheckedChanged += ChkFullVideo_CheckedChanged;
 
             //TextBox changed events:
@@ -90,23 +88,6 @@ namespace GIShowCam.Gui
                     vlc.Play();
                 }*/
         }
-
-        private static void ChkLoop_CheckedChanged(object sender, EventArgs e)
-        {
-            /*
-            info.videoLoop = ((CheckBox)sender).Checked;
-            if (vlc != null)
-                if (info.videoLoop)
-                {
-                    vlc.Pause();
-                    vlc.Play();
-                }
-                else
-                {
-                    vlc.Pause();
-                }*/
-        }
-
 
         /*
         void VlcControl_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)

@@ -41,7 +41,7 @@ namespace GIShowCam.Utils
 
         void ILogger.Debug(string debug)
         {
-            if (!On) return;
+            if (true) return;
 
             if (SessionInfo.Playing)
             {

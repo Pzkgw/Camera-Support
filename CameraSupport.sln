@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraSpoter", "GIShowCam\C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NVlc", "NVlc", "{BF5AF2C2-5298-4F6B-89CA-B5933AD5F152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nVLC.LibVlcWrapper", "NVlc\LibVlcWrapper\nVLC.LibVlcWrapper.csproj", "{57F08087-B175-4C96-BE36-83FBC4A21065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibVlcWrapper", "NVlc\LibVlcWrapper\LibVlcWrapper.csproj", "{57F08087-B175-4C96-BE36-83FBC4A21065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nVLC.Declarations", "NVlc\Declarations\nVLC.Declarations.csproj", "{819C4BAB-8FD0-463F-BB5F-119731840390}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Declarations", "NVlc\Declarations\Declarations.csproj", "{819C4BAB-8FD0-463F-BB5F-119731840390}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nVLC.Implementation", "NVlc\Implementation\nVLC.Implementation.csproj", "{6BA02CCA-2E14-4A64-8AB6-594E600D80C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implementation", "NVlc\Implementation\Implementation.csproj", "{6BA02CCA-2E14-4A64-8AB6-594E600D80C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

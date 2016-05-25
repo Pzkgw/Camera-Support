@@ -26,7 +26,7 @@ namespace GIShowCam.Gui
             {
                 SessionInfo.VlcOptions = new[] { //--snapshot-format=jpg
                 "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
-                ,"--no-fullscreen" //
+                ,SessionInfo.FullScreen?"--fullscreen":"--no-fullscreen" //
                 ,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on starting to play media.

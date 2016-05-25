@@ -5,14 +5,15 @@ namespace GIShowCam.Info
 {
     internal class SessionInfo
     {
- 
+
         internal static bool
             Debug = false, ShowMessageBoxes = true,
-            Audio = false, FullVideo = false, Playing = false;
+            Audio = false, Playing = false,
+            FullVideo = false, FullScreen = false;
 
         internal static string[] VlcOptions;//, vlcMediaOptions
 
-        internal int DevId = 4;
+        internal int DevId = 2;
 
         internal static string SnapshotDir = "C:\\";
         internal static readonly uint SnapshotStreamNr = 0;

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Implementation</RootNamespace>
-    <AssemblyName>nVLC.Implementation</AssemblyName>
+    <AssemblyName>Implementation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -131,13 +131,13 @@
     <Compile Include="VLM\VlmEventManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Declarations\nVLC.Declarations.csproj">
+    <ProjectReference Include="..\Declarations\Declarations.csproj">
       <Project>{819C4BAB-8FD0-463F-BB5F-119731840390}</Project>
-      <Name>nVLC.Declarations</Name>
+      <Name>Declarations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibVlcWrapper\nVLC.LibVlcWrapper.csproj">
+    <ProjectReference Include="..\LibVlcWrapper\LibVlcWrapper.csproj">
       <Project>{57F08087-B175-4C96-BE36-83FBC4A21065}</Project>
-      <Name>nVLC.LibVlcWrapper</Name>
+      <Name>LibVlcWrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

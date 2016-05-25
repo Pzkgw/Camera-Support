@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LibVlcWrapper</RootNamespace>
-    <AssemblyName>nVLC.LibVlcWrapper</AssemblyName>
+    <AssemblyName>LibVlcWrapper</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
