@@ -15,8 +15,9 @@ namespace GIShowCam.Gui
 {
     internal partial class GuiBase
     {
-        private Point _vlcTop;
-        private Size _vlcSize;
+        //private Point _vlcTop;
+        //private Size _vlcSize;
+
         // todo: -- > mouseDown; record
         private void ToggleRunningMedia(bool on)
         {
@@ -30,7 +31,7 @@ namespace GIShowCam.Gui
                 _mPlayer.Open(_mMedia);
                 //_mMedia.Parse(false);
 
-                if (!SessionInfo.FullVideo)
+                if (!SessionInfo.FullScreen)
                 {
                     _info.NewCameraInfo();
                     _info.Cam.Data.PropertyChanged += Data_PropertyChanged;
@@ -51,7 +52,7 @@ namespace GIShowCam.Gui
                 _mPlayer.Stop();
                 UiSync.On = false; // minus notify event send
 
-                if (!SessionInfo.FullVideo)
+                if (!SessionInfo.FullScreen)
                 {
                     RegisterPlayerEvents(false);
                     RegisterMediaEvents(false);
@@ -98,6 +99,7 @@ namespace GIShowCam.Gui
                     _form.TopMost = true;
                     //FullScreenApi.SetWinFullScreen(_form.Handle);
                 }
+                /*
                 else
                     if (SessionInfo.FullVideo)
                 {
@@ -115,6 +117,7 @@ namespace GIShowCam.Gui
                     _form.panelVlc.Dock = DockStyle.None;
                     //form.panelVlc.SendToBack();
                 }
+                */
             }
 
 
@@ -166,9 +169,8 @@ namespace GIShowCam.Gui
             while (true)
             {
                 ToggleRunningMedia(false);
-                Thread.Sleep(4);
+                Thread.Sleep(8);
                 GC.Collect();
-                Thread.Sleep(4);
                 ToggleRunningMedia(true);
 
                 if (_info.Cam.Data.IsError)

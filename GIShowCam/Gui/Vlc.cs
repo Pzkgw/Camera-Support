@@ -14,11 +14,10 @@ namespace GIShowCam.Gui
         private IDiskPlayer _mPlayer;
         private IMedia _mMedia;
 
-        /*
-        internal static string[] GetVlcOptions()
-        {
-            return new string[] { "--aspect-ratio=4:3" };
-        }*/
+        //internal static string[] GetVlcOptions()
+        //{
+        //return new string[] { "--minimize-threads", "--auto-adjust-pts-delay", "--use-stream-immediate" };
+        //}
 
         internal static string[] GetVlcOptions()
         {
@@ -75,7 +74,7 @@ namespace GIShowCam.Gui
 
             //,"--no-plugins-cache" // Use a plugins cache which will greatly improve the startup time of VLC. (default enabled)
             //,"--no-ffmpeg-hurry-up" // partially decode or skip frame(s) when there is note enough time
-            
+
             //,"--vout-filter=crop"
             //,"--grayscale"
             //,"--aspect-ratio=16:10"

@@ -111,10 +111,6 @@ namespace GIShowCam.Gui
             Log(e.PropertyName);
         }
 
-
-
-
-
         internal void Log(string s)
         {
             if (_logTimeLast == DateTime.MinValue)//connection start

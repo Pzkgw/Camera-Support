@@ -22,13 +22,14 @@ namespace GIShowCam
 
             mainB = new GuiBase(this);
 
-            if (SessionInfo.FullVideo)
+            if (SessionInfo.FullScreen)
             {
                 mainB.VideoInit(true);
 
-                // sterg tot in afara de primul control
-                // ,panelVlc
-                for (int i = 1; i < Controls.Count; Controls[i++].Dispose()) ;
+                tabLowDev.Dispose();
+                lblVlcNotify.Dispose();
+                lblEvent.Dispose();
+                //GC.WaitForFullGCComplete();
             }
             else
             {

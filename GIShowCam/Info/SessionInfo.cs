@@ -9,7 +9,7 @@ namespace GIShowCam.Info
         internal static bool
             Debug = false, ShowMessageBoxes = true,
             Audio = false, Playing = false,
-            FullVideo = false, FullScreen = false;
+            FullScreen = false;
 
         internal static string[] VlcOptions;//, vlcMediaOptions
 
