@@ -127,7 +127,6 @@ namespace GIShowCam.Gui
                 //m_player.Play();
                 ToggleRunningMedia(true);
             }
-
             SetBtnsVisibilityOnPlay(_mPlayer?.IsPlaying ?? false);
         }
 

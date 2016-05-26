@@ -21,8 +21,7 @@ namespace GIShowCam.Gui
         // todo: -- > mouseDown; record
         private void ToggleRunningMedia(bool on)
         {
-            SessionInfo.Playing = false;
-
+            CLogger.VideoOnPlay = false;
             if (on)
             {
                 _mMedia = _mFactory.CreateMedia<IMedia>(GetPath());
@@ -36,21 +35,22 @@ namespace GIShowCam.Gui
                     _info.NewCameraInfo();
                     _info.Cam.Data.PropertyChanged += Data_PropertyChanged;
 
-
-                    RegisterPlayerEvents(true);
-                    RegisterMediaEvents(true);
+                    RegisterPlayerEvents(true);                    
                 }
 
-                _mPlayer.WindowHandle = _form.panelVlc.Handle;
+                RegisterMediaEvents(true);
 
-                UiSync.On = true;
+                _mPlayer.WindowHandle = _form.panelVlc.Handle;               
 
                 _mPlayer.Play();
+
+                UiSync.SetSyncObj(_form);
             }
             else if (_mMedia != null)
             {
+                UiSync.SetSyncObj(null); // minus notify event send
+
                 _mPlayer.Stop();
-                UiSync.On = false; // minus notify event send
 
                 if (!SessionInfo.FullScreen)
                 {
@@ -64,13 +64,15 @@ namespace GIShowCam.Gui
                 _mPlayer.Dispose();
                 _mPlayer = null;
 
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
                 //m_factory.VideoLanManager.DeleteMedia("m_media");
             }
         }
 
         internal void VideoInit(bool allowResize)
         {
-            SessionInfo.Playing = false;
 
             if (_mFactory == null)
             {
@@ -137,6 +139,13 @@ namespace GIShowCam.Gui
 
             //} catch (Exception e) { MessageBox.Show(e.Message); }
 
+            _mFactory.VideoLanManager.Events.MediaInstanceError += Events_MediaInstanceError;
+
+        }
+
+        private void Events_MediaInstanceError(object sender, Declarations.VLM.VlmEvent e)
+        {
+            
         }
 
         /// <summary>
@@ -145,16 +154,15 @@ namespace GIShowCam.Gui
         /// </summary>
         /// <returns></returns>
         private void StartVlcReinit(bool byEnd)
-        {
-            LogEvent(@"Eroare la conexiune, repornire initializata");
+        {            
             if (SessionInfo.ReinitCount != 0) return; // niciun alt thread
+
+            if (!SessionInfo.FullScreen)
+                LogEvent(@"Eroare la conexiune, repornire initializata");
 
             if (byEnd)
             {
                 _info.Cam.Data.IsEnded = true;
-
-                TextUpdate(_form.lblVlcNotify,
-                    " Vlc stopped and re-initialization started ... ", false, false, false);
             }
             else
             {
@@ -169,8 +177,9 @@ namespace GIShowCam.Gui
             while (true)
             {
                 ToggleRunningMedia(false);
-                Thread.Sleep(8);
-                GC.Collect();
+
+                //Thread.Sleep(8);
+
                 ToggleRunningMedia(true);
 
                 if (_info.Cam.Data.IsError)

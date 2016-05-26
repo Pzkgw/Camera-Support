@@ -35,14 +35,12 @@ namespace GIShowCam
             {
                 mainB.InitGuiControls();
                 mainB.InitGuiDeviceInfo();
-                mainB.InitGuiRecord();
-
-                mainB.VideoInit(false);
+                mainB.InitGuiRecord();                
 
                 mainB.DeviceTextBoxesUpdate(false);
                 mainB.AddFormEvents();
 
-
+                mainB.VideoInit(false);
             }
 
             FormClosing += FormMain_FormClosing;

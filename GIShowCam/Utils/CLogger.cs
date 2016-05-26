@@ -15,7 +15,7 @@ namespace GIShowCam.Utils
         private bool _debugSaveDone;
         private byte _debugSaveStart;
 
-        internal static bool On = true;
+        internal static bool On = true, VideoOnPlay;
 
         internal CLogger(params TextBoxBase[] logView)
         {
@@ -41,9 +41,9 @@ namespace GIShowCam.Utils
 
         void ILogger.Debug(string debug)
         {
-            if (true) return;
+            if (!On) return;
 
-            if (SessionInfo.Playing)
+            if (VideoOnPlay)
             {
                 if (_debugSaveDone)
                 {

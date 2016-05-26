@@ -18,7 +18,7 @@ namespace GIShowCam.Gui
             SessionInfo.Logger = new CLogger(_form.txtLVDebug, _form.txtLVErrors, _form.txtLVInfo, _form.txtLVWarnings);
             _info = new SessionInfo();
 
-            UiSync.Init(formBase);
+            UiSync.SetSyncObj(formBase);
             
 
             DiscoverDevices();

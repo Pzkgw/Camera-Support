@@ -4,6 +4,7 @@ using GIShowCam.Info;
 using GIShowCam.Utils;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace GIShowCam.Gui
@@ -11,6 +12,8 @@ namespace GIShowCam.Gui
     internal partial class GuiBase
     {
         private DateTime _logTimeLast, _logTimeNow;
+
+        private static readonly object _lockStateModif = new object();
 
 
         /// <summary>
@@ -66,39 +69,48 @@ namespace GIShowCam.Gui
 
         private void Events_StateChanged(object sender, MediaStateChange e)
         {
-            switch (e.NewState)
+            var locked = false;
+            Monitor.Enter(_lockStateModif, ref locked);
+            try
             {
-                case MediaState.Opening:
-                    _info.Cam.Data.IsOpening = true;
-                    break;
-                case MediaState.Buffering:
-                    _info.Cam.Data.IsBuffering = true;
-                    break;
-                case MediaState.Playing:
-                    _info.Cam.Data.IsPlaying = true;
-                    break;
-                case MediaState.Paused:
-                    _info.Cam.Data.IsPaused = true;
-                    break;
-                case MediaState.Stopped:
-                    if (!_info.Cam.Data.IsStopped)
-                    {
-                        UiSync.Execute(() => SetBtnsVisibilityOnPlay(false));
-                    }
-                    _info.Cam.Data.IsStopped = true;
-                    break;
-                case MediaState.Ended:
-                    UiSync.Execute(() => StartVlcReinit(true));
-                    break;
-                case MediaState.Error:
-                    UiSync.Execute(() => StartVlcReinit(false));
-                    break;
-                case MediaState.NothingSpecial:
-                    break;
-            }
+                switch (e.NewState)
+                {
+                    case MediaState.Opening:
+                        _info.Cam.Data.IsOpening = true;
+                        break;
+                    case MediaState.Buffering:
+                        _info.Cam.Data.IsBuffering = true;
+                        break;
+                    case MediaState.Playing:
+                        _info.Cam.Data.IsPlaying = true;
+                        break;
+                    case MediaState.Paused:
+                        _info.Cam.Data.IsPaused = true;
+                        break;
+                    case MediaState.Stopped:
+                        if (!SessionInfo.FullScreen && !_info.Cam.Data.IsStopped)
+                        {
+                            UiSync.Execute(() => SetBtnsVisibilityOnPlay(false));
+                        }
+                        _info.Cam.Data.IsStopped = true;
+                        break;
+                    case MediaState.Ended:
+                        UiSync.Execute(() => StartVlcReinit(true));
+                        break;
+                    case MediaState.Error:
+                        UiSync.Execute(() => StartVlcReinit(false));
+                        break;
+                    case MediaState.NothingSpecial:
+                        break;
+                }
 
-            if (_mPlayer != null)
-                SessionInfo.Playing = _mPlayer.IsPlaying;
+                CLogger.VideoOnPlay = _info.Cam.Data.IsPlaying;
+            }
+            finally
+            {
+                if (locked)
+                    Monitor.Exit(_lockStateModif);
+            }
         }
 
         private void Events_MediaChanged(object sender, MediaPlayerMediaChanged e)
