@@ -11,8 +11,9 @@ namespace GIShowCam.Gui
     internal partial class GuiBase
     {
         private IMediaPlayerFactory _mFactory;
+        private IMemoryRenderer _memRender;
         private IDiskPlayer _mPlayer;
-        private IMedia _mMedia;
+        private IMedia _mMedia;        
 
         //internal static string[] GetVlcOptions()
         //{

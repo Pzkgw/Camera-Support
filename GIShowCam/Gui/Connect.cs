@@ -1,12 +1,9 @@
 ﻿using Declarations.Media;
 using Declarations.Players;
 using GIShowCam.Info;
-using GIShowCam.Utils;
 using Implementation;
 using System;
-using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
 
@@ -36,9 +33,9 @@ namespace GIShowCam.Gui
                     _info.Cam.Data.PropertyChanged += Data_PropertyChanged;
 
                     RegisterPlayerEvents(true);                    
-                }                
+                }
 
-                _mPlayer.WindowHandle = _form.panelVlc.Handle;               
+                ToggleDrawing(true);
 
                 _mPlayer.Play();
 
@@ -54,7 +51,7 @@ namespace GIShowCam.Gui
                     RegisterMediaEvents(false);
                 }
 
-                _mPlayer.WindowHandle = IntPtr.Zero;
+                ToggleDrawing(false);
 
                 _mMedia.Dispose();
                 _mMedia = null;
@@ -154,7 +151,7 @@ namespace GIShowCam.Gui
         /// <returns></returns>
         private void StartVlcReinit(bool byEnd)
         {            
-            if (SessionInfo.ReinitCount != 0) return; // niciun alt thread
+            if (_info.ReinitCount != 0) return; // niciun alt thread
 
             if (!SessionInfo.FullScreen)
                 LogEvent(@"Eroare la conexiune, repornire initializata");
@@ -183,13 +180,13 @@ namespace GIShowCam.Gui
 
                 if (_info.Cam.Data.IsError)
                 {
-                    ++SessionInfo.ReinitCount;
-                    if (SessionInfo.ReinitCount < 4) continue;
+                    ++_info.ReinitCount;
+                    if (_info.ReinitCount < 4) continue;
                 }
 
                 //(new System.Threading.Thread(delegate () { VideoInit(false,false,true); })).Start(); 
 
-                SessionInfo.ReinitCount = 0;
+                _info.ReinitCount = 0;
                 break;
             }
         }

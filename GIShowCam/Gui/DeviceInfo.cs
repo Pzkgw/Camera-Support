@@ -80,8 +80,6 @@ namespace GIShowCam.Gui
                 @", LostPictures: " + _mMedia.Statistics.LostPictures
                 , false, false, false)));
 
-            _form.BeginInvoke((Action)(() => checkF()));
-
             //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
 
             if (!_info.Cam.Data.IsVideoComplete &&
@@ -94,14 +92,6 @@ namespace GIShowCam.Gui
             }
             //form.Log("Poze = " + media.Statistics.DisplayedPictures);
             _form.BeginInvoke((Action)UpdateEventsLabel);
-        }
-
-        private void checkF()
-        {
-            if (_form.panelVlc.Focused)
-            {
-
-            }
         }
 
         private void UpdateEventsLabel()

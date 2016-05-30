@@ -18,8 +18,8 @@ namespace Implementation.Loggers
         private LogCallback m_callback;
         private ILogger m_logger;
 
-        UnBuffer _buff;
-        string _msg;
+        private UnBuffer _buff;
+        private string _msg;
 
         public LogSubscriber(ILogger logger, IntPtr pInstance)
         {

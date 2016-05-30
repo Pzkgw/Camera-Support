@@ -12,7 +12,7 @@ namespace GIShowCam.Utils
         private DateTime _dt;
         private FormMain _ctrl;
 
-        internal bool On = true, VideoOnPlay;
+        internal bool On = true;//, VideoOnPlay;
 
         internal CLogger(FormMain form)
         {

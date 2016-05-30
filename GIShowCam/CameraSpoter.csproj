@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Discovery\Discovery.cs" />
+    <Compile Include="Gui\Video.cs" />
     <Compile Include="Utils\CLogger.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>

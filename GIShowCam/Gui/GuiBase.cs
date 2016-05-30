@@ -20,6 +20,7 @@ namespace GIShowCam.Gui
 
             DiscoverDevices();
 
+            VideoInit();
 
             //form.panelVlc.BringToFront();
             //form.panelVlc.Click += PanelVlc_Click;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GIShowCam.Utils;
+using Declarations;
 
 namespace GIShowCam.Info
 {
@@ -18,7 +19,7 @@ namespace GIShowCam.Info
         internal static string SnapshotDir = "C:\\";
         internal static readonly uint SnapshotStreamNr = 0;
 
-        internal static int ReinitCount = 0;
+        internal int ReinitCount = 0;
 
         internal static readonly string VlcDir32 = @"C:\Program Files (x86)\VideoLAN\VLC",
             VlcDir64 = @"C:\Program Files\VideoLAN\VLC", 
@@ -33,6 +34,7 @@ namespace GIShowCam.Info
         };
 
         internal Device Cam;
+        internal BitmapFormat ImgFormat;
 
         internal static CLogger Logger;
         
