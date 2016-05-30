@@ -21,7 +21,7 @@ namespace GIShowCam.Gui
         // todo: -- > mouseDown; record
         private void ToggleRunningMedia(bool on)
         {
-            CLogger.VideoOnPlay = false;
+            //CLogger.VideoOnPlay = false;
             if (on)
             {
                 _mMedia = _mFactory.CreateMedia<IMedia>(GetPath());
@@ -36,20 +36,16 @@ namespace GIShowCam.Gui
                     _info.Cam.Data.PropertyChanged += Data_PropertyChanged;
 
                     RegisterPlayerEvents(true);                    
-                }
-
-                RegisterMediaEvents(true);
+                }                
 
                 _mPlayer.WindowHandle = _form.panelVlc.Handle;               
 
                 _mPlayer.Play();
 
-                UiSync.SetSyncObj(_form);
+                RegisterMediaEvents(true);
             }
             else if (_mMedia != null)
             {
-                UiSync.SetSyncObj(null); // minus notify event send
-
                 _mPlayer.Stop();
 
                 if (!SessionInfo.FullScreen)
@@ -58,6 +54,8 @@ namespace GIShowCam.Gui
                     RegisterMediaEvents(false);
                 }
 
+                _mPlayer.WindowHandle = IntPtr.Zero;
+
                 _mMedia.Dispose();
                 _mMedia = null;
 
@@ -65,6 +63,7 @@ namespace GIShowCam.Gui
                 _mPlayer = null;
 
                 GC.Collect();
+                GC.SuppressFinalize(_form);
                 GC.WaitForPendingFinalizers();
 
                 //m_factory.VideoLanManager.DeleteMedia("m_media");

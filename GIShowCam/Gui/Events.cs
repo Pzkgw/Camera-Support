@@ -38,7 +38,7 @@ namespace GIShowCam.Gui
 
         private void Events_PlayerSnapshotTaken(object sender, MediaPlayerSnapshotTaken e)
         {
-            UiSync.Execute(() => LogEvent(@"Snapshot salvat: " + e.FileName));
+            _form.BeginInvoke((Action)(() => LogEvent(@"Snapshot salvat: " + e.FileName)));
         }
 
         private void LogEvent(string s)
@@ -90,21 +90,21 @@ namespace GIShowCam.Gui
                     case MediaState.Stopped:
                         if (!SessionInfo.FullScreen && !_info.Cam.Data.IsStopped)
                         {
-                            UiSync.Execute(() => SetBtnsVisibilityOnPlay(false));
+                            _form.BeginInvoke((Action)(() => SetBtnsVisibilityOnPlay(false)));
                         }
                         _info.Cam.Data.IsStopped = true;
                         break;
                     case MediaState.Ended:
-                        UiSync.Execute(() => StartVlcReinit(true));
+                        _form.BeginInvoke((Action)(() => StartVlcReinit(true)));
                         break;
                     case MediaState.Error:
-                        UiSync.Execute(() => StartVlcReinit(false));
+                        _form.BeginInvoke((Action)(() => StartVlcReinit(false)));
                         break;
                     case MediaState.NothingSpecial:
                         break;
                 }
 
-                CLogger.VideoOnPlay = _info.Cam.Data.IsPlaying;
+                //CLogger.VideoOnPlay = _info.Cam.Data.IsPlaying;
             }
             finally
             {
@@ -129,18 +129,18 @@ namespace GIShowCam.Gui
             {
                 _logTimeLast = DateTime.Now;
 
-                UiSync.Execute(() =>
+                _form.BeginInvoke((Action)(() =>
                 TextUpdate(_form.txtDev,
                      Environment.NewLine +
                      $"{_logTimeLast.Hour:00}:{_logTimeLast.Minute:00}:{_logTimeLast.Second:00}.{_logTimeLast.Millisecond:000}          ---    Conexiune pornita   ---"
-                    , true, true, false));
+                    , true, true, false)));
             }
 
             _logTimeNow = DateTime.Now;
-            UiSync.Execute(() =>
+            _form.BeginInvoke((Action)(() =>
             TextUpdate(_form.txtDev,
                 $"{_logTimeLast.Hour:00}:{_logTimeLast.Minute:00}:{_logTimeLast.Second:00}.{_logTimeLast.Millisecond:000} {s} a inceput in {((int)_logTimeNow.Subtract(_logTimeLast).TotalMilliseconds).ToString()} ms {Environment.NewLine}"
-                , true, false, true));
+                , true, false, true)));
 
         }
 

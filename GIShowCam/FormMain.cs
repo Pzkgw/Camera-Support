@@ -49,7 +49,7 @@ namespace GIShowCam
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             mainB.CleanUp();
-            base.Dispose();
+            Dispose();
         }
 
 

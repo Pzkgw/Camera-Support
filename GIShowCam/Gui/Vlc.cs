@@ -127,7 +127,7 @@ namespace GIShowCam.Gui
 
         internal void CleanUp()
         {
-            CLogger.On = false;
+            SessionInfo.Logger.CleanUp();
 
             ToggleRunningMedia(false);
 

@@ -1,6 +1,6 @@
 ﻿using Declarations.Events;
 using GIShowCam.Utils;
-
+using System;
 
 namespace GIShowCam.Gui
 {
@@ -70,7 +70,7 @@ namespace GIShowCam.Gui
 
             if (_mMedia == null || _mPlayer == null || !_mPlayer.IsPlaying) return;
 
-            UiSync.Execute(() => TextUpdate(_form.lblVlcNotify,
+            _form.BeginInvoke((Action)(() => TextUpdate(_form.lblVlcNotify,
                 @"Timp de functionare: " + _mPlayer.Time / 60000 + @" minute si " +
                 (_mPlayer.Time / 1000) % 60 + @" secunde " +
                 @", DecodedVideo: " + _mMedia.Statistics.DecodedVideo +
@@ -78,7 +78,9 @@ namespace GIShowCam.Gui
                 @", DemuxBitrate: " + _mMedia.Statistics.DemuxBitrate +
                 @", DisplayedPictures: " + _mMedia.Statistics.DisplayedPictures +
                 @", LostPictures: " + _mMedia.Statistics.LostPictures
-                , false, false, false));
+                , false, false, false)));
+
+            _form.BeginInvoke((Action)(() => checkF()));
 
             //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
 
@@ -87,11 +89,19 @@ namespace GIShowCam.Gui
             {
                 _info.Cam.Data.ImgCount = _mMedia.Statistics.DisplayedPictures;
                 _info.Cam.Data.IsVideoComplete = true;
-                UiSync.Execute(() => SetBtnsVisibilityOnPlay(true));
+                _form.BeginInvoke((Action)(() => SetBtnsVisibilityOnPlay(true)));
 
             }
             //form.Log("Poze = " + media.Statistics.DisplayedPictures);
-            UiSync.Execute(UpdateEventsLabel);
+            _form.BeginInvoke((Action)UpdateEventsLabel);
+        }
+
+        private void checkF()
+        {
+            if (_form.panelVlc.Focused)
+            {
+
+            }
         }
 
         private void UpdateEventsLabel()

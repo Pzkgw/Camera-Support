@@ -7,19 +7,23 @@ using System.Security;
 
 namespace Implementation.Loggers
 {
+    internal unsafe struct UnBuffer
+    {
+        public unsafe fixed char _buff[4096];
+    }
+
     internal unsafe sealed class LogSubscriber : DisposableBase
     {
         private IntPtr m_instance;
         private LogCallback m_callback;
         private ILogger m_logger;
-        private const int BUFFER_SIZE = 2048;
 
-        private IntPtr _buff;
-        private string _msg;
+        UnBuffer _buff;
+        string _msg;
 
         public LogSubscriber(ILogger logger, IntPtr pInstance)
         {
-            _buff = Marshal.AllocHGlobal(BUFFER_SIZE);
+            _buff = default(UnBuffer);
 
             m_instance = pInstance;
             m_logger = logger;
@@ -29,7 +33,11 @@ namespace Implementation.Loggers
 
         private void OnLogCallback(void* data, libvlc_log_level level, void* ctx, char* fmt, char* args)
         {
-            _msg = Marshal.PtrToStringAnsi(_buff, vsprintf((char*)_buff, fmt, args));
+
+            fixed (char* buff = _buff._buff)
+            {
+                _msg = Marshal.PtrToStringAnsi(new IntPtr(buff), vsprintf(buff, fmt, args));
+            }
 
             switch (level)
             {
@@ -47,6 +55,7 @@ namespace Implementation.Loggers
                     m_logger.Error(_msg);
                     break;
             }
+            _msg = null;
         }
 
         protected override void Dispose(bool disposing)
@@ -54,7 +63,7 @@ namespace Implementation.Loggers
             try
             {
                 LibVlcMethods.libvlc_log_unset(m_instance);
-                Marshal.FreeHGlobal(_buff);
+                //Marshal.FreeHGlobal(_buff);
             }
             catch { }
 

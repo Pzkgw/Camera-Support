@@ -45,15 +45,15 @@
             this.groupBoxBtns = new System.Windows.Forms.GroupBox();
             this.chkFullVid = new System.Windows.Forms.CheckBox();
             this.tabLowDev = new System.Windows.Forms.TabControl();
-            this.tabVlcDebug = new System.Windows.Forms.TabPage();
-            this.txtLVDebug = new System.Windows.Forms.TextBox();
+            this.tabLogConnection = new System.Windows.Forms.TabPage();
             this.tabVlcError = new System.Windows.Forms.TabPage();
             this.txtLVErrors = new System.Windows.Forms.TextBox();
+            this.tabVlcDebug = new System.Windows.Forms.TabPage();
+            this.txtLVDebug = new System.Windows.Forms.TextBox();
             this.tabVlcInfo = new System.Windows.Forms.TabPage();
             this.txtLVInfo = new System.Windows.Forms.TextBox();
             this.tabWlcWarnings = new System.Windows.Forms.TabPage();
             this.txtLVWarnings = new System.Windows.Forms.TextBox();
-            this.tabLogConnection = new System.Windows.Forms.TabPage();
             this.tabLowCtrl = new System.Windows.Forms.TabPage();
             this.lblTxtRatio = new System.Windows.Forms.Label();
             this.btnRatio = new System.Windows.Forms.Button();
@@ -61,11 +61,11 @@
             this.groupBoxDev.SuspendLayout();
             this.groupBoxBtns.SuspendLayout();
             this.tabLowDev.SuspendLayout();
-            this.tabVlcDebug.SuspendLayout();
+            this.tabLogConnection.SuspendLayout();
             this.tabVlcError.SuspendLayout();
+            this.tabVlcDebug.SuspendLayout();
             this.tabVlcInfo.SuspendLayout();
             this.tabWlcWarnings.SuspendLayout();
-            this.tabLogConnection.SuspendLayout();
             this.tabLowCtrl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,6 +84,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVlc.BackColor = System.Drawing.Color.Transparent;
+            this.panelVlc.Enabled = false;
             this.panelVlc.Location = new System.Drawing.Point(327, 4);
             this.panelVlc.Margin = new System.Windows.Forms.Padding(0);
             this.panelVlc.Name = "panelVlc";
@@ -254,30 +255,15 @@
             this.tabLowDev.Size = new System.Drawing.Size(1228, 336);
             this.tabLowDev.TabIndex = 9;
             // 
-            // tabVlcDebug
+            // tabLogConnection
             // 
-            this.tabVlcDebug.Controls.Add(this.txtLVDebug);
-            this.tabVlcDebug.Location = new System.Drawing.Point(4, 24);
-            this.tabVlcDebug.Name = "tabVlcDebug";
-            this.tabVlcDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVlcDebug.Size = new System.Drawing.Size(1220, 308);
-            this.tabVlcDebug.TabIndex = 1;
-            this.tabVlcDebug.Text = " Debug ";
-            this.tabVlcDebug.UseVisualStyleBackColor = true;
-            // 
-            // txtLVDebug
-            // 
-            this.txtLVDebug.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtLVDebug.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLVDebug.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txtLVDebug.Location = new System.Drawing.Point(3, 3);
-            this.txtLVDebug.Margin = new System.Windows.Forms.Padding(0);
-            this.txtLVDebug.Multiline = true;
-            this.txtLVDebug.Name = "txtLVDebug";
-            this.txtLVDebug.ReadOnly = true;
-            this.txtLVDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLVDebug.Size = new System.Drawing.Size(1214, 302);
-            this.txtLVDebug.TabIndex = 0;
+            this.tabLogConnection.Controls.Add(this.txtDev);
+            this.tabLogConnection.Location = new System.Drawing.Point(4, 24);
+            this.tabLogConnection.Name = "tabLogConnection";
+            this.tabLogConnection.Size = new System.Drawing.Size(1220, 308);
+            this.tabLogConnection.TabIndex = 5;
+            this.tabLogConnection.Text = "Connection log";
+            this.tabLogConnection.UseVisualStyleBackColor = true;
             // 
             // tabVlcError
             // 
@@ -302,6 +288,31 @@
             this.txtLVErrors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtLVErrors.Size = new System.Drawing.Size(1220, 308);
             this.txtLVErrors.TabIndex = 0;
+            // 
+            // tabVlcDebug
+            // 
+            this.tabVlcDebug.Controls.Add(this.txtLVDebug);
+            this.tabVlcDebug.Location = new System.Drawing.Point(4, 24);
+            this.tabVlcDebug.Name = "tabVlcDebug";
+            this.tabVlcDebug.Padding = new System.Windows.Forms.Padding(3);
+            this.tabVlcDebug.Size = new System.Drawing.Size(1220, 308);
+            this.tabVlcDebug.TabIndex = 1;
+            this.tabVlcDebug.Text = " Debug ";
+            this.tabVlcDebug.UseVisualStyleBackColor = true;
+            // 
+            // txtLVDebug
+            // 
+            this.txtLVDebug.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtLVDebug.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLVDebug.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txtLVDebug.Location = new System.Drawing.Point(3, 3);
+            this.txtLVDebug.Margin = new System.Windows.Forms.Padding(0);
+            this.txtLVDebug.Multiline = true;
+            this.txtLVDebug.Name = "txtLVDebug";
+            this.txtLVDebug.ReadOnly = true;
+            this.txtLVDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtLVDebug.Size = new System.Drawing.Size(1214, 302);
+            this.txtLVDebug.TabIndex = 0;
             // 
             // tabVlcInfo
             // 
@@ -350,16 +361,6 @@
             this.txtLVWarnings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtLVWarnings.Size = new System.Drawing.Size(1220, 308);
             this.txtLVWarnings.TabIndex = 0;
-            // 
-            // tabLogConnection
-            // 
-            this.tabLogConnection.Controls.Add(this.txtDev);
-            this.tabLogConnection.Location = new System.Drawing.Point(4, 24);
-            this.tabLogConnection.Name = "tabLogConnection";
-            this.tabLogConnection.Size = new System.Drawing.Size(1220, 308);
-            this.tabLogConnection.TabIndex = 5;
-            this.tabLogConnection.Text = "Connection log";
-            this.tabLogConnection.UseVisualStyleBackColor = true;
             // 
             // tabLowCtrl
             // 
@@ -420,16 +421,16 @@
             this.groupBoxBtns.ResumeLayout(false);
             this.groupBoxBtns.PerformLayout();
             this.tabLowDev.ResumeLayout(false);
-            this.tabVlcDebug.ResumeLayout(false);
-            this.tabVlcDebug.PerformLayout();
+            this.tabLogConnection.ResumeLayout(false);
+            this.tabLogConnection.PerformLayout();
             this.tabVlcError.ResumeLayout(false);
             this.tabVlcError.PerformLayout();
+            this.tabVlcDebug.ResumeLayout(false);
+            this.tabVlcDebug.PerformLayout();
             this.tabVlcInfo.ResumeLayout(false);
             this.tabVlcInfo.PerformLayout();
             this.tabWlcWarnings.ResumeLayout(false);
             this.tabWlcWarnings.PerformLayout();
-            this.tabLogConnection.ResumeLayout(false);
-            this.tabLogConnection.PerformLayout();
             this.tabLowCtrl.ResumeLayout(false);
             this.tabLowCtrl.PerformLayout();
             this.ResumeLayout(false);

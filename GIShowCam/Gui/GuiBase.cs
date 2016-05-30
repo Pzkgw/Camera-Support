@@ -15,14 +15,11 @@ namespace GIShowCam.Gui
             _logTimeLast = DateTime.MinValue;
             _form = formBase;
 
-            SessionInfo.Logger = new CLogger(_form.txtLVDebug, _form.txtLVErrors, _form.txtLVInfo, _form.txtLVWarnings);
+            SessionInfo.Logger = new CLogger(_form);
             _info = new SessionInfo();
 
-            UiSync.SetSyncObj(formBase);
-            
-
             DiscoverDevices();
-            
+
 
             //form.panelVlc.BringToFront();
             //form.panelVlc.Click += PanelVlc_Click;
