@@ -27,10 +27,15 @@ namespace Implementation.Players
 
         #region IPlayer Members
 
-        public virtual void Open(IMedia media)
+        public virtual void Open(IMediaPlayerFactory factory, string s)
         {
-            m_currentMedia = media;
-            LibVlcMethods.libvlc_media_player_set_media(m_hMediaPlayer, ((INativePointer)media).Pointer);
+            if (m_currentMedia != null)
+            {
+                m_currentMedia.Dispose();
+            }
+
+            m_currentMedia = factory.CreateMedia<IMedia>(s);
+            LibVlcMethods.libvlc_media_player_set_media(m_hMediaPlayer, ((INativePointer)m_currentMedia).Pointer);
         }
 
         public virtual void Play()
@@ -43,9 +48,15 @@ namespace Implementation.Players
             LibVlcMethods.libvlc_media_player_pause(m_hMediaPlayer);
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             LibVlcMethods.libvlc_media_player_stop(m_hMediaPlayer);
+
+            if (m_currentMedia != null)
+            {
+                m_currentMedia.Dispose();
+                m_currentMedia = null;
+            }
         }
 
         public long Time

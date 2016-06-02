@@ -48,6 +48,25 @@ namespace Implementation.Players
             }
         }
 
+        public override void Stop()
+        {
+            base.Stop();
+
+            if (m_memRender != null)
+            {
+                m_memRender.Dispose();
+                m_memRender = null;
+            }
+
+            if (m_memRenderEx != null)
+            {
+                m_memRenderEx.Dispose();
+                m_memRenderEx = null;
+                Events.PlayerPlaying -= Events_PlayerPlaying;
+            }
+
+        }
+
         #region IVideoPlayer Members
 
         public IntPtr WindowHandle

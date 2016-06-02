@@ -117,9 +117,9 @@ namespace Implementation.Players
             LibVlcMethods.libvlc_media_list_player_stop(m_hMediaListPlayer);
         }
 
-        public void Open(IMedia media)
+        public void Open(IMediaPlayerFactory factory, string s)
         {
-            m_videoPlayer.Open(media);
+            //m_videoPlayer.Open(media); // utilizabil mai tarzi7u
         }
 
         public long Time

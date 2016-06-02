@@ -21,10 +21,11 @@ namespace GIShowCam.Gui
             //CLogger.VideoOnPlay = false;
             if (on)
             {
-                _mMedia = _mFactory.CreateMedia<IMedia>(GetPath());
+
                 _mPlayer = _mFactory.CreatePlayer<IDiskPlayer>();
 
-                _mPlayer.Open(_mMedia);
+                _mPlayer.Open(_mFactory, GetPath());
+                _mMedia = _mPlayer.CurrentMedia;
                 //_mMedia.Parse(false);
 
                 if (!SessionInfo.FullScreen)
@@ -73,7 +74,7 @@ namespace GIShowCam.Gui
             if (_mFactory == null)
             {
                 _mFactory = new MediaPlayerFactory(GetVlcOptions(),
-                    SessionInfo.VlcDir, SessionInfo.Logger, true);
+                    SessionInfo.VlcDir, true, SessionInfo.Logger);
             }
 
             ToggleRunningMedia(false);

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Declarations.Media;
 using Declarations.Events;
+using Declarations;
 
 namespace Declarations.Players
 {
@@ -15,7 +16,7 @@ namespace Declarations.Players
         /// Opens new media item.
         /// </summary>
         /// <param name="media">Media item to play</param>
-        void Open(IMedia media);
+        void Open(IMediaPlayerFactory factory, string s);//IMedia media);
 
         /// <summary>
         /// Plays media item.
