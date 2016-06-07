@@ -3,7 +3,7 @@ using Declarations.Media;
 using Declarations.Players;
 using Implementation;
 using System;
-
+using System.Threading;
 
 namespace GISendLib
 {
@@ -108,29 +108,79 @@ namespace GISendLib
             if (on)
             {
                 _mPlayer.Open(_mFactory, s[si]);
-                _mPlayer.Play();
+                _mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged;
 
-                ToggleDrawing(true);
+                ToggleDrawing(true); // inainte de play
+
+                _mPlayer.Play();
+                
             }
             else
             {
                 _mPlayer.Stop();
+                _mPlayer.CurrentMedia.Events.StateChanged -= Events_StateChanged;
+                ToggleDrawing(false);
             }
         }
 
+        private static readonly object _lockStateModif = new object();
+
+        private void Events_StateChanged(object sender, Declarations.Events.MediaStateChange e)
+        {
+            var locked = false;
+            Monitor.Enter(_lockStateModif, ref locked);
+            try
+            {
+                switch (e.NewState)
+                {
+                    case MediaState.Opening:
+                        //_info.Cam.Data.IsOpening = true;
+                        break;
+                    case MediaState.Buffering:
+                        //_info.Cam.Data.IsBuffering = true;
+                        break;
+                    case MediaState.Playing:
+                        //_info.Cam.Data.IsPlaying = true;
+                        break;
+                    case MediaState.Paused:
+                        //_info.Cam.Data.IsPaused = true;
+                        break;
+                    case MediaState.Stopped:
+                        //if (!SessionInfo.FullScreen && !_info.Cam.Data.IsStopped)                        {
+                         //   _form.BeginInvoke((Action)(() => SetBtnsVisibilityOnPlay(false)));                        }
+                        //_info.Cam.Data.IsStopped = true;
+                        break;
+                    case MediaState.Ended:
+                    case MediaState.Error:
+                        ToggleRunningMedia(false);
+                        ToggleRunningMedia(true);
+                        break;
+                    case MediaState.NothingSpecial:
+                        break;
+                }
+
+                //CLogger.VideoOnPlay = _info.Cam.Data.IsPlaying;
+            }
+            finally
+            {
+                if (locked)
+                    Monitor.Exit(_lockStateModif);
+            }
+        }
 
         private void ToggleDrawing(bool on)
         {
             if (on)
             {
                 _mPlayer.CustomRendererEx.SetFormatSetupCallback(OnSetupCallback);
-                _mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallback);
+                //_mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallback);
                 _mPlayer.CustomRendererEx.SetCallback(OnNewFrameCallback);
             }
             else
             {
-                //_mPlayer.WindowHandle = IntPtr.Zero;
-
+                _mPlayer.CustomRendererEx.SetFormatSetupCallback(null);
+                //_mPlayer.CustomRendererEx.SetExceptionHandler(null);
+                _mPlayer.CustomRendererEx.SetCallback(null);
             }
         }
 
@@ -139,11 +189,13 @@ namespace GISendLib
             SetupInput(format);
             return new BitmapFormat(format.Width, format.Height, ChromaType.RV24);
         }
-
+        /*
         private void OnErrorCallback(Exception error)
         {
+            ToggleRunningMedia(false);
+            ToggleRunningMedia(true);
             //MessageBox.Show(error.Message);
-        }
+        }*/
 
         private void OnNewFrameCallback(PlanarFrame frame)
         {
@@ -167,7 +219,7 @@ namespace GISendLib
             streamInfo.Size = format.ImageSize;
 
             InputMedia.Initialize(streamInfo);
-            //_mInputMedia.SetExceptionHandler(OnErrorCallback);
+            //InputMedia.SetExceptionHandler(OnErrorCallback);
             //m_renderPlayer.Open(m_inputMedia);
         }
 
