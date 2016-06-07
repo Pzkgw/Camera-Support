@@ -1,7 +1,6 @@
-﻿using System;
-using Declarations;
+﻿using Declarations;
 
-namespace GISendApp
+namespace GISendLib
 {
     class CLogger : ILogger
     {
@@ -25,4 +24,6 @@ namespace GISendApp
 
         }
     }
+
+
 }

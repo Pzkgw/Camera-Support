@@ -1,27 +1,31 @@
 ﻿using Declarations;
+using Declarations.Media;
 using Declarations.Players;
 using Implementation;
 using System;
-using System.Drawing;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using WindowsFormsApplication1;
 
-namespace GISendApp
+
+namespace GISendLib
 {
-    class MainSend
+    public class MainSend
     {
         private IMediaPlayerFactory _mFactory;
         //private IMemoryRenderer _memRender;
-        private IDiskPlayer _mPlayer;
-        //private IMedia _mMedia;
+        private IVideoPlayer _mPlayer;
+        public IMemoryInputMedia InputMedia;
+
+
+        const long MicroSecondsInSecomd = 1000 * 1000;
+        long MicroSecondsBetweenFrame;
+        long frameCounter;
+        FrameData data = new FrameData() { DTS = -1 };
+        const int DefaultFps = 24;
 
 
         string[] opt = new[] { //--snapshot-format=jpg
                 "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
                 ,"--no-fullscreen" //
-                ,"--one-instance"  //  Allow only one running instance (default disabled)
+                //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on starting to play media.
                 //,"--rtsp-tcp"
@@ -52,29 +56,22 @@ namespace GISendApp
 
         bool started;
 
-        //BitmapFormat bformat;
-        Form1 form;
-        Graphics graphics;
-
-        public MainSend(Form1 fork)
+        public MainSend()
         {
-            form = fork;
-
+            
             if (_mFactory == null)
             {
                 _mFactory = new MediaPlayerFactory(opt,//new string[] { },
                     @"C:\Program Files (x86)\VideoLAN\VLC", false, new CLogger());
 
-                _mPlayer = _mFactory.CreatePlayer<IDiskPlayer>();
+                _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
+                _mPlayer.Events.PlayerPlaying += new EventHandler(Events_PlayerPlaying);
+                InputMedia = _mFactory.CreateMedia<IMemoryInputMedia>(MediaStrings.IMEM);
             }
 
-
-            //bformat = new BitmapFormat(form.panel1.Width, form.panel1.Height, ChromaType.RV24);
-
             DateTime _dt;
-            graphics = form.panel1.CreateGraphics();
 
-            while (true)//for (int i = 0; i < 128; i++)
+            //while (true)//for (int i = 0; i < 128; i++)
             {
                 _dt = DateTime.Now;
 
@@ -100,6 +97,11 @@ namespace GISendApp
 
         }
 
+        void Events_PlayerPlaying(object sender, EventArgs e)
+        {
+            MicroSecondsBetweenFrame = (long)(MicroSecondsInSecomd / (_mPlayer.FPS != 0 ? _mPlayer.FPS : DefaultFps));
+        }
+
 
         private void ToggleRunningMedia(bool on)
         {
@@ -116,80 +118,57 @@ namespace GISendApp
             }
         }
 
-        //public delegate void NewFrameDataEventHandler(PlanarFrame frame);
-
-        void NewFrameDat(PlanarFrame frame)
-        {
-            Console.WriteLine(frame.Lenghts);
-            /*
-            System.Threading.Tasks.Parallel.ForEach(m_renders, rnd => rnd.Display(frame.Planes[0], frame.Planes[1], frame.Planes[2], true));
-            // Exception is thrown here  -- Display play time in milliseconds      
-             
-            m_renders[0].RemoveOverlay(0);
-            m_renders[0].AddTextOverlay(0, m_player.Time.ToString(), new Rectangle(20, 20, 100, 40), 24, Color.Red, "Sans serif", 255);
-            */
-
-
-        }
-
-        FrameData data = new FrameData() { DTS = -1 };
 
         private void ToggleDrawing(bool on)
         {
             if (on)
             {
-                //_memRender = _mPlayer.CustomRenderer;
-
-                //_mPlayer.WindowHandle = _form.panelVlc.Handle;
-
-
-                /*
-                _mPlayer.CustomRenderer.SetCallback(delegate (Bitmap frame)
-                {
-                    _panGraphics.DrawImageUnscaled(frame, Point.Empty);
-                }*/
-
-                
-                //_mPlayer.CustomRendererEx.SetFormat(bformat);
-                //_mPlayer.CustomRendererEx.SetFormatSetupCallback(delegate(BitmapFormat bf))
-
-                _mPlayer.CustomRendererEx.SetCallback(delegate (PlanarFrame frame)
-                {
-                    //_panGraphics.DrawImageUnscaled(frame, Point.Empty);
-                    //Console.WriteLine("Frame");//frame.Lenghts);
-
-                    var byteArrayIn = new byte[frame.Lenghts[1]];
-                    Marshal.Copy(frame.Planes[1], byteArrayIn, 0, frame.Lenghts[1]);
-
-                    //graphics.DrawImageUnscaled((Bitmap)((new ImageConverter()).ConvertFrom(byteArray)), Point.Empty);
-
-                    /*
-                    using (var ms = new MemoryStream(byteArray))
-                    {
-                        using (var img = Image.FromStream(ms,true, false))
-                        {
-                            graphics.DrawImageUnscaled(img, Point.Empty);
-                        }
-                    }*/
-
-                    MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
-                    ms.Position = 0; // this is important
-                    graphics.DrawImageUnscaled(Image.FromStream(ms, true,false), Point.Empty);
-
-                    //Parallel.ForEach(m_renders, rnd => rnd.Display(frame.Planes[0], frame.Planes[1], frame.Planes[2], true));
-                    // Exception is thrown here      -- Display play time in milliseconds
-                    //m_renders[0].RemoveOverlay(0);
-                    //m_renders[0].AddTextOverlay(0, m_player.Time.ToString(), new Rectangle(20, 20, 100, 40), 24, Color.Red, "Sans serif", 255);
-
-                });
-
-                //_memRender.SetFormat(_info.ImgFormat);
+                _mPlayer.CustomRendererEx.SetFormatSetupCallback(OnSetupCallback);
+                _mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallback);
+                _mPlayer.CustomRendererEx.SetCallback(OnNewFrameCallback);
             }
             else
             {
                 //_mPlayer.WindowHandle = IntPtr.Zero;
 
             }
+        }
+
+        private BitmapFormat OnSetupCallback(BitmapFormat format)
+        {
+            SetupInput(format);
+            return new BitmapFormat(format.Width, format.Height, ChromaType.RV24);
+        }
+
+        private void OnErrorCallback(Exception error)
+        {
+            //MessageBox.Show(error.Message);
+        }
+
+        private void OnNewFrameCallback(PlanarFrame frame)
+        {
+            data.Data = frame.Planes[0];
+            data.DataSize = frame.Lenghts[0];
+            data.PTS = frameCounter++ * MicroSecondsBetweenFrame;
+            InputMedia.AddFrame(data);
+
+            //if (/*m_inputMedia.PendingFramesCount == 10 && */!m_renderPlayer.IsPlaying)            {
+            //    m_renderPlayer.Play();            }
+        }
+
+
+        private void SetupInput(BitmapFormat format)
+        {
+            var streamInfo = new StreamInfo();
+            streamInfo.Category = Declarations.Enums.StreamCategory.Video;
+            streamInfo.Codec = Declarations.Enums.VideoCodecs.BGR24;
+            streamInfo.Width = format.Width;
+            streamInfo.Height = format.Height;
+            streamInfo.Size = format.ImageSize;
+
+            InputMedia.Initialize(streamInfo);
+            //_mInputMedia.SetExceptionHandler(OnErrorCallback);
+            //m_renderPlayer.Open(m_inputMedia);
         }
 
 

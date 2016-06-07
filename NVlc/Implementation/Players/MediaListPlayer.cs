@@ -119,7 +119,12 @@ namespace Implementation.Players
 
         public void Open(IMediaPlayerFactory factory, string s)
         {
-            //m_videoPlayer.Open(media); // utilizabil mai tarzi7u
+            //m_videoPlayer.Open(media); // utilizabil mai tarziu
+        }
+
+        public void Open(IMedia media)
+        {
+            m_videoPlayer.Open(media);
         }
 
         public long Time

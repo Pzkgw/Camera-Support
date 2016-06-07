@@ -16,6 +16,12 @@ namespace Declarations.Players
         /// Opens new media item.
         /// </summary>
         /// <param name="media">Media item to play</param>
+        void Open(IMedia media);
+
+        /// <summary>
+        /// Opens new media item.
+        /// </summary>
+        /// <param name="media">Media item to play</param>
         void Open(IMediaPlayerFactory factory, string s);//IMedia media);
 
         /// <summary>

@@ -38,6 +38,17 @@ namespace Implementation.Players
             LibVlcMethods.libvlc_media_player_set_media(m_hMediaPlayer, ((INativePointer)m_currentMedia).Pointer);
         }
 
+        public virtual void Open(IMedia media)
+        {
+            if (m_currentMedia != null)
+            {
+                m_currentMedia.Dispose();
+            }
+
+            m_currentMedia = media;
+            LibVlcMethods.libvlc_media_player_set_media(m_hMediaPlayer, ((INativePointer)m_currentMedia).Pointer);
+        }
+
         public virtual void Play()
         {
             LibVlcMethods.libvlc_media_player_play(m_hMediaPlayer);

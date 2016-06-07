@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace GIStreamReceive
 {
     partial class Form1
     {
@@ -33,16 +33,16 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(51, 49);
+            this.panel1.Location = new System.Drawing.Point(108, 67);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(723, 423);
+            this.panel1.Size = new System.Drawing.Size(760, 435);
             this.panel1.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 563);
+            this.ClientSize = new System.Drawing.Size(983, 614);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -52,7 +52,7 @@
 
         #endregion
 
-        public System.Windows.Forms.Panel panel1;
+        internal System.Windows.Forms.Panel panel1;
     }
 }
 

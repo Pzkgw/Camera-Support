@@ -19,7 +19,7 @@ namespace Implementation
         volatile int m_frameRate = 0;
         int m_latestFps;
         object m_lock = new object();
-        List<Delegate> m_callbacks = new List<Delegate>();
+        //List<Delegate> m_callbacks = new List<Delegate>();
 
         IntPtr pLockCallback;
         IntPtr pUnlockCallback;
@@ -41,9 +41,9 @@ namespace Implementation
             pUnlockCallback = Marshal.GetFunctionPointerForDelegate(ueh);
             pDisplayCallback = Marshal.GetFunctionPointerForDelegate(deh);
 
-            m_callbacks.Add(leh);
-            m_callbacks.Add(deh);
-            m_callbacks.Add(ueh);
+            //m_callbacks.Add(leh);
+            //m_callbacks.Add(deh);
+            //m_callbacks.Add(ueh);
 
             m_timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             m_timer.Interval = 1000;
@@ -168,7 +168,7 @@ namespace Implementation
             {
                 m_timer.Dispose();
                 m_callback = null;
-                m_callbacks.Clear();
+                //m_callbacks.Clear();
             }
         }
     }
