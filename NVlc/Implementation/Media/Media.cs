@@ -59,8 +59,19 @@ namespace Implementation.Media
             }
             set
             {
+                // ASG
+                /*
+                string s = "rtsp://10.10.10.78/axis-media/media.amp";//root:cavi123,.@
+                m_path = s;
+                m_hMedia = LibVlcMethods.libvlc_media_new_location(m_hMediaLib, Encoding.UTF8.GetBytes(s));
+                LibVlcMethods.libvlc_media_add_option(m_hMedia, Encoding.UTF8.GetBytes("--rtsp-user".ToCharArray()));
+                LibVlcMethods.libvlc_media_add_option(m_hMedia, Encoding.UTF8.GetBytes("root".ToCharArray()));
+                LibVlcMethods.libvlc_media_add_option(m_hMedia, Encoding.UTF8.GetBytes("--rtsp-pwd".ToCharArray()));
+                LibVlcMethods.libvlc_media_add_option(m_hMedia, Encoding.UTF8.GetBytes("cavi123,.".ToCharArray()));
+*/
+
                 m_path = value;
-                m_hMedia = LibVlcMethods.libvlc_media_new_location(m_hMediaLib, m_path.ToUtf8());
+                m_hMedia = LibVlcMethods.libvlc_media_new_location(m_hMediaLib, Encoding.UTF8.GetBytes(m_path));
             }
         }
 
@@ -78,7 +89,15 @@ namespace Implementation.Media
             {
                 if (!string.IsNullOrEmpty(item))
                 {
-                    LibVlcMethods.libvlc_media_add_option(m_hMedia, item.ToUtf8());
+                    //unsafe
+                    {
+                        //fixed(char * g = item.ToCharArray())
+                        {
+                            //IntPtr g  = Marshal.AllocHGlobal(item.ToCharArray().Length);
+                            //Marshal.Copy(item.ToCharArray(), 0, g, item.ToCharArray().Length);
+                            LibVlcMethods.libvlc_media_add_option(m_hMedia, Encoding.UTF8.GetBytes(item.ToCharArray())); // item.ToUtf8()
+                        }
+                    }
                 }
             }
         }

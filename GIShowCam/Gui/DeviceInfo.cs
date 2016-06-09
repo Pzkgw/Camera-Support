@@ -68,30 +68,36 @@ namespace GIShowCam.Gui
             //form.ControlTextUpdate(lblVlcNotifications, "Pozitie(doar pentru video local) : " + (e.Data * 100).ToString("000") + " %");
             //form.ControlTextUpdate(lblVlcNotifications, "FPS: " + vlc.FPS);
 
-            if (_mMedia == null || _mPlayer == null || !_mPlayer.IsPlaying) return;
+            if (_mPlayer == null || !_mPlayer.IsPlaying) return;
 
-            _form.BeginInvoke((Action)(() => TextUpdate(_form.lblVlcNotify,
-                @"Timp de functionare: " + _mPlayer.Time / 60000 + @" minute si " +
-                (_mPlayer.Time / 1000) % 60 + @" secunde " +
-                @", DecodedVideo: " + _mMedia.Statistics.DecodedVideo +
-                @", InputBitrate: " + _mMedia.Statistics.InputBitrate +
-                @", DemuxBitrate: " + _mMedia.Statistics.DemuxBitrate +
-                @", DisplayedPictures: " + _mMedia.Statistics.DisplayedPictures +
-                @", LostPictures: " + _mMedia.Statistics.LostPictures
-                , false, false, false)));
+            _form.BeginInvoke((Action)(() => StatsUpdate()));
+        }
+
+        private void StatsUpdate()
+        {
+            /*
+            TextUpdate(_form.lblVlcNotify,
+    @"Timp de functionare: " + _mPlayer.Time / 60000 + @" minute si " +
+    (_mPlayer.Time / 1000) % 60 + @" secunde " +
+    @", DecodedVideo: " + _mPlayer.CurrentMedia.Statistics.DecodedVideo +
+    @", InputBitrate: " + _mPlayer.CurrentMedia.Statistics.InputBitrate +
+    @", DemuxBitrate: " + _mPlayer.CurrentMedia.Statistics.DemuxBitrate +
+    @", DisplayedPictures: " + _mPlayer.CurrentMedia.Statistics.DisplayedPictures +
+    @", LostPictures: " + _mPlayer.CurrentMedia.Statistics.LostPictures
+    , false, false, false);
 
             //form.Log("Poze = " + vlc.GetCurrentMedia().Statistics.DisplayedPictures);
 
             if (!_info.Cam.Data.IsVideoComplete &&
-                _info.Cam.Data.ImgCount < _mMedia.Statistics.DisplayedPictures)
+                _info.Cam.Data.ImgCount < _mPlayer.CurrentMedia.Statistics.DisplayedPictures)
             {
-                _info.Cam.Data.ImgCount = _mMedia.Statistics.DisplayedPictures;
+                _info.Cam.Data.ImgCount = _mPlayer.CurrentMedia.Statistics.DisplayedPictures;
                 _info.Cam.Data.IsVideoComplete = true;
-                _form.BeginInvoke((Action)(() => SetBtnsVisibilityOnPlay(true)));
-
+                SetBtnsVisibilityOnPlay(true);
             }
             //form.Log("Poze = " + media.Statistics.DisplayedPictures);
-            _form.BeginInvoke((Action)UpdateEventsLabel);
+            UpdateEventsLabel();
+            */
         }
 
         private void UpdateEventsLabel()

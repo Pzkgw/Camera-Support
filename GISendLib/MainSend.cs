@@ -11,19 +11,20 @@ namespace GISendLib
     {
         private IMediaPlayerFactory _mFactory;
         //private IMemoryRenderer _memRender;
-        private IVideoPlayer _mPlayer;
+        public IVideoPlayer Player;
         public IMemoryInputMedia InputMedia;
 
 
         const long MicroSecondsInSecomd = 1000 * 1000;
         long MicroSecondsBetweenFrame;
         long frameCounter;
-        FrameData data = new FrameData() { DTS = -1 };
+        //FrameData data = new FrameData() { DTS = -1 };
         const int DefaultFps = 24;
 
 
         string[] opt = new[] { //--snapshot-format=jpg
                 "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
+            ,"-vvv"
                 ,"--no-fullscreen" //
                 //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
@@ -52,7 +53,7 @@ namespace GISendLib
             @"rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0",
             @"rtsp://root:cavi123,.@10.10.10.78/axis-media/media.amp"
         };
-        int si = 0;
+        int si = 1;
 
         bool started;
 
@@ -64,9 +65,10 @@ namespace GISendLib
                 _mFactory = new MediaPlayerFactory(opt,//new string[] { },
                     @"C:\Program Files (x86)\VideoLAN\VLC", false, new CLogger());
 
-                _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
-                _mPlayer.Events.PlayerPlaying += new EventHandler(Events_PlayerPlaying);
+                Player = _mFactory.CreatePlayer<IVideoPlayer>();
                 InputMedia = _mFactory.CreateMedia<IMemoryInputMedia>(MediaStrings.IMEM);
+
+                Player.Events.PlayerPlaying += new EventHandler(Events_PlayerPlaying);
             }
 
             DateTime _dt;
@@ -83,9 +85,9 @@ namespace GISendLib
 
 
                 ToggleRunningMedia(true);
+                Thread.Sleep(3000);
 
 
-                System.Threading.Thread.Sleep(3000);
                 ++si;
                 if (si >= s.Length) si = 0;
                 _dt = DateTime.Now;
@@ -97,9 +99,10 @@ namespace GISendLib
 
         }
 
+
         void Events_PlayerPlaying(object sender, EventArgs e)
         {
-            MicroSecondsBetweenFrame = (long)(MicroSecondsInSecomd / (_mPlayer.FPS != 0 ? _mPlayer.FPS : DefaultFps));
+            ((Action)(()=>MicroSecondsBetweenFrame = (long)(MicroSecondsInSecomd / (Player.FPS != 0 ? Player.FPS : DefaultFps)))).DynamicInvoke();
         }
 
 
@@ -107,19 +110,19 @@ namespace GISendLib
         {
             if (on)
             {
-                _mPlayer.Open(_mFactory, s[si]);
-                _mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged;
+                Player.Open(_mFactory, s[si]);
+                //_mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged;
 
-                ToggleDrawing(true); // inainte de play
+                ToggleDrawing(true); // inainte de play                
 
-                _mPlayer.Play();
-                
+                Player.Play();
             }
             else
             {
-                _mPlayer.Stop();
-                _mPlayer.CurrentMedia.Events.StateChanged -= Events_StateChanged;
                 ToggleDrawing(false);
+                //_mPlayer.CurrentMedia.Events.StateChanged -= Events_StateChanged;
+                Player.Stop();                
+                
             }
         }
 
@@ -172,22 +175,21 @@ namespace GISendLib
         {
             if (on)
             {
-                _mPlayer.CustomRendererEx.SetFormatSetupCallback(OnSetupCallback);
+                Player.CustomRendererEx.SetFormatSetupCallback(OnSetupCallback);
                 //_mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallback);
-                _mPlayer.CustomRendererEx.SetCallback(OnNewFrameCallback);
+                Player.CustomRendererEx.SetCallback(OnNewFrameCallback);
             }
             else
             {
-                _mPlayer.CustomRendererEx.SetFormatSetupCallback(null);
+                Player.CustomRendererEx.SetFormatSetupCallback(null);
                 //_mPlayer.CustomRendererEx.SetExceptionHandler(null);
-                _mPlayer.CustomRendererEx.SetCallback(null);
+                Player.CustomRendererEx.SetCallback(null);
             }
         }
 
         private BitmapFormat OnSetupCallback(BitmapFormat format)
         {
-            SetupInput(format);
-            return new BitmapFormat(format.Width, format.Height, ChromaType.RV24);
+            return SetupInput(format);
         }
         /*
         private void OnErrorCallback(Exception error)
@@ -198,18 +200,24 @@ namespace GISendLib
         }*/
 
         private void OnNewFrameCallback(PlanarFrame frame)
-        {
+        {/*
             data.Data = frame.Planes[0];
             data.DataSize = frame.Lenghts[0];
             data.PTS = frameCounter++ * MicroSecondsBetweenFrame;
-            InputMedia.AddFrame(data);
 
-            //if (/*m_inputMedia.PendingFramesCount == 10 && */!m_renderPlayer.IsPlaying)            {
-            //    m_renderPlayer.Play();            }
+            InputMedia.AddFrame(data); // DTS ramane pe default ( -1 )
+
+            for (int i = 0; i < frame.Planes.Length; frame.Planes[i++] = IntPtr.Zero) ;
+            */
+            //if (/*m_inputMedia.PendingFramesCount == 10 && */!_mPlayer.IsPlaying) { _mPlayer.Play(); }
+
+            InputMedia.AddFrame(new FrameData() { Data = frame.Planes[0], DataSize = frame.Lenghts[0], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
+
+
         }
 
 
-        private void SetupInput(BitmapFormat format)
+        private BitmapFormat SetupInput(BitmapFormat format)
         {
             var streamInfo = new StreamInfo();
             streamInfo.Category = Declarations.Enums.StreamCategory.Video;
@@ -218,9 +226,11 @@ namespace GISendLib
             streamInfo.Height = format.Height;
             streamInfo.Size = format.ImageSize;
 
-            InputMedia.Initialize(streamInfo);
+            InputMedia.Initialize(streamInfo, 16);
             //InputMedia.SetExceptionHandler(OnErrorCallback);
             //m_renderPlayer.Open(m_inputMedia);
+
+            return new BitmapFormat(format.Width, format.Height, ChromaType.RV24);
         }
 
 

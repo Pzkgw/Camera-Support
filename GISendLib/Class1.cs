@@ -15,5 +15,10 @@
             return asr.InputMedia;
         }
 
+        public Declarations.Players.IVideoPlayer GetPlayer()
+        {
+            return asr.Player;
+        }
+
     }
 }

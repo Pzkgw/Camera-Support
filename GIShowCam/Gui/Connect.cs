@@ -22,10 +22,10 @@ namespace GIShowCam.Gui
             if (on)
             {
 
-                _mPlayer = _mFactory.CreatePlayer<IDiskPlayer>();
+                _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
 
                 _mPlayer.Open(_mFactory, GetPath());
-                _mMedia = _mPlayer.CurrentMedia;
+
                 //_mMedia.Parse(false);
 
                 if (!SessionInfo.FullScreen)
@@ -42,7 +42,7 @@ namespace GIShowCam.Gui
 
                 RegisterMediaEvents(true);
             }
-            else if (_mMedia != null)
+            else if (_mPlayer!=null && _mPlayer.CurrentMedia != null)
             {
                 _mPlayer.Stop();
 
@@ -53,9 +53,6 @@ namespace GIShowCam.Gui
                 }
 
                 ToggleDrawing(false);
-
-                _mMedia.Dispose();
-                _mMedia = null;
 
                 _mPlayer.Dispose();
                 _mPlayer = null;

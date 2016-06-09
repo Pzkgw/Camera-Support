@@ -3,10 +3,6 @@ using Declarations.Players;
 using GISendLib;
 using Implementation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GIStreamReceive
 {
@@ -42,11 +38,14 @@ namespace GIStreamReceive
                 ,"--aout=none" //  main NO audio output ( optional mai e si "--no-audio" )
 
         };
-
+        Class1 gs;
         public MainReceive(Form1 fork)
         {
-            Class1 gs = new Class1(); // inainte de MainReceive::_mFactory->Init()
+            
+
+            gs = new Class1(); // inainte de MainReceive::_mFactory->Init()
             form = fork;
+            
 
             if (_mFactory == null)
             {
@@ -55,13 +54,20 @@ namespace GIStreamReceive
 
                 _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
             }
+            
+
+            _mPlayer.Open(gs.GetMedia());
+            
+            _mPlayer.Play();
 
             _mPlayer.WindowHandle = form.panel1.Handle;
 
-            
-            _mPlayer.Open(gs.GetMedia());
-            _mPlayer.Play();
+            gs.GetPlayer().Events.PlayerPositionChanged += Events_PlayerPositionChanged;
         }
-        
+
+        private void Events_PlayerPositionChanged(object sender, Declarations.Events.MediaPlayerPositionChanged e)
+        {
+            form.BeginInvoke((Action)(() => form.label1.Text = ("PendingFramesCount = " + gs.GetMedia().PendingFramesCount.ToString())));
+        }
     }
 }

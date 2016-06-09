@@ -18,16 +18,14 @@ namespace GIShowCam.Gui
         {
             if (on)
             {
-                _memRender = _mPlayer.CustomRenderer;
-
                 //_mPlayer.WindowHandle = _form.panelVlc.Handle;  
 
-                _memRender.SetCallback(delegate (Bitmap frame)
+                _mPlayer.CustomRenderer.SetCallback(delegate (Bitmap frame)
                 {
                     _panGraphics.DrawImageUnscaled(frame, Point.Empty);
                 });
 
-                _memRender.SetFormat(_info.ImgFormat);
+                _mPlayer.CustomRenderer.SetFormat(_info.ImgFormat);
             }
             else
             {

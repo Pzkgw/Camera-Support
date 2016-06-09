@@ -53,18 +53,19 @@ namespace GIShowCam.Gui
         /// <returns></returns>
         private void RegisterMediaEvents(bool on)
         {
-            if (on)
-            {
-                //m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
-                //m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
-                _mMedia.Events.StateChanged += Events_StateChanged;
-            }
-            else
-            {
-                //m_media.Events.DurationChanged -= new EventHandler<MediaDurationChange>(Events_DurationChanged);
-                //m_media.Events.ParsedChanged -= new EventHandler<MediaParseChange>(Events_ParsedChanged);
-                _mMedia.Events.StateChanged -= Events_StateChanged;
-            }
+            if (_mPlayer != null && _mPlayer.CurrentMedia != null)
+                if (on)
+                {
+                    //m_media.Events.DurationChanged += new EventHandler<MediaDurationChange>(Events_DurationChanged);
+                    //m_media.Events.ParsedChanged += new EventHandler<MediaParseChange>(Events_ParsedChanged);
+                    _mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged;
+                }
+                else
+                {
+                    //m_media.Events.DurationChanged -= new EventHandler<MediaDurationChange>(Events_DurationChanged);
+                    //m_media.Events.ParsedChanged -= new EventHandler<MediaParseChange>(Events_ParsedChanged);
+                    _mPlayer.CurrentMedia.Events.StateChanged -= Events_StateChanged;
+                }
         }
 
         private void Events_StateChanged(object sender, MediaStateChange e)
