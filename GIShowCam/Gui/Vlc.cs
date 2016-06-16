@@ -22,7 +22,8 @@ namespace GIShowCam.Gui
         {
             if (SessionInfo.VlcOptions == null)
             {
-                SessionInfo.VlcOptions = new[] { //--snapshot-format=jpg
+                SessionInfo.VlcOptions = new string[] { /*
+                    //--snapshot-format=jpg
                 "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
                 ,SessionInfo.FullScreen?"--fullscreen":"--no-fullscreen" //
                 ,"--one-instance"  //  Allow only one running instance (default disabled)
@@ -48,6 +49,7 @@ namespace GIShowCam.Gui
                 ,SessionInfo.Audio?"--no-sout-audio":null //        ^^^  Enable audio stream output (default enabled)
                 ,SessionInfo.Audio?"--aout=none":null //  main NO audio output ( optional mai e si "--no-audio" )
                 //,"--no-audio" //             ^^^ ERR error la init cateodata when enabled
+                */
             }.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
             }

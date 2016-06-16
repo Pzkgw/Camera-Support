@@ -151,7 +151,7 @@ namespace Implementation.Events
             }
         }
 
-        internal void RaiseMediaEnded()
+        public void RaiseMediaEnded()
         {
             if (m_mediaEnded != null)
             {

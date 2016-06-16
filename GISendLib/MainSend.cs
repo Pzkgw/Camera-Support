@@ -1,4 +1,5 @@
 ﻿using Declarations;
+using Declarations.Events;
 using Declarations.Media;
 using Declarations.Players;
 using Implementation;
@@ -19,12 +20,11 @@ namespace GISendLib
         long MicroSecondsBetweenFrame;
         long frameCounter;
         //FrameData data = new FrameData() { DTS = -1 };
-        const int DefaultFps = 24;
+        const int DefaultFps = 30;
 
 
         string[] opt = new[] { //--snapshot-format=jpg
                 "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
-            ,"-vvv"
                 ,"--no-fullscreen" //
                 //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
@@ -57,81 +57,82 @@ namespace GISendLib
 
         bool started;
 
+        public bool MediaRunning;
+
         public MainSend()
         {
+            _mFactory = new MediaPlayerFactory(opt,//new string[] { },
+                @"C:\Program Files (x86)\VideoLAN\VLC", true, new CLogger());
+
+            InputMedia = _mFactory.CreateMedia<IMemoryInputMedia>(MediaStrings.IMEM);
+
+            Player = _mFactory.CreatePlayer<IVideoPlayer>();
             
-            if (_mFactory == null)
-            {
-                _mFactory = new MediaPlayerFactory(opt,//new string[] { },
-                    @"C:\Program Files (x86)\VideoLAN\VLC", false, new CLogger());
 
-                Player = _mFactory.CreatePlayer<IVideoPlayer>();
-                InputMedia = _mFactory.CreateMedia<IMemoryInputMedia>(MediaStrings.IMEM);
+            Player.Events.PlayerPlaying += new EventHandler(Events_PlayerPlaying);
 
-                Player.Events.PlayerPlaying += new EventHandler(Events_PlayerPlaying);
-            }
 
             DateTime _dt;
 
             //while (true)//for (int i = 0; i < 128; i++)
-            {
+            //{
                 _dt = DateTime.Now;
 
                 if (started) ToggleRunningMedia(false);
 
-                _dt = DateTime.Now;
-                Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}",
-                    _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Stop"));
+                //_dt = DateTime.Now;
+                //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}",
+                 //   _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Stop"));
 
 
                 ToggleRunningMedia(true);
-                Thread.Sleep(3000);
+                Thread.Sleep(1000); // ???
 
 
-                ++si;
-                if (si >= s.Length) si = 0;
-                _dt = DateTime.Now;
-                Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}{5}",
-                    _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Start", Environment.NewLine));
+                //++si;                if (si >= s.Length) si = 0;
+                //_dt = DateTime.Now;
+                //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}{5}",
+                    //_dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Start", Environment.NewLine));
 
                 started = true;
-            }
+            //}
 
         }
 
 
         void Events_PlayerPlaying(object sender, EventArgs e)
         {
-            ((Action)(()=>MicroSecondsBetweenFrame = (long)(MicroSecondsInSecomd / (Player.FPS != 0 ? Player.FPS : DefaultFps)))).DynamicInvoke();
+            ((Action)(() => MicroSecondsBetweenFrame = (long)(MicroSecondsInSecomd / (Player.FPS != 0 ? Player.FPS : DefaultFps)))).DynamicInvoke();
         }
 
 
         private void ToggleRunningMedia(bool on)
         {
+            MediaRunning = on;
+
             if (on)
             {
+                ToggleDrawing(true); // inainte de play
                 Player.Open(_mFactory, s[si]);
-                //_mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged;
+                //Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
 
-                ToggleDrawing(true); // inainte de play                
+                             
 
                 Player.Play();
             }
             else
             {
                 ToggleDrawing(false);
-                //_mPlayer.CurrentMedia.Events.StateChanged -= Events_StateChanged;
-                Player.Stop();                
-                
+                //Player.CurrentMedia.Events.StateChanged -= Events_StateChanged;
+                Player.Stop();
+
             }
         }
 
-        private static readonly object _lockStateModif = new object();
+        public event EventHandler<MediaStateChange> StateChanged;
 
-        private void Events_StateChanged(object sender, Declarations.Events.MediaStateChange e)
+        private void Events_StateChanged(object sender, MediaStateChange e)
         {
-            var locked = false;
-            Monitor.Enter(_lockStateModif, ref locked);
             try
             {
                 switch (e.NewState)
@@ -150,7 +151,7 @@ namespace GISendLib
                         break;
                     case MediaState.Stopped:
                         //if (!SessionInfo.FullScreen && !_info.Cam.Data.IsStopped)                        {
-                         //   _form.BeginInvoke((Action)(() => SetBtnsVisibilityOnPlay(false)));                        }
+                        //   _form.BeginInvoke((Action)(() => SetBtnsVisibilityOnPlay(false)));                        }
                         //_info.Cam.Data.IsStopped = true;
                         break;
                     case MediaState.Ended:
@@ -162,12 +163,13 @@ namespace GISendLib
                         break;
                 }
 
+                StateChanged?.Invoke(sender, e);
+
                 //CLogger.VideoOnPlay = _info.Cam.Data.IsPlaying;
             }
             finally
             {
-                if (locked)
-                    Monitor.Exit(_lockStateModif);
+                //if (locked)                    Monitor.Exit(_lockStateModif);
             }
         }
 
@@ -178,10 +180,12 @@ namespace GISendLib
                 Player.CustomRendererEx.SetFormatSetupCallback(OnSetupCallback);
                 //_mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallback);
                 Player.CustomRendererEx.SetCallback(OnNewFrameCallback);
+
+                OnSetupCallback(new BitmapFormat(640, 386, ChromaType.J420));
             }
             else
             {
-                Player.CustomRendererEx.SetFormatSetupCallback(null);
+                //Player.CustomRendererEx.SetFormatSetupCallback(null);
                 //_mPlayer.CustomRendererEx.SetExceptionHandler(null);
                 Player.CustomRendererEx.SetCallback(null);
             }
@@ -199,6 +203,7 @@ namespace GISendLib
             //MessageBox.Show(error.Message);
         }*/
 
+        //FrameData data = new FrameData();
         private void OnNewFrameCallback(PlanarFrame frame)
         {/*
             data.Data = frame.Planes[0];
@@ -207,9 +212,9 @@ namespace GISendLib
 
             InputMedia.AddFrame(data); // DTS ramane pe default ( -1 )
 
-            for (int i = 0; i < frame.Planes.Length; frame.Planes[i++] = IntPtr.Zero) ;
-            */
-            //if (/*m_inputMedia.PendingFramesCount == 10 && */!_mPlayer.IsPlaying) { _mPlayer.Play(); }
+            for (int i = 0; i < frame.Planes.Length; frame.Planes[i++] = IntPtr.Zero) ;*/
+            
+            //if (/*m_inputMedia.PendingFramesCount == 10 && */!Player.IsPlaying) { Player.Play(); }
 
             InputMedia.AddFrame(new FrameData() { Data = frame.Planes[0], DataSize = frame.Lenghts[0], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
 
@@ -226,9 +231,11 @@ namespace GISendLib
             streamInfo.Height = format.Height;
             streamInfo.Size = format.ImageSize;
 
-            InputMedia.Initialize(streamInfo, 16);
+            InputMedia.Initialize(streamInfo, 36);
             //InputMedia.SetExceptionHandler(OnErrorCallback);
             //m_renderPlayer.Open(m_inputMedia);
+
+            //Player.Open(_mFactory, s[si]);
 
             return new BitmapFormat(format.Width, format.Height, ChromaType.RV24);
         }

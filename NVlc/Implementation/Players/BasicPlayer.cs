@@ -36,6 +36,7 @@ namespace Implementation.Players
 
             m_currentMedia = factory.CreateMedia<IMedia>(s);
             LibVlcMethods.libvlc_media_player_set_media(m_hMediaPlayer, ((INativePointer)m_currentMedia).Pointer);
+            LibVlcMethods.libvlc_media_release(((INativePointer)m_currentMedia).Pointer);
         }
 
         public virtual void Open(IMedia media)
@@ -47,6 +48,7 @@ namespace Implementation.Players
 
             m_currentMedia = media;
             LibVlcMethods.libvlc_media_player_set_media(m_hMediaPlayer, ((INativePointer)m_currentMedia).Pointer);
+            LibVlcMethods.libvlc_media_release(((INativePointer)m_currentMedia).Pointer);
         }
 
         public virtual void Play()
@@ -65,6 +67,7 @@ namespace Implementation.Players
 
             if (m_currentMedia != null)
             {
+                m_events.RaiseMediaEnded();
                 m_currentMedia.Dispose();
                 m_currentMedia = null;
             }

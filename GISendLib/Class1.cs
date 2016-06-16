@@ -1,4 +1,9 @@
-﻿namespace GISendLib
+﻿using Declarations.Events;
+using Declarations.Media;
+using Declarations.Players;
+using System;
+
+namespace GISendLib
 {
 
 
@@ -10,14 +15,9 @@
             asr = new MainSend();
         }
 
-        public Declarations.Media.IMemoryInputMedia GetMedia()
+        public MainSend GetBase()
         {
-            return asr.InputMedia;
-        }
-
-        public Declarations.Players.IVideoPlayer GetPlayer()
-        {
-            return asr.Player;
+            return asr;
         }
 
     }

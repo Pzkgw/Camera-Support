@@ -133,14 +133,9 @@ namespace GIShowCam.Gui
 
             //} catch (Exception e) { MessageBox.Show(e.Message); }
 
-            _mFactory.VideoLanManager.Events.MediaInstanceError += Events_MediaInstanceError;
 
         }
 
-        private void Events_MediaInstanceError(object sender, Declarations.VLM.VlmEvent e)
-        {
-            
-        }
 
         /// <summary>
         /// Dupa media-stop sesizat de media\events\MediaStateChange(event extern),

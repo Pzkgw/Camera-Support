@@ -3,6 +3,7 @@ using Declarations.Players;
 using GISendLib;
 using Implementation;
 using System;
+using System.Threading;
 
 namespace GIStreamReceive
 {
@@ -38,36 +39,68 @@ namespace GIStreamReceive
                 ,"--aout=none" //  main NO audio output ( optional mai e si "--no-audio" )
 
         };
+
         Class1 gs;
+
         public MainReceive(Form1 fork)
         {
-            
 
             gs = new Class1(); // inainte de MainReceive::_mFactory->Init()
+            //Thread.Sleep(100);
+            gs.GetBase().StateChanged += MainReceive_StateChanged;
+
             form = fork;
-            
 
-            if (_mFactory == null)
-            {
-                _mFactory = new MediaPlayerFactory(opt,//new string[] { },
-                    @"C:\Program Files (x86)\VideoLAN\VLC", false, new CLogger());
+            _mFactory = new MediaPlayerFactory(opt,//new string[] { },
+                @"C:\Program Files (x86)\VideoLAN\VLC", false, new CLogger());
 
-                _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
-            }
-            
-
-            _mPlayer.Open(gs.GetMedia());
-            
+            _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
+            _mPlayer.WindowHandle = form.panel1.Handle;
+            _mPlayer.Open(gs.GetBase().InputMedia);
             _mPlayer.Play();
 
-            _mPlayer.WindowHandle = form.panel1.Handle;
+            gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
+            
 
-            gs.GetPlayer().Events.PlayerPositionChanged += Events_PlayerPositionChanged;
         }
+
+        private void MainReceive_StateChanged(object sender, Declarations.Events.MediaStateChange e)
+        {
+            try
+            {
+                switch (e.NewState)
+                {
+                    case MediaState.Opening:
+                        break;
+                    case MediaState.Buffering:
+                        break;
+                    case MediaState.Playing:
+                        
+                        break;
+                    case MediaState.Paused:
+                    case MediaState.Stopped:
+                    case MediaState.Ended:
+                    case MediaState.Error:
+                        _mPlayer.Stop();
+                        break;
+                    case MediaState.NothingSpecial:
+                        break;
+                }
+
+                //CLogger.VideoOnPlay = _info.Cam.Data.IsPlaying;
+            }
+            finally
+            {
+
+            }
+        }
+
+        
+
 
         private void Events_PlayerPositionChanged(object sender, Declarations.Events.MediaPlayerPositionChanged e)
         {
-            form.BeginInvoke((Action)(() => form.label1.Text = ("PendingFramesCount = " + gs.GetMedia().PendingFramesCount.ToString())));
+            form.BeginInvoke((Action)(() => form.label1.Text = ("PendingFramesCount = " + gs.GetBase().InputMedia.PendingFramesCount.ToString())));
         }
     }
 }
