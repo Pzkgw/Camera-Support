@@ -80,19 +80,19 @@ namespace Implementation.Utils
         const int HEAP_ZERO_MEMORY = 0x00000008;
 
         // Heap API functions
-        [DllImport("kernel32")]
+        [DllImport("kernel32.dll")]
         static extern IntPtr GetProcessHeap();
 
-        [DllImport("kernel32")]
+        [DllImport("kernel32.dll")]
         static extern void* HeapAlloc(IntPtr hHeap, int flags, int size);
 
-        [DllImport("kernel32")]
+        [DllImport("kernel32.dll")]
         static extern bool HeapFree(IntPtr hHeap, int flags, void* block);
 
-        [DllImport("kernel32")]
+        [DllImport("kernel32.dll")]
         static extern void* HeapReAlloc(IntPtr hHeap, int flags, void* block, int size);
 
-        [DllImport("kernel32")]
+        [DllImport("kernel32.dll")]
         static extern int HeapSize(IntPtr hHeap, int flags, void* block);
 
         [DllImport("Kernel32.dll", EntryPoint = "RtlMoveMemory", SetLastError = true)]

@@ -28,7 +28,11 @@ namespace Implementation
                 MemoryHeap.Free(Data[i]);
             }
 
+            Sizes = null;
+
             MemoryHeap.Free(Data);
+
+            Data = null;
         }
 
         public static bool operator ==(PlanarPixelData pd1, PlanarPixelData pd2)

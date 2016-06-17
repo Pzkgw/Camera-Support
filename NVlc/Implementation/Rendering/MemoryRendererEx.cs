@@ -16,7 +16,7 @@ namespace Implementation
         volatile int m_frameRate = 0;
         int m_latestFps;
         object m_lock = new object();
-        //List<Delegate> m_callbacks = new List<Delegate>();
+        List<Delegate> m_callbacks = new List<Delegate>();
         Func<BitmapFormat, BitmapFormat> m_formatSetupCB = null;
         IntPtr[] m_planes = new IntPtr[3];
         BitmapFormat m_format;
@@ -39,9 +39,9 @@ namespace Implementation
             pLockCallback = Marshal.GetFunctionPointerForDelegate(leh);
             pDisplayCallback = Marshal.GetFunctionPointerForDelegate(deh);
 
-            //m_callbacks.Add(leh);
-            //m_callbacks.Add(deh);
-            //m_callbacks.Add(formatCallback);
+            m_callbacks.Add(leh);
+            m_callbacks.Add(deh);
+            m_callbacks.Add(formatCallback);
            
             m_timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             m_timer.Interval = 1000;
@@ -205,7 +205,7 @@ namespace Implementation
                 m_formatSetupCB = null;
                 m_excHandler = null;
                 m_callback = null;
-                //m_callbacks.Clear();
+                m_callbacks.Clear();
             }         
         }
     }

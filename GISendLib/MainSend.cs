@@ -23,9 +23,10 @@ namespace GISendLib
         const int DefaultFps = 30;
 
 
-        string[] opt = new[] { //--snapshot-format=jpg
-                "-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
-                ,"--no-fullscreen" //
+        string[] opt = new string[] {
+            //--snapshot-format=jpg
+                //"-I", "dumy", "--ignore-config", "--no-osd", "--disable-screensaver", "--plugin-path=./plugins"
+                /*,"--no-fullscreen" //
                 //,"--one-instance"  //  Allow only one running instance (default disabled)
                 ,"--high-priority" //  Increase the prior-ity of the process (default disabled)    
                 ,"--no-video-title"  //hide played media filename on starting to play media.
@@ -42,8 +43,8 @@ namespace GISendLib
                 ,"--no-interact" // Interface interaction (default enabled) VlcControl are deja Enabled = false
                 ,"--no-full-help" //  Exhaustive help for VLC and its modules (default enabled)
                 ,"--no-playlist-autostart" // playlist auto start (default enabled)
-                ,"--no-snapshot-preview"
-                ,"--quiet" // quiet- deactivates all console messages  
+                ,"--no-snapshot-preview"*/
+                "--quiet" // quiet- deactivates all console messages  
                 ,"--no-sout-audio" //        ^^^  Enable audio stream output (default enabled)
                 ,"--aout=none" //  main NO audio output ( optional mai e si "--no-audio" )
 
@@ -67,7 +68,7 @@ namespace GISendLib
             InputMedia = _mFactory.CreateMedia<IMemoryInputMedia>(MediaStrings.IMEM);
 
             Player = _mFactory.CreatePlayer<IVideoPlayer>();
-            
+
 
             Player.Events.PlayerPlaying += new EventHandler(Events_PlayerPlaying);
 
@@ -76,25 +77,25 @@ namespace GISendLib
 
             //while (true)//for (int i = 0; i < 128; i++)
             //{
-                _dt = DateTime.Now;
+            _dt = DateTime.Now;
 
-                if (started) ToggleRunningMedia(false);
+            if (started) ToggleRunningMedia(false);
 
-                //_dt = DateTime.Now;
-                //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}",
-                 //   _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Stop"));
+            //_dt = DateTime.Now;
+            //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}",
+            //   _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Stop"));
+            Thread.Sleep(100); // ???
+
+            ToggleRunningMedia(true);
+            Thread.Sleep(1000); // ???
 
 
-                ToggleRunningMedia(true);
-                Thread.Sleep(1000); // ???
+            //++si;                if (si >= s.Length) si = 0;
+            //_dt = DateTime.Now;
+            //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}{5}",
+            //_dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Start", Environment.NewLine));
 
-
-                //++si;                if (si >= s.Length) si = 0;
-                //_dt = DateTime.Now;
-                //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}{5}",
-                    //_dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Start", Environment.NewLine));
-
-                started = true;
+            started = true;
             //}
 
         }
@@ -116,7 +117,7 @@ namespace GISendLib
                 Player.Open(_mFactory, s[si]);
                 //Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
 
-                             
+
 
                 Player.Play();
             }
@@ -177,17 +178,18 @@ namespace GISendLib
         {
             if (on)
             {
+                //Player.CustomRenderer.SetCallback(OnNewFrameCallback);
                 Player.CustomRendererEx.SetFormatSetupCallback(OnSetupCallback);
-                //_mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallback);
-                Player.CustomRendererEx.SetCallback(OnNewFrameCallback);
+                //_mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallbackEx);
+                Player.CustomRendererEx.SetCallback(OnNewFrameCallbackEx);
 
-                OnSetupCallback(new BitmapFormat(640, 386, ChromaType.J420));
+                //OnSetupCallback(new BitmapFormat(640, 386, ChromaType.J420));
             }
             else
             {
-                //Player.CustomRendererEx.SetFormatSetupCallback(null);
-                //_mPlayer.CustomRendererEx.SetExceptionHandler(null);
-                Player.CustomRendererEx.SetCallback(null);
+                //Player.CustomRendererEx.SetFormatSetupCallbackEx(null);
+                //_mPlayer.CustomRendererEx.SetExceptionHandlerEx(null);
+                //Player.CustomRendererEx.SetCallbackEx(null);
             }
         }
 
@@ -203,9 +205,19 @@ namespace GISendLib
             //MessageBox.Show(error.Message);
         }*/
 
-        //FrameData data = new FrameData();
-        private void OnNewFrameCallback(PlanarFrame frame)
-        {/*
+        private void OnNewFrameCallback(System.Drawing.Bitmap frame)
+        {
+
+        }
+
+
+        object _lockStateModif = new object();
+        FrameData data = new FrameData();
+        private void OnNewFrameCallbackEx(PlanarFrame frame)
+        {
+            Monitor.Enter(_lockStateModif);
+            try { 
+                /*
             data.Data = frame.Planes[0];
             data.DataSize = frame.Lenghts[0];
             data.PTS = frameCounter++ * MicroSecondsBetweenFrame;
@@ -213,11 +225,19 @@ namespace GISendLib
             InputMedia.AddFrame(data); // DTS ramane pe default ( -1 )
 
             for (int i = 0; i < frame.Planes.Length; frame.Planes[i++] = IntPtr.Zero) ;*/
-            
+
             //if (/*m_inputMedia.PendingFramesCount == 10 && */!Player.IsPlaying) { Player.Play(); }
 
-            InputMedia.AddFrame(new FrameData() { Data = frame.Planes[0], DataSize = frame.Lenghts[0], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
-
+            data = new FrameData() { Data = frame.Planes[0], DataSize = frame.Lenghts[0], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame };
+            InputMedia.AddFrame(data);
+            //data.
+            //InputMedia.AddFrame(new FrameData() { Data = frame.Planes[1], DataSize = frame.Lenghts[1], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
+            //InputMedia.AddFrame(new FrameData() { Data = frame.Planes[2], DataSize = frame.Lenghts[2], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
+        }
+            finally
+            {
+                                   Monitor.Exit(_lockStateModif);
+            }
 
         }
 
