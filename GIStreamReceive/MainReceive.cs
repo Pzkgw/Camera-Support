@@ -19,6 +19,8 @@ namespace GIStreamReceive
 
         Class1 gs;
 
+        bool startToPlay;
+
         public MainReceive(Form1 fork)
         {
 
@@ -40,7 +42,7 @@ namespace GIStreamReceive
 
             gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
 
-            g = form.panel1.CreateGraphics(); _mPlayer.Play();
+            g = form.panel1.CreateGraphics();
 
 
 
@@ -84,12 +86,18 @@ namespace GIStreamReceive
             }
         }
 
-
-
-
         private void Events_PlayerPositionChanged(object sender, Declarations.Events.MediaPlayerPositionChanged e)
         {
-            form.BeginInvoke((Action)(() => form.label1.Text = ("PendingFramesCount = " + gs.GetBase().InputMedia.PendingFramesCount.ToString())));
+            if (startToPlay)
+            {
+                form.BeginInvoke((Action)(() => form.label1.Text = ("PendingFramesCount = " + gs.GetBase().InputMedia.PendingFramesCount.ToString())));
+            }
+            else
+            {
+                startToPlay = true;
+                _mPlayer.Play();
+                //form.BeginInvoke((Action)(() => form.label1.Text = ("Inainte de pendingFrames ... ")));
+            }
         }
     }
 }

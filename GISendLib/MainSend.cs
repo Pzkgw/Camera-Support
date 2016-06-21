@@ -54,7 +54,7 @@ namespace GISendLib
             @"rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0",
             @"rtsp://root:cavi123,.@10.10.10.78/axis-media/media.amp"
         };
-        int si = 1;
+        int si = 0;
 
         bool started;
 
@@ -84,10 +84,8 @@ namespace GISendLib
             //_dt = DateTime.Now;
             //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}",
             //   _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Stop"));
-            Thread.Sleep(100); // ???
 
             ToggleRunningMedia(true);
-            Thread.Sleep(1000); // ???
 
 
             //++si;                if (si >= s.Length) si = 0;
