@@ -22,6 +22,7 @@ namespace GISendLib
         //FrameData data = new FrameData() { DTS = -1 };
         const int DefaultFps = 30;
 
+        string adr;
 
         string[] opt = new string[] {
             //--snapshot-format=jpg
@@ -50,11 +51,8 @@ namespace GISendLib
 
         };
 
-        string[] s = new[] {
-            @"rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0",
-            @"rtsp://root:cavi123,.@10.10.10.78/axis-media/media.amp"
-        };
-        int si = 0;
+
+        
 
         bool started;
 
@@ -72,12 +70,12 @@ namespace GISendLib
 
             Player.Events.PlayerPlaying += new EventHandler(Events_PlayerPlaying);
 
+            /*
+            //DateTime _dt;
 
-            DateTime _dt;
-
-            //while (true)//for (int i = 0; i < 128; i++)
-            //{
-            _dt = DateTime.Now;
+            for (int i = 0; i < 2; i++)//while (true)
+            {
+            //_dt = DateTime.Now;
 
             if (started) ToggleRunningMedia(false);
 
@@ -85,17 +83,29 @@ namespace GISendLib
             //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}",
             //   _dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Stop"));
 
-            ToggleRunningMedia(true);
+            
 
 
-            //++si;                if (si >= s.Length) si = 0;
+            ++si;                if (si >= s.Length) si = 0;
             //_dt = DateTime.Now;
             //Console.WriteLine(string.Format(" {0:00}:{1:00}:{2:00}.{3:000}    {4}{5}",
             //_dt.Hour, _dt.Minute, _dt.Second, _dt.Millisecond, "Start", Environment.NewLine));
 
             started = true;
-            //}
+            }*/
 
+        }
+
+        public int TogglePlay(bool on, string adr)
+        {
+            this.adr = adr;
+            if (started) ToggleRunningMedia(false);
+
+            ToggleRunningMedia(true);
+
+            started = true;
+
+            return 0;
         }
 
 
@@ -112,7 +122,7 @@ namespace GISendLib
             if (on)
             {
                 ToggleDrawing(true); // inainte de play
-                Player.Open(_mFactory, s[si]);
+                Player.Open(_mFactory, adr);
                 //Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
 
 
@@ -121,9 +131,10 @@ namespace GISendLib
             }
             else
             {
+                Player.Stop();
                 ToggleDrawing(false);
                 //Player.CurrentMedia.Events.StateChanged -= Events_StateChanged;
-                Player.Stop();
+                
 
             }
         }

@@ -21,14 +21,26 @@ namespace GIStreamReceive
 
         bool startToPlay;
 
+        string[] s = new[] {
+            @"rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0",
+            @"rtsp://root:cavi123,.@10.10.10.78/axis-media/media.amp"
+        };
+
+        int si = 1;
+
         public MainReceive(Form1 fork)
         {
 
             gs = new Class1(); // inainte de MainReceive::_mFactory->Init()
             //Thread.Sleep(100);
             //gs.GetBase().StateChanged += MainReceive_StateChanged;
+            
+            //++si;
+            //gs.GetBase().TogglePlay(true, s[si]);
 
             form = fork;
+
+            gs.GetBase().TogglePlay(true, s[si]);
 
             _mFactory = new MediaPlayerFactory(opt,//new string[] { },
                 @"C:\Program Files (x86)\VideoLAN\VLC", false, new CLogger());
@@ -42,10 +54,27 @@ namespace GIStreamReceive
 
             gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
 
+
+
+            
+
+           // gs.GetBase().Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
+            //_mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged1;
+
             g = form.panel1.CreateGraphics();
 
 
 
+        }
+
+        private void Events_StateChanged1(object sender, Declarations.Events.MediaStateChange e)
+        {
+            
+        }
+
+        private void Events_StateChanged(object sender, Declarations.Events.MediaStateChange e)
+        {
+            gs.GetBase().TogglePlay(true, s[si]);
         }
 
         Graphics g;
@@ -94,8 +123,9 @@ namespace GIStreamReceive
             }
             else
             {
-                startToPlay = true;
+                
                 _mPlayer.Play();
+                startToPlay = true;
                 //form.BeginInvoke((Action)(() => form.label1.Text = ("Inainte de pendingFrames ... ")));
             }
         }
