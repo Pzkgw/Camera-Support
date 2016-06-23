@@ -30,46 +30,42 @@ namespace GIStreamReceive
 
         public MainReceive(Form1 fork)
         {
-
             gs = new Class1(); // inainte de MainReceive::_mFactory->Init()
+            gs.GetBase().TogglePlay(true, s[si]);
+            gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
+
             //Thread.Sleep(100);
             //gs.GetBase().StateChanged += MainReceive_StateChanged;
-            
+
             //++si;
             //gs.GetBase().TogglePlay(true, s[si]);
 
             form = fork;
-
-            gs.GetBase().TogglePlay(true, s[si]);
+            //g = form.panel1.CreateGraphics();
 
             _mFactory = new MediaPlayerFactory(opt,//new string[] { },
-                @"C:\Program Files (x86)\VideoLAN\VLC", false, new CLogger());
+                @"C:\Program Files (x86)\VideoLAN\VLC", true, new CLogger());
 
             _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
-            _mPlayer.WindowHandle = form.panel1.Handle;          
+            _mPlayer.WindowHandle = form.panel1.Handle;
+
             //_mPlayer.CustomRenderer.SetCallback(OnNewFrameCallback);
+
+
             _mPlayer.Open(gs.GetBase().InputMedia);
 
-            
 
-            gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
-
+            //_mPlayer.Play();
 
 
-            
-
-           // gs.GetBase().Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
+            // gs.GetBase().Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
             //_mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged1;
-
-            g = form.panel1.CreateGraphics();
-
-
 
         }
 
         private void Events_StateChanged1(object sender, Declarations.Events.MediaStateChange e)
         {
-            
+
         }
 
         private void Events_StateChanged(object sender, Declarations.Events.MediaStateChange e)
@@ -123,7 +119,7 @@ namespace GIStreamReceive
             }
             else
             {
-                
+
                 _mPlayer.Play();
                 startToPlay = true;
                 //form.BeginInvoke((Action)(() => form.label1.Text = ("Inainte de pendingFrames ... ")));

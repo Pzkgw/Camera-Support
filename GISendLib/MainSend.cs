@@ -52,7 +52,7 @@ namespace GISendLib
         };
 
 
-        
+
 
         bool started;
 
@@ -121,12 +121,12 @@ namespace GISendLib
 
             if (on)
             {
+                //Thread.Sleep(3000);
                 ToggleDrawing(true); // inainte de play
                 Player.Open(_mFactory, adr);
                 //Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
 
-
-
+                
                 Player.Play();
             }
             else
@@ -134,11 +134,11 @@ namespace GISendLib
                 Player.Stop();
                 ToggleDrawing(false);
                 //Player.CurrentMedia.Events.StateChanged -= Events_StateChanged;
-                
+
 
             }
         }
-
+        /*
         public event EventHandler<MediaStateChange> StateChanged;
 
         private void Events_StateChanged(object sender, MediaStateChange e)
@@ -181,7 +181,7 @@ namespace GISendLib
             {
                 //if (locked)                    Monitor.Exit(_lockStateModif);
             }
-        }
+        }*/
 
         private void ToggleDrawing(bool on)
         {
@@ -225,7 +225,8 @@ namespace GISendLib
         private void OnNewFrameCallbackEx(PlanarFrame frame)
         {
             Monitor.Enter(_lockStateModif);
-            try { 
+            try
+            {
                 /*
             data.Data = frame.Planes[0];
             data.DataSize = frame.Lenghts[0];
@@ -235,17 +236,17 @@ namespace GISendLib
 
             for (int i = 0; i < frame.Planes.Length; frame.Planes[i++] = IntPtr.Zero) ;*/
 
-            //if (/*m_inputMedia.PendingFramesCount == 10 && */!Player.IsPlaying) { Player.Play(); }
+                //if (/*m_inputMedia.PendingFramesCount == 10 && */!Player.IsPlaying) { Player.Play(); }
 
-            data = new FrameData() { Data = frame.Planes[0], DataSize = frame.Lenghts[0], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame };
-            InputMedia.AddFrame(data);
-            //data.
-            //InputMedia.AddFrame(new FrameData() { Data = frame.Planes[1], DataSize = frame.Lenghts[1], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
-            //InputMedia.AddFrame(new FrameData() { Data = frame.Planes[2], DataSize = frame.Lenghts[2], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
-        }
+                data = new FrameData() { Data = frame.Planes[0], DataSize = frame.Lenghts[0], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame };
+                InputMedia.AddFrame(data);
+                //data.
+                //InputMedia.AddFrame(new FrameData() { Data = frame.Planes[1], DataSize = frame.Lenghts[1], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
+                //InputMedia.AddFrame(new FrameData() { Data = frame.Planes[2], DataSize = frame.Lenghts[2], DTS = -1, PTS = frameCounter++ * MicroSecondsBetweenFrame });
+            }
             finally
             {
-                                   Monitor.Exit(_lockStateModif);
+                Monitor.Exit(_lockStateModif);
             }
 
         }
