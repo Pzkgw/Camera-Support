@@ -31,10 +31,10 @@ namespace GIStreamReceive
         public MainReceive(Form1 fork)
         {
             gs = new Class1(); // inainte de MainReceive::_mFactory->Init()
-            gs.GetBase().TogglePlay(true, s[si]);
+
             gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
 
-            //Thread.Sleep(100);
+
             //gs.GetBase().StateChanged += MainReceive_StateChanged;
 
             //++si;
@@ -49,18 +49,27 @@ namespace GIStreamReceive
             _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
             _mPlayer.WindowHandle = form.panel1.Handle;
 
-            //_mPlayer.CustomRenderer.SetCallback(OnNewFrameCallback);
-
-
-            _mPlayer.Open(gs.GetBase().InputMedia);
-
-
-            //_mPlayer.Play();
-
+            PlayStart(s[si]);
+            //ToggleMedia(false, null);
+            //ToggleMedia(true, s[si]);
 
             // gs.GetBase().Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
             //_mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged1;
 
+        }
+
+        private void PlayStart(string adr)
+        {
+
+            gs.GetBase().PlayStart(adr);
+            _mPlayer.Open(gs.GetBase().InputMedia);
+
+        }
+
+        private void PlayStop()
+        {
+            gs.GetBase().PlayStop();
+            _mPlayer.Stop();
         }
 
         private void Events_StateChanged1(object sender, Declarations.Events.MediaStateChange e)
@@ -70,15 +79,13 @@ namespace GIStreamReceive
 
         private void Events_StateChanged(object sender, Declarations.Events.MediaStateChange e)
         {
-            gs.GetBase().TogglePlay(true, s[si]);
+            //gs.GetBase().PlayStart(s[si]);
         }
 
-        Graphics g;
+        //Graphics g;
 
-        private void OnNewFrameCallback(System.Drawing.Bitmap frame)
-        {
-            g.DrawImage(frame, Point.Empty);
-        }
+        //private void OnNewFrameCallback(System.Drawing.Bitmap frame)        {
+        //g.DrawImage(frame, Point.Empty);        }
 
         private void MainReceive_StateChanged(object sender, Declarations.Events.MediaStateChange e)
         {
@@ -119,7 +126,6 @@ namespace GIStreamReceive
             }
             else
             {
-
                 _mPlayer.Play();
                 startToPlay = true;
                 //form.BeginInvoke((Action)(() => form.label1.Text = ("Inainte de pendingFrames ... ")));

@@ -51,11 +51,6 @@ namespace GISendLib
 
         };
 
-
-
-
-        bool started;
-
         public bool MediaRunning;
 
         public MainSend()
@@ -96,18 +91,17 @@ namespace GISendLib
 
         }
 
-        public int TogglePlay(bool on, string adr)
+        public int PlayStart(string adr)
         {
             this.adr = adr;
-            if (started) ToggleRunningMedia(false);
-
             ToggleRunningMedia(true);
-
-            started = true;
-
             return 0;
         }
 
+        public void PlayStop()
+        {
+            ToggleRunningMedia(false);
+        }
 
         void Events_PlayerPlaying(object sender, EventArgs e)
         {
