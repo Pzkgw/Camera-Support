@@ -190,6 +190,7 @@ namespace GISendLib
             }
             else
             {
+                Player.CustomRendererEx.Dispose();
                 //Player.CustomRendererEx.SetFormatSetupCallbackEx(null);
                 //_mPlayer.CustomRendererEx.SetExceptionHandlerEx(null);
                 //Player.CustomRendererEx.SetCallbackEx(null);

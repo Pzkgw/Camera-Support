@@ -147,6 +147,7 @@ namespace LibVlcWrapper
 
         [DllImport("libvlc", CallingConvention = CallingConvention.Cdecl)]
         public static extern void libvlc_media_add_option(IntPtr libvlc_media_inst, [MarshalAs(UnmanagedType.LPArray)] byte[] ppsz_options);
+        //public static extern void libvlc_media_add_option(IntPtr libvlc_media_inst, IntPtr ppsz_options);
 
         [DllImport("libvlc", CallingConvention = CallingConvention.Cdecl)]
         public static extern void libvlc_media_add_option_flag(IntPtr p_md, [MarshalAs(UnmanagedType.LPArray)] byte[] ppsz_options, int i_flags);

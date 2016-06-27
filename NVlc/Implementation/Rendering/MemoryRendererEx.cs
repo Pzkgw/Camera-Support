@@ -141,7 +141,7 @@ namespace Implementation
 
         internal void StartTimer()
         {
-            m_timer.Start();
+            if (m_timer != null) m_timer.Start();
         }
 
         private PlanarFrame GetFrame()
@@ -205,6 +205,7 @@ namespace Implementation
                 m_formatSetupCB = null;
                 m_excHandler = null;
                 m_callback = null;
+                m_timer = null;
                 m_callbacks.Clear();
             }         
         }

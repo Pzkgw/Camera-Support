@@ -93,9 +93,12 @@ namespace Implementation.Media
                     {
                         //fixed(char * g = item.ToCharArray())
                         {
-                            //IntPtr g  = Marshal.AllocHGlobal(item.ToCharArray().Length);
-                            //Marshal.Copy(item.ToCharArray(), 0, g, item.ToCharArray().Length);
-                            LibVlcMethods.libvlc_media_add_option(m_hMedia, Encoding.UTF8.GetBytes(item.ToCharArray())); // item.ToUtf8()
+                            /*
+                            IntPtr g  = Marshal.AllocHGlobal(item.ToCharArray().Length);
+                            Marshal.Copy(item.ToCharArray(), 0, g, item.ToCharArray().Length);
+                            LibVlcMethods.libvlc_media_add_option(m_hMedia, g); // item.ToUtf8()*/
+
+                            LibVlcMethods.libvlc_media_add_option(m_hMedia, item.ToUtf8());
                         }
                     }
                 }

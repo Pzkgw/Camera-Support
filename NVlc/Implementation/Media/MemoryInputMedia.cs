@@ -22,10 +22,10 @@ namespace Implementation
         BlockingCollection<FrameData> m_queue;
         Action<Exception> m_excHandler;
         bool m_initilaized;
-        
+
         public MemoryInputMedia(IntPtr hMediaLib)
             : base(hMediaLib)
-        {           
+        {
             ImemGet pLock = OnImemGet;
             ImemRelease pUnlock = OnImemRelease;
 
@@ -178,7 +178,7 @@ namespace Implementation
                     throw new Exception("imem-get callback failed", ex);
                 }
                 return 1;
-            }           
+            }
         }
 
         private void OnImemRelease(void* data, char* cookie, uint dataSize, void* pData)
@@ -228,7 +228,7 @@ namespace Implementation
             if (disposing)
             {
                 m_callbacks = null;
-                if (m_queue.Count > 0)
+                if (m_queue != null && m_queue.Count > 0)
                 {
                     foreach (var item in m_queue)
                     {
@@ -246,7 +246,7 @@ namespace Implementation
 
         public int PendingFramesCount
         {
-            get 
+            get
             {
                 if (m_queue == null)
                 {

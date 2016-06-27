@@ -1,4 +1,5 @@
 ﻿using Declarations;
+using Declarations.Events;
 using Declarations.Players;
 using GISendLib;
 using Implementation;
@@ -22,11 +23,16 @@ namespace GIStreamReceive
         bool startToPlay;
 
         string[] s = new[] {
+            @"rtsp://root:cavi123,.@10.10.10.78/axis-media/media.amp",/*
             @"rtsp://admin:admin@10.10.10.202:554/cam/realmonitor?channel=1&subtype=0",
-            @"rtsp://root:cavi123,.@10.10.10.78/axis-media/media.amp"
+            @"rtsp://root:cavi1234@10.10.10.101:8000",
+            @"http://admin:1qaz@WSX@10.10.10.208",
+            @"http://admin:1qaz@WSX@192.168.0.92/streaming/channels/1/httppreview",
+            @"rtsp://192.168.0.100:554/0",*/
+            @"http://root:cavi123,.@10.10.10.78/axis-cgi/mjpg/video.cgi"
         };
 
-        int si = 1;
+        int si = 0;
 
         public MainReceive(Form1 fork)
         {
@@ -49,11 +55,13 @@ namespace GIStreamReceive
             _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
             _mPlayer.WindowHandle = form.panel1.Handle;
 
-            PlayStart(s[si]);
-            //ToggleMedia(false, null);
-            //ToggleMedia(true, s[si]);
+            PlayStart(s[0]);
+            
+            PlayStop(); // --> ev # s
+            //Thread.Sleep(3000);
+            PlayStart(s[1]);
 
-            // gs.GetBase().Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
+
             //_mPlayer.CurrentMedia.Events.StateChanged += Events_StateChanged1;
 
         }
@@ -64,22 +72,15 @@ namespace GIStreamReceive
             gs.GetBase().PlayStart(adr);
             _mPlayer.Open(gs.GetBase().InputMedia);
 
+            gs.GetBase().Player.CurrentMedia.Events.StateChanged += MainReceive_StateChanged;
+
         }
 
         private void PlayStop()
         {
-            gs.GetBase().PlayStop();
+            gs.GetBase().Player.CurrentMedia.Events.StateChanged -= MainReceive_StateChanged;
             _mPlayer.Stop();
-        }
-
-        private void Events_StateChanged1(object sender, Declarations.Events.MediaStateChange e)
-        {
-
-        }
-
-        private void Events_StateChanged(object sender, Declarations.Events.MediaStateChange e)
-        {
-            //gs.GetBase().PlayStart(s[si]);
+            gs.GetBase().PlayStop();
         }
 
         //Graphics g;
@@ -87,7 +88,7 @@ namespace GIStreamReceive
         //private void OnNewFrameCallback(System.Drawing.Bitmap frame)        {
         //g.DrawImage(frame, Point.Empty);        }
 
-        private void MainReceive_StateChanged(object sender, Declarations.Events.MediaStateChange e)
+        private void MainReceive_StateChanged(object sender, MediaStateChange e)
         {
             try
             {
@@ -104,7 +105,7 @@ namespace GIStreamReceive
                     case MediaState.Stopped:
                     case MediaState.Ended:
                     case MediaState.Error:
-                        _mPlayer.Stop();
+                        //_mPlayer.Stop();
                         break;
                     case MediaState.NothingSpecial:
                         break;
@@ -118,7 +119,7 @@ namespace GIStreamReceive
             }
         }
 
-        private void Events_PlayerPositionChanged(object sender, Declarations.Events.MediaPlayerPositionChanged e)
+        private void Events_PlayerPositionChanged(object sender, MediaPlayerPositionChanged e)
         {
             if (startToPlay)
             {
