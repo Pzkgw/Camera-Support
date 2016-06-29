@@ -38,7 +38,7 @@ namespace GIStreamReceive
         {
             gs = new Class1(); // inainte de MainReceive::_mFactory->Init()
 
-            gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
+            
 
 
             //gs.GetBase().StateChanged += MainReceive_StateChanged;
@@ -55,10 +55,12 @@ namespace GIStreamReceive
             _mPlayer = _mFactory.CreatePlayer<IVideoPlayer>();
             _mPlayer.WindowHandle = form.panel1.Handle;
 
-            PlayStart(s[0]);
-            
+            // true: 00, 01
+            // false:11, 10
+            PlayStart(s[1]);
+            //Thread.Sleep(5000);
             PlayStop(); // --> ev # s
-            //Thread.Sleep(3000);
+
             PlayStart(s[1]);
 
 
@@ -73,12 +75,15 @@ namespace GIStreamReceive
             _mPlayer.Open(gs.GetBase().InputMedia);
 
             gs.GetBase().Player.CurrentMedia.Events.StateChanged += MainReceive_StateChanged;
+            gs.GetBase().Player.Events.PlayerPositionChanged += Events_PlayerPositionChanged;
 
         }
 
         private void PlayStop()
         {
+            //_mFactory.
             gs.GetBase().Player.CurrentMedia.Events.StateChanged -= MainReceive_StateChanged;
+            gs.GetBase().Player.Events.PlayerPositionChanged -= Events_PlayerPositionChanged;
             _mPlayer.Stop();
             gs.GetBase().PlayStop();
         }
@@ -123,7 +128,11 @@ namespace GIStreamReceive
         {
             if (startToPlay)
             {
-                form.BeginInvoke((Action)(() => form.label1.Text = ("PendingFramesCount = " + gs.GetBase().InputMedia.PendingFramesCount.ToString())));
+                try
+                {
+                    //form.BeginInvoke((Action)(() => form.label1.Text = ("PendingFramesCount = " + gs.GetBase().InputMedia.PendingFramesCount.ToString())));
+                }
+                catch (Exception ex) { }
             }
             else
             {

@@ -120,7 +120,7 @@ namespace GISendLib
                 Player.Open(_mFactory, adr);
                 //Player.CurrentMedia.Events.StateChanged += Events_StateChanged;
 
-                
+
                 Player.Play();
             }
             else
@@ -181,6 +181,9 @@ namespace GISendLib
         {
             if (on)
             {
+                Player.CustomRendererEx.SetExceptionHandler(OnExceptionCallback);
+
+
                 //Player.CustomRenderer.SetCallback(OnNewFrameCallback);
                 Player.CustomRendererEx.SetFormatSetupCallback(OnSetupCallback);
                 //_mPlayer.CustomRendererEx.SetExceptionHandler(OnErrorCallbackEx);
@@ -195,6 +198,11 @@ namespace GISendLib
                 //_mPlayer.CustomRendererEx.SetExceptionHandlerEx(null);
                 //Player.CustomRendererEx.SetCallbackEx(null);
             }
+        }
+
+        private void OnExceptionCallback(Exception ex)
+        {
+
         }
 
         private BitmapFormat OnSetupCallback(BitmapFormat format)
